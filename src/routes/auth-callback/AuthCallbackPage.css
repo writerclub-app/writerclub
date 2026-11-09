@@ -1,0 +1,10 @@
+@import 'tailwindcss';
+
+.callback-root {
+  @apply min-h-screen flex items-center justify-center;
+}
+
+.callback-text {
+  @apply text-sm;
+  color: var(--color-awake-text-muted);
+}

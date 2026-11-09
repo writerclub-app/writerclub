@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+
+.palette-selector {
+  @apply flex items-center gap-1.5;
+}
+
+.palette-swatch {
+  @apply w-5 h-5 rounded-full border-2 border-transparent
+         transition-all duration-150 cursor-pointer
+         hover:scale-110 focus-visible:outline-none
+         focus-visible:ring-2 focus-visible:ring-offset-1;
+
+  background-color: var(--swatch-color);
+  ring-color: var(--swatch-color);
+}
+
+.palette-swatch--active {
+  @apply border-white scale-110 shadow-md;
+  outline: 2px solid var(--swatch-color);
+  outline-offset: 2px;
+}

@@ -1,0 +1,33 @@
+@import 'tailwindcss';
+
+.login-root {
+  @apply min-h-screen flex items-center justify-center;
+  background-color: var(--color-awake-surface);
+}
+
+.login-wrapper {
+  @apply w-full max-w-sm space-y-8 px-4;
+}
+
+.login-header {
+  @apply text-center space-y-2;
+}
+
+.login-title {
+  @apply text-3xl font-bold tracking-tight;
+  color: var(--color-awake-text);
+}
+
+.login-subtitle {
+  @apply text-sm;
+  color: var(--color-awake-text-muted);
+}
+
+.login-providers {
+  @apply space-y-3;
+}
+
+.login-notice {
+  @apply text-center text-xs;
+  color: var(--color-awake-text-subtle);
+}

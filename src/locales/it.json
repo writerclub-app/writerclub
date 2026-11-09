@@ -1,0 +1,32 @@
+{
+  "app": {
+    "name": "WriterClub",
+    "tagline": "Il tuo spazio di scrittura creativa"
+  },
+  "auth": {
+    "login": {
+      "continue_with_google": "Continua con Google",
+      "continue_with_microsoft": "Continua con Microsoft",
+      "continue_with_github": "Continua con GitHub",
+      "local_storage_notice": "I tuoi scritti sono archiviati localmente sul tuo dispositivo.",
+      "signing_in": "Accesso in corso…"
+    },
+    "callback": {
+      "signing_in": "Accesso in corso…"
+    },
+    "onboarding": {
+      "title": "Scegli il tuo nome utente",
+      "subtitle": "Apparirà nell'URL del tuo profilo pubblico.",
+      "username_label": "Nome utente",
+      "username_placeholder": "es: nil",
+      "submit": "Continua",
+      "submitting": "Salvataggio…"
+    }
+  },
+  "palette": {
+    "label": "Tavolozza colori",
+    "literary": "Letteraria",
+    "minimal": "Minimale",
+    "modern": "Moderna"
+  }
+}
