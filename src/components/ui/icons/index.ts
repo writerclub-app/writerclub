@@ -1,3 +1,7 @@
 export { GoogleIcon } from './GoogleIcon'
 export { MicrosoftIcon } from './MicrosoftIcon'
 export { GitHubIcon } from './GitHubIcon'
+export { HomeIcon } from './HomeIcon'
+export { ExploreIcon } from './ExploreIcon'
+export { NewIcon } from './NewIcon'
+export { ProfileIcon } from './ProfileIcon'

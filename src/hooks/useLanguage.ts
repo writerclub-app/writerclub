@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next'
 
 export type Language = 'pt' | 'en' | 'es' | 'it'
 
-export const LANGUAGES: { value: Language; label: string }[] = [
-  { value: 'pt', label: 'Português' },
-  { value: 'en', label: 'English' },
-  { value: 'es', label: 'Español' },
-  { value: 'it', label: 'Italiano' },
+export const LANGUAGES: { value: Language; label: string; flag: string }[] = [
+  { value: 'pt', label: 'Português', flag: '🇧🇷' },
+  { value: 'en', label: 'English',   flag: '🇺🇸' },
+  { value: 'es', label: 'Español',   flag: '🇪🇸' },
+  { value: 'it', label: 'Italiano',  flag: '🇮🇹' },
 ]
 
 export function useLanguage() {

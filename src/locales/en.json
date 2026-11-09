@@ -9,7 +9,10 @@
       "continue_with_microsoft": "Continue with Microsoft",
       "continue_with_github": "Continue with GitHub",
       "local_storage_notice": "Your writings are stored locally on your device.",
-      "signing_in": "Signing in…"
+      "signing_in": "Signing in…",
+      "coming_soon": "coming soon",
+      "coming_soon_label": "Coming soon",
+      "terms_notice": "By continuing you agree to our <a href=\"#\">Terms of Use</a> and <a href=\"#\">Privacy Policy</a>."
     },
     "callback": {
       "signing_in": "Signing in…"
@@ -28,5 +31,11 @@
     "literary": "Literary",
     "minimal": "Minimal",
     "modern": "Modern"
+  },
+  "nav": {
+    "home": "Writings",
+    "explore": "Explore",
+    "new": "New",
+    "profile": "Profile"
   }
 }

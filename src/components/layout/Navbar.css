@@ -1,0 +1,34 @@
+@import 'tailwindcss';
+
+.navbar {
+  @apply hidden md:flex fixed top-0 left-0 right-0 z-40 h-14 border-b;
+  background-color: var(--color-awake-surface);
+  border-color: var(--color-awake-border);
+}
+
+.navbar-inner {
+  @apply flex items-center justify-between w-full max-w-4xl mx-auto px-6 h-full;
+}
+
+.navbar-logo {
+  @apply text-base font-semibold tracking-tight no-underline;
+  color: var(--color-awake-text);
+}
+
+.navbar-links {
+  @apply flex items-center gap-6;
+}
+
+.navbar-link {
+  @apply text-sm no-underline transition-colors duration-150;
+  color: var(--color-awake-text-muted);
+}
+
+.navbar-link:hover {
+  color: var(--color-awake-text);
+}
+
+.navbar-link--active {
+  color: var(--color-awake-brand);
+  @apply font-medium;
+}

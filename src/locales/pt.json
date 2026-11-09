@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "WriterClub",
-    "tagline": "Seu espaço de escrita criativa"
+    "tagline": "O seu espaço para escrever sem pressa — poemas, contos, músicas e tudo mais."
   },
   "auth": {
     "login": {
@@ -9,7 +9,10 @@
       "continue_with_microsoft": "Continuar com Microsoft",
       "continue_with_github": "Continuar com GitHub",
       "local_storage_notice": "Seus textos são armazenados localmente no seu dispositivo.",
-      "signing_in": "Entrando…"
+      "signing_in": "Entrando…",
+      "coming_soon": "em breve",
+      "coming_soon_label": "Em breve",
+      "terms_notice": "Ao continuar, você concorda com os <a href=\"#\">Termos de Uso</a> e a <a href=\"#\">Política de Privacidade</a>."
     },
     "callback": {
       "signing_in": "Entrando…"
@@ -28,5 +31,11 @@
     "literary": "Literária",
     "minimal": "Minimalista",
     "modern": "Moderna"
+  },
+  "nav": {
+    "home": "Escritos",
+    "explore": "Explorar",
+    "new": "Novo",
+    "profile": "Perfil"
   }
 }
