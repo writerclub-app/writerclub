@@ -1,20 +1,30 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@awakr/awake-ui/button'
 import { Loading } from '@awakr/awake-ui/loading'
 import { Badge } from '@awakr/awake-ui/badge'
 import './LoginPage.css'
-import { initiateGoogleLogin } from '@/services/auth.service'
+import { initiateGoogleLogin, saveToken } from '@/services/auth.service'
 import { GoogleIcon, MicrosoftIcon, GitHubIcon } from '@/components/ui/icons'
 import { GlobalControls } from '@/components/ui/GlobalControls'
+import { db } from '@/db'
 
 export function LoginPage() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
 
-  const handleGoogle = async () => {
+  const handleGoogle = () => {
     setLoading(true)
-    await initiateGoogleLogin()
+    initiateGoogleLogin(
+      async (token) => {
+        saveToken(token)
+        const profile = await db.profile.get(token.authId)
+        void navigate('/')
+      },
+      () => setLoading(false),
+    )
   }
 
   return (

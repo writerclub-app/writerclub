@@ -2,103 +2,86 @@ import type { OAuthToken } from '@/types/auth'
 import type { OAuthProvider } from '@/types/profile'
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID as string
-const REDIRECT_URI = `${window.location.origin}/auth/callback`
 
-// ─── PKCE helpers ────────────────────────────────────────────────────────────
+// ─── Google OAuth2 Token Client (popup, sem FedCM, sem client_secret) ────────
 
-function generateCodeVerifier(): string {
-  const array = new Uint8Array(64)
-  crypto.getRandomValues(array)
-  return btoa(String.fromCharCode(...array))
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=/g, '')
+type TokenResponse = {
+  access_token: string
+  expires_in: number
+  error?: string
 }
 
-async function generateCodeChallenge(verifier: string): Promise<string> {
-  const encoder = new TextEncoder()
-  const data = encoder.encode(verifier)
-  const digest = await crypto.subtle.digest('SHA-256', data)
-  return btoa(String.fromCharCode(...new Uint8Array(digest)))
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=/g, '')
-}
-
-// ─── Google OAuth PKCE ───────────────────────────────────────────────────────
-
-export async function initiateGoogleLogin(): Promise<void> {
-  const verifier = generateCodeVerifier()
-  const challenge = await generateCodeChallenge(verifier)
-
-  sessionStorage.setItem('pkce_verifier', verifier)
-
-  const params = new URLSearchParams({
-    client_id: GOOGLE_CLIENT_ID,
-    redirect_uri: REDIRECT_URI,
-    response_type: 'code',
-    scope: 'openid email profile',
-    code_challenge: challenge,
-    code_challenge_method: 'S256',
-    prompt: 'select_account',
-  })
-
-  window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params}`
-}
-
-export async function handleGoogleCallback(code: string): Promise<OAuthToken> {
-  const verifier = sessionStorage.getItem('pkce_verifier')
-  if (!verifier) throw new Error('Missing PKCE verifier')
-
-  const response = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-      code,
-      client_id: GOOGLE_CLIENT_ID,
-      redirect_uri: REDIRECT_URI,
-      grant_type: 'authorization_code',
-      code_verifier: verifier,
-    }),
-  })
-
-  if (!response.ok) throw new Error('Failed to exchange code for token')
-
-  const data = await response.json() as {
-    access_token: string
-    expires_in: number
-    id_token: string
-  }
-
-  sessionStorage.removeItem('pkce_verifier')
-
-  const userInfo = await fetchGoogleUserInfo(data.access_token)
-
-  return {
-    accessToken: data.access_token,
-    expiresAt: Date.now() + data.expires_in * 1000,
-    provider: 'google' as OAuthProvider,
-    authId: userInfo.sub,
-    email: userInfo.email,
-    displayName: userInfo.name,
-    avatarUrl: userInfo.picture,
-  }
-}
-
-async function fetchGoogleUserInfo(accessToken: string): Promise<{
+type GoogleUserInfo = {
   sub: string
   email: string
   name: string
   picture: string
-}> {
-  const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  })
-  if (!response.ok) throw new Error('Failed to fetch user info')
-  return response.json() as Promise<{ sub: string; email: string; name: string; picture: string }>
 }
 
-// ─── Token storage (sessionStorage — cleared on tab close) ───────────────────
+type TokenClient = {
+  requestAccessToken: (cfg?: { prompt?: string }) => void
+}
+
+declare global {
+  interface Window {
+    google?: {
+      accounts: {
+        oauth2: {
+          initTokenClient: (cfg: {
+            client_id: string
+            scope: string
+            callback: (response: TokenResponse) => void
+          }) => TokenClient
+        }
+      }
+    }
+  }
+}
+
+export function initiateGoogleLogin(
+  onSuccess: (token: OAuthToken) => void,
+  onError: () => void,
+): void {
+  const google = window.google
+  if (!google) {
+    console.error('GSI not loaded')
+    onError()
+    return
+  }
+
+  const client = google.accounts.oauth2.initTokenClient({
+    client_id: GOOGLE_CLIENT_ID,
+    scope: 'openid email profile',
+    callback: async (response: TokenResponse) => {
+      if (response.error || !response.access_token) {
+        onError()
+        return
+      }
+      try {
+        const userInfo = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: { Authorization: `Bearer ${response.access_token}` },
+        }).then((r) => r.json()) as GoogleUserInfo
+
+        const token: OAuthToken = {
+          accessToken: response.access_token,
+          expiresAt: Date.now() + response.expires_in * 1000,
+          provider: 'google' as OAuthProvider,
+          authId: userInfo.sub,
+          email: userInfo.email,
+          displayName: userInfo.name,
+          avatarUrl: userInfo.picture,
+        }
+        onSuccess(token)
+      } catch {
+        onError()
+      }
+    },
+  })
+
+  client.requestAccessToken({ prompt: 'select_account' })
+}
+
+// ─── Token storage ────────────────────────────────────────────────────────────
 
 const TOKEN_KEY = 'writerclub_token'
 
