@@ -20,19 +20,22 @@
 .home-filter__chip {
   @apply px-3 py-1 rounded-full border text-xs cursor-pointer transition-all duration-150;
   border-color: var(--color-awake-border);
-  color: var(--color-awake-text-muted, currentColor);
+  color: var(--color-awake-text, #111);
   background: transparent;
 }
 
-.home-filter__chip:hover {
+.home-filter__chip:hover:not(.home-filter__chip--active) {
   color: var(--color-awake-brand);
   border-color: var(--color-awake-brand);
 }
 
-.home-filter__chip--active {
-  @apply font-medium text-white border-transparent;
+.home-filter__chip.home-filter__chip--active {
+  @apply font-medium;
+  color: #fff !important;
   background-color: var(--color-awake-brand);
   border-color: var(--color-awake-brand);
+  border-width: 1px;
+  border-style: solid;
 }
 
 /* List */
@@ -47,8 +50,10 @@
 
 .home-empty__title {
   @apply text-sm font-medium m-0;
+  color: var(--color-awake-text, #111);
 }
 
 .home-empty__sub {
-  @apply text-xs m-0 opacity-55;
+  @apply text-xs m-0;
+  color: var(--color-awake-text-muted, #666);
 }
