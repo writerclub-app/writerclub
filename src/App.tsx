@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AppLayout } from '@/components/layout/AppLayout'
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
 import { LoginPage } from '@/routes/login/LoginPage'
+import { HomePage } from '@/routes/home/HomePage'
 import { AuthCallbackPage } from '@/routes/auth-callback/AuthCallbackPage'
 
 export default function App() {
@@ -15,7 +16,7 @@ export default function App() {
         {/* Rotas protegidas */}
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
-            <Route path="/" element={<div>Home</div>} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/explore" element={<div>Explore</div>} />
             <Route path="/writings/new" element={<div>Novo texto</div>} />
             <Route path="/writings/:id" element={<div>Editar texto</div>} />

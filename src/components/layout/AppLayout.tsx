@@ -1,9 +1,9 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { BottomNav } from '@awakr/awake-ui/bottom-nav'
-import { GlobalControls } from '@/components/ui/GlobalControls'
 import { HomeIcon, ExploreIcon, NewIcon, ProfileIcon } from '@/components/ui/icons'
 import { Navbar } from './Navbar'
+import { MobileHeader } from './MobileHeader'
 import './AppLayout.css'
 
 export function AppLayout() {
@@ -21,23 +21,23 @@ export function AppLayout() {
   return (
     <div className="app-layout">
       <Navbar />
-      <GlobalControls />
-
+      <MobileHeader />
       <main className="app-layout__main">
         <Outlet />
       </main>
-
-      <BottomNav.Root className="app-layout__bottom-nav">
-        {navItems.map(({ to, icon, label }) => (
-          <BottomNav.Item
-            key={to}
-            icon={icon}
-            label={label}
-            active={pathname === to}
-            onClick={() => navigate(to)}
-          />
-        ))}
-      </BottomNav.Root>
+      <div className="app-layout__bottom-nav">
+        <BottomNav.Root>
+          {navItems.map(({ to, icon, label }) => (
+            <BottomNav.Item
+              key={to}
+              icon={icon}
+              label={label}
+              active={pathname === to}
+              onClick={() => navigate(to)}
+            />
+          ))}
+        </BottomNav.Root>
+      </div>
     </div>
   )
 }

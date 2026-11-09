@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+
+.mobile-header {
+  @apply flex items-center justify-between h-14 px-4 border-b md:hidden sticky top-0 z-40;
+  background-color: var(--color-awake-surface);
+  border-color: var(--color-awake-border);
+}
+
+.mobile-header__logo {
+  @apply text-base font-semibold tracking-tight no-underline;
+  color: var(--color-awake-text);
+}
+
+.mobile-header__avatar {
+  @apply w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold border-0 cursor-pointer overflow-hidden;
+  background-color: var(--color-awake-brand);
+  color: #fff;
+}
+
+.mobile-header__avatar-img {
+  @apply w-full h-full object-cover;
+}

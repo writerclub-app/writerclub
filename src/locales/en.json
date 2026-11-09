@@ -37,5 +37,20 @@
     "explore": "Explore",
     "new": "New",
     "profile": "Profile"
+  },
+  "home": {
+    "tab_writings": "Writings",
+    "tab_folders": "Folders",
+    "filter_all": "All",
+    "filter_draft": "Drafts",
+    "filter_published": "Published",
+    "empty_writings": "No writings yet.",
+    "empty_writings_sub": "Tap + to get started.",
+    "empty_folders": "No folders yet.",
+    "empty_folders_sub": "Organize your writings into folders.",
+    "writings_count": "{{count}} writing",
+    "writings_count_plural": "{{count}} writings",
+    "draft": "Draft",
+    "published": "Published"
   }
 }

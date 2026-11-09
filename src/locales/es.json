@@ -37,5 +37,20 @@
     "explore": "Explorar",
     "new": "Nuevo",
     "profile": "Perfil"
+  },
+  "home": {
+    "tab_writings": "Escritos",
+    "tab_folders": "Carpetas",
+    "filter_all": "Todos",
+    "filter_draft": "Borradores",
+    "filter_published": "Publicados",
+    "empty_writings": "Aún no hay escritos.",
+    "empty_writings_sub": "Toca + para empezar.",
+    "empty_folders": "Aún no hay carpetas.",
+    "empty_folders_sub": "Organiza tus escritos en carpetas.",
+    "writings_count": "{{count}} escrito",
+    "writings_count_plural": "{{count}} escritos",
+    "draft": "Borrador",
+    "published": "Publicado"
   }
 }

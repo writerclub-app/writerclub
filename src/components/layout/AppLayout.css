@@ -1,54 +1,37 @@
 @import 'tailwindcss';
 
 /*
-  Grid layout da aplicação
-
-  Mobile (< 768px):
-  ┌────────────────┐
-  │  main  (1fr)  │
-  ├────────────────┤
-  │  bottom-nav   │  ← em fluxo, não fixed
-  └────────────────┘
-
-  Desktop (≥ 768px):
-  ┌────────────────┐
-  │  navbar fixed  │  ← fora do fluxo, h-14 (56px)
-  ├────────────────┤
-  │  main  (1fr)  │  ← padding-top compensa navbar
+  Mobile (< 768px):        Desktop (≥ 768px):
+  ┌────────────────┐        ┌────────────────┐
+  │ mobile-header  │        │  navbar fixed  │
+  ├────────────────┤        ├────────────────┤
+  │  main  (1fr)  │        │  main  (1fr)  │
+  ├────────────────┤        └────────────────┘
+  │  bottom-nav   │
   └────────────────┘
 */
 
 .app-layout {
-  display: grid;
-  grid-template-rows: 1fr auto;  /* main cresce, bottom-nav fica no fundo */
-  grid-template-areas:
-    "main"
-    "bottom-nav";
+  display: flex;
+  flex-direction: column;
   min-height: 100dvh;
 }
 
-/* Desktop: navbar é fixed (já tem position: fixed no Navbar.css),
-   então só removemos o bottom-nav e compensamos o espaço da navbar */
 @media (min-width: 768px) {
   .app-layout {
-    grid-template-rows: 1fr;
-    grid-template-areas: "main";
-    padding-top: 56px; /* altura da Navbar (h-14) */
+    padding-top: 56px; /* altura da Navbar fixa */
   }
 }
 
-/* Área de conteúdo */
 .app-layout__main {
-  grid-area: main;
   display: flex;
   flex-direction: column;
+  flex: 1;
   padding-left: max(0px, env(safe-area-inset-left, 0px));
   padding-right: max(0px, env(safe-area-inset-right, 0px));
 }
 
-/* Bottom nav — visível só no mobile */
 .app-layout__bottom-nav {
-  grid-area: bottom-nav;
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 

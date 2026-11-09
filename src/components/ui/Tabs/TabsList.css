@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+
+.tabs-list {
+  @apply flex border-b sticky top-0 z-10 px-4;
+  background-color: var(--color-awake-surface, var(--color-awake-bg));
+  border-color: var(--color-awake-border);
+}

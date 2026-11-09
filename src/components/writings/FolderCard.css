@@ -1,0 +1,32 @@
+@import 'tailwindcss';
+
+.folder-card {
+  @apply cursor-pointer transition-colors duration-150;
+}
+
+.folder-card:hover {
+  background-color: color-mix(in srgb, var(--color-awake-text, currentColor) 4%, transparent);
+}
+
+.folder-card__content {
+  @apply flex items-center gap-3 p-3.5;
+}
+
+.folder-card__icon {
+  @apply w-10 h-10 rounded-[10px] flex items-center justify-center shrink-0;
+  background-color: var(--color-awake-brand-subtle, color-mix(in srgb, var(--color-awake-brand, currentColor) 12%, transparent));
+  color: var(--color-awake-brand, currentColor);
+}
+
+.folder-card__info {
+  @apply flex flex-col gap-0.5 min-w-0;
+}
+
+.folder-card__name {
+  @apply text-[0.95rem] font-semibold m-0 truncate;
+}
+
+.folder-card__count {
+  @apply text-xs m-0 opacity-60;
+  color: var(--color-awake-text-muted, currentColor);
+}

@@ -7,7 +7,7 @@
 }
 
 .navbar-inner {
-  @apply flex items-center justify-between w-full max-w-4xl mx-auto px-6 h-full;
+  @apply flex items-center justify-between w-full max-w-5xl mx-auto px-6 h-full;
 }
 
 .navbar-logo {
@@ -29,6 +29,20 @@
 }
 
 .navbar-link--active {
-  color: var(--color-awake-brand);
   @apply font-medium;
+  color: var(--color-awake-brand);
+}
+
+.navbar-actions {
+  @apply flex items-center gap-3;
+}
+
+.navbar-avatar {
+  @apply w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold border-0 cursor-pointer overflow-hidden;
+  background-color: var(--color-awake-brand);
+  color: #fff;
+}
+
+.navbar-avatar__img {
+  @apply w-full h-full object-cover;
 }

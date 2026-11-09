@@ -1,0 +1,54 @@
+@import 'tailwindcss';
+
+.home-root {
+  @apply flex flex-col flex-1 min-h-0;
+}
+
+.home-tabs {
+  @apply flex flex-col flex-1;
+}
+
+.home-panel {
+  @apply flex flex-col flex-1 p-4 gap-2;
+}
+
+/* Filter chips */
+.home-filter {
+  @apply flex flex-wrap gap-1.5 mb-1;
+}
+
+.home-filter__chip {
+  @apply px-3 py-1 rounded-full border text-xs cursor-pointer transition-all duration-150;
+  border-color: var(--color-awake-border);
+  color: var(--color-awake-text-muted, currentColor);
+  background: transparent;
+}
+
+.home-filter__chip:hover {
+  color: var(--color-awake-brand);
+  border-color: var(--color-awake-brand);
+}
+
+.home-filter__chip--active {
+  @apply font-medium text-white border-transparent;
+  background-color: var(--color-awake-brand);
+  border-color: var(--color-awake-brand);
+}
+
+/* List */
+.home-list {
+  @apply flex flex-col gap-2;
+}
+
+/* Empty state */
+.home-empty {
+  @apply flex flex-col items-center justify-center flex-1 gap-1 py-12 px-4 text-center;
+}
+
+.home-empty__title {
+  @apply text-sm font-medium m-0;
+}
+
+.home-empty__sub {
+  @apply text-xs m-0 opacity-55;
+}

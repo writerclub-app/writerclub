@@ -37,5 +37,20 @@
     "explore": "Esplora",
     "new": "Nuovo",
     "profile": "Profilo"
+  },
+  "home": {
+    "tab_writings": "Scritti",
+    "tab_folders": "Cartelle",
+    "filter_all": "Tutti",
+    "filter_draft": "Bozze",
+    "filter_published": "Pubblicati",
+    "empty_writings": "Nessuno scritto ancora.",
+    "empty_writings_sub": "Tocca + per iniziare.",
+    "empty_folders": "Nessuna cartella ancora.",
+    "empty_folders_sub": "Organizza i tuoi scritti in cartelle.",
+    "writings_count": "{{count}} scritto",
+    "writings_count_plural": "{{count}} scritti",
+    "draft": "Bozza",
+    "published": "Pubblicato"
   }
 }

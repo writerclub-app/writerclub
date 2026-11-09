@@ -1,5 +1,11 @@
 @import 'tailwindcss';
 
+/* Por padrão, inline — quem posiciona é o pai */
 .global-controls {
-  @apply fixed top-4 right-4 flex items-center gap-2 z-50;
+  @apply flex items-center gap-2;
+}
+
+/* Na login page, flutua no canto */
+.login-root .global-controls {
+  @apply fixed top-4 right-4 z-50;
 }
