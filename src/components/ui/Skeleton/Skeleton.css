@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+
+.skeleton {
+  @apply rounded;
+  background-color: var(--color-awake-border, rgba(128,128,128,0.2));
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--color-awake-surface, #fff) 30%, transparent) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

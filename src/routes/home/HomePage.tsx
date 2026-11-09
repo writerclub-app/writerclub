@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { TabsRoot, TabsList, TabsTab, TabsPanel } from '@/components/ui/Tabs'
 import { WritingCard } from '@/components/writings/WritingCard'
+import { WritingCardSkeleton } from '@/components/writings/WritingCardSkeleton'
 import { FolderCard } from '@/components/writings/FolderCard'
+import { FolderCardSkeleton } from '@/components/writings/FolderCardSkeleton'
 import { db } from '@/db'
 import type { Writing } from '@/types/writing'
 import type { Folder } from '@/types/folder'
@@ -17,10 +19,17 @@ export function HomePage() {
   const [filter, setFilter] = useState<Filter>('all')
   const [writings, setWritings] = useState<Writing[]>([])
   const [folders, setFolders] = useState<Folder[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    void db.writings.toArray().then(setWritings)
-    void db.folders.toArray().then(setFolders)
+    void Promise.all([
+      db.writings.toArray(),
+      db.folders.toArray(),
+    ]).then(([w, f]) => {
+      setWritings(w)
+      setFolders(f)
+      setLoading(false)
+    })
   }, [])
 
   const filtered = writings.filter((w) => {
@@ -59,7 +68,11 @@ export function HomePage() {
             ))}
           </div>
 
-          {filtered.length === 0 ? (
+          {loading ? (
+            <div className="home-list">
+              {Array.from({ length: 4 }).map((_, i) => <WritingCardSkeleton key={i} />)}
+            </div>
+          ) : filtered.length === 0 ? (
             <div className="home-empty">
               <p className="home-empty__title">{t('home.empty_writings')}</p>
               <p className="home-empty__sub">{t('home.empty_writings_sub')}</p>
@@ -74,7 +87,11 @@ export function HomePage() {
         </TabsPanel>
 
         <TabsPanel value="folders" className="home-panel">
-          {folders.length === 0 ? (
+          {loading ? (
+            <div className="home-list">
+              {Array.from({ length: 3 }).map((_, i) => <FolderCardSkeleton key={i} />)}
+            </div>
+          ) : folders.length === 0 ? (
             <div className="home-empty">
               <p className="home-empty__title">{t('home.empty_folders')}</p>
               <p className="home-empty__sub">{t('home.empty_folders_sub')}</p>
