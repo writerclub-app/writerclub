@@ -24,6 +24,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "erasableSyntaxOnly": true,
+    "ignoreDeprecations": "6.0",
 
     /* Path alias */
     "baseUrl": ".",

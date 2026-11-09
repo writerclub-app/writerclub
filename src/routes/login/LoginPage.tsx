@@ -8,7 +8,6 @@ import './LoginPage.css'
 import { initiateGoogleLogin, saveToken } from '@/services/auth.service'
 import { GoogleIcon, MicrosoftIcon, GitHubIcon } from '@/components/ui/icons'
 import { GlobalControls } from '@/components/ui/GlobalControls'
-import { db } from '@/db'
 
 export function LoginPage() {
   const { t } = useTranslation()
@@ -20,7 +19,6 @@ export function LoginPage() {
     initiateGoogleLogin(
       async (token) => {
         saveToken(token)
-        const profile = await db.profile.get(token.authId)
         void navigate('/')
       },
       () => setLoading(false),
