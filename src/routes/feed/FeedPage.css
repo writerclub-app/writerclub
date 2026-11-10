@@ -1,0 +1,156 @@
+.feed-root {
+  @apply w-full;
+  padding-block: 16px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+.feed-root--center {
+  @apply flex flex-col items-center justify-center;
+  min-height: 60vh;
+  gap: 16px;
+  text-align: center;
+}
+
+.feed-list {
+  @apply flex flex-col;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 12px;
+}
+
+/* Card */
+.feed-card {
+  @apply flex flex-col;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--color-awake-border, #e5e5e5);
+  background: var(--color-awake-surface, #ffffff);
+  transition: box-shadow 0.15s ease;
+}
+
+.feed-card:hover {
+  box-shadow: 0 2px 10px rgba(0 0 0 / 0.06);
+}
+
+/* Author */
+.feed-card__author {
+  @apply flex items-center;
+  gap: 10px;
+}
+
+
+.feed-card__author-info {
+  @apply flex flex-col;
+  gap: 1px;
+}
+
+.feed-card__author-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-awake-text, #111);
+  text-decoration: none;
+}
+
+.feed-card__author-name:hover {
+  text-decoration: underline;
+}
+
+.feed-card__author-meta {
+  font-size: 0.75rem;
+  color: var(--color-awake-text-muted, #666);
+}
+
+/* Body (link) */
+.feed-card__body {
+  @apply flex flex-col;
+  gap: 6px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.feed-card__category {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  @apply uppercase;
+  color: var(--color-awake-primary, #7c3aed);
+}
+
+.feed-card__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-awake-text, #111);
+  line-height: 1.4;
+}
+
+.feed-card__excerpt {
+  font-size: 0.875rem;
+  color: var(--color-awake-text-muted, #555);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  @apply overflow-hidden;
+}
+
+/* Actions */
+.feed-card__actions {
+  @apply flex items-center;
+  gap: 8px;
+  padding-top: 4px;
+  border-top: 1px solid var(--color-awake-border, #e5e5e5);
+}
+
+.feed-card__like-btn {
+  @apply flex items-center cursor-pointer;
+  gap: 5px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-awake-text-muted, #666);
+  font-size: 0.82rem;
+  transition: color 0.15s, background 0.15s;
+}
+
+.feed-card__like-btn:hover:not(:disabled) {
+  color: #e11d48;
+  background: rgba(225 29 72 / 0.07);
+}
+
+.feed-card__like-btn--active {
+  color: #e11d48;
+}
+
+.feed-card__like-btn:disabled {
+  @apply cursor-not-allowed;
+  opacity: 0.5;
+}
+
+/* Empty state */
+.feed-empty {
+  @apply flex flex-col items-center;
+  gap: 12px;
+}
+
+.feed-empty__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-awake-text, #111);
+}
+
+.feed-empty__text {
+  font-size: 0.9rem;
+  color: var(--color-awake-text-muted, #666);
+}
+
+/* Load more */
+.feed-load-more {
+  @apply flex justify-center;
+  margin-top: 24px;
+}

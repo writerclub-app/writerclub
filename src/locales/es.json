@@ -216,5 +216,13 @@
     "following": "Siguiendo",
     "no_followers": "Aún no hay seguidores.",
     "no_following": "Aún no sigue a nadie."
-  }
+  },
+  "nav.feed": "Feed",
+  "feed.loading": "Cargando feed…",
+  "feed.error": "Error al cargar el feed.",
+  "feed.empty_title": "Tu feed está vacío",
+  "feed.empty_body": "Sigue a escritores para ver sus textos aquí.",
+  "feed.load_more": "Cargar más",
+  "public.unlike": "Dejar de dar me gusta",
+  "common.retry": "Reintentar"
 }

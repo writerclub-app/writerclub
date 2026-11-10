@@ -192,3 +192,61 @@ export async function fetchFollowing(
   if (!res.ok) throw new Error('Failed to fetch following')
   return res.json() as Promise<{ following: FollowUser[]; total: number; page: number }>
 }
+
+// ── Fase 4 — Feed + Curtidas ──────────────────────────────────────────────
+
+export interface FeedWriting {
+  id: string
+  title: string
+  slug: string
+  excerpt: string | null
+  category_name: string | null
+  published_at: string
+  author_id: string
+  username: string | null
+  display_name: string | null
+  avatar_url: string | null
+  likes_count: number
+  liked: number  // 0 | 1 (D1 retorna inteiro)
+}
+
+/** Feed de textos de quem o usuário segue. */
+export async function fetchFeed(authId: string, page = 1): Promise<{ data: FeedWriting[]; page: number; limit: number }> {
+  const token = await getToken(authId)
+  const res = await fetch(`${API_URL}/writings/feed?page=${page}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  if (!res.ok) throw new Error('Failed to fetch feed')
+  return res.json() as Promise<{ data: FeedWriting[]; page: number; limit: number }>
+}
+
+export interface LikesInfo {
+  writingId: string
+  count: number
+  liked: boolean
+}
+
+/** Busca contagem de curtidas e se o usuário curtiu. */
+export async function fetchLikesInfo(writingId: string, authId?: string): Promise<LikesInfo> {
+  const headers: Record<string, string> = {}
+  if (authId) {
+    try {
+      const token = await getToken(authId)
+      headers['Authorization'] = `Bearer ${token}`
+    } catch { /* sem token — ignora */ }
+  }
+  const res = await fetch(`${API_URL}/likes/${writingId}`, { headers })
+  if (!res.ok) return { writingId, count: 0, liked: false }
+  const { count, liked } = await res.json() as { count: number; liked: boolean }
+  return { writingId, count, liked }
+}
+
+/** Curtir (liked=false) ou descurtir (liked=true) um writing. */
+export async function toggleLike(authId: string, writingId: string, currentlyLiked: boolean): Promise<void> {
+  const token = await getToken(authId)
+  const res = await fetch(`${API_URL}/likes/${writingId}`, {
+    method: currentlyLiked ? 'DELETE' : 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  if (!res.ok) throw new Error('Failed to toggle like')
+}

@@ -12,6 +12,7 @@ import { ExplorePage } from '@/routes/explore/ExplorePage'
 import { PublicWritingPage } from '@/routes/public-writing/PublicWritingPage'
 import { PublicProfilePage } from '@/routes/public-profile/PublicProfilePage'
 import { FollowListPage } from '@/routes/follow-list/FollowListPage'
+import { FeedPage } from '@/routes/feed/FeedPage'
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route path="/" element={<HomePage />} />
+            <Route path="/feed" element={<FeedPage />} />
             <Route path="/explore" element={<ExplorePage />} />
             <Route path="/writings/new" element={<EditorPage />} />
             <Route path="/writings/:id" element={<EditorPage />} />

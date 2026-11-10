@@ -1,7 +1,7 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { BottomNav } from '@awakr/awake-ui/bottom-nav'
-import { HomeIcon, ExploreIcon, NewIcon, ProfileIcon } from '@/components/ui/icons'
+import { HomeIcon, ExploreIcon, FeedIcon, NewIcon, ProfileIcon } from '@/components/ui/icons'
 import { Navbar } from './Navbar'
 import { MobileHeader } from './MobileHeader'
 import './AppLayout.css'
@@ -14,6 +14,7 @@ export function AppLayout() {
   const navItems = [
     { to: '/',             icon: <HomeIcon />,    label: t('nav.home') },
     { to: '/explore',      icon: <ExploreIcon />, label: t('nav.explore') },
+    { to: '/feed',         icon: <FeedIcon />,    label: t('nav.feed') },
     { to: '/writings/new', icon: <NewIcon />,     label: t('nav.new') },
     { to: '/profile',      icon: <ProfileIcon />, label: t('nav.profile') },
   ]

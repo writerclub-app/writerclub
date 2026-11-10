@@ -216,5 +216,13 @@
     "following": "Following",
     "no_followers": "No followers yet.",
     "no_following": "Not following anyone yet."
-  }
+  },
+  "nav.feed": "Feed",
+  "feed.loading": "Loading feed…",
+  "feed.error": "Failed to load feed.",
+  "feed.empty_title": "Your feed is empty",
+  "feed.empty_body": "Follow writers to see their writings here.",
+  "feed.load_more": "Load more",
+  "public.unlike": "Unlike",
+  "common.retry": "Try again"
 }
