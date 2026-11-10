@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { runBackup, getActiveProvider } from '@/services/backup.service'
 import { useNavigate } from 'react-router-dom'
 import type { Editor } from '@tiptap/react'
 import { useToast } from '@awakr/awake-ui/toast'
@@ -81,6 +82,10 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
         message: pub && overridePublic ? t('editor.toast_published') : t('editor.toast_saved'),
         variant: pub && overridePublic ? 'success' : 'info',
       })
+      // Fire backup silently if provider is configured
+      if (getActiveProvider() && token) {
+        void runBackup(token.authId).catch(() => { /* silent */ })
+      }
       setTimeout(() => { setSaveStatus('idle'); void navigate('/') }, 1200)
     } catch {
       setSaveStatus('error')

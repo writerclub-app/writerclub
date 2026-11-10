@@ -86,6 +86,17 @@ export function EditorPage() {
     }
   }, [editor, editorRef])
 
+  // Set content imperatively when writing loads async (edit mode)
+  useEffect(() => {
+    if (!editor || !writing?.content) return
+    try {
+      editor.commands.setContent(JSON.parse(writing.content) as object)
+    } catch {
+      // invalid JSON — ignore
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editor, writing?.id])
+
   // Auto-resize title textarea
   useEffect(() => {
     const el = titleRef.current

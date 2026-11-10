@@ -152,5 +152,29 @@
   "writing": {
     "delete": "Elimina testo",
     "confirm_delete": "Sei sicuro di voler eliminare \"{{title}}\"?"
+  },
+  "backup": {
+    "title": "Backup automatico",
+    "github_hint": "Collega il tuo GitHub per salvare automaticamente i tuoi scritti in un Gist privato.",
+    "github_pat_label": "Token di accesso personale",
+    "github_pat_hint": "Token con scope \"gist\". Salvato solo su questo dispositivo.",
+    "github_pat_create": "Crea token →",
+    "connect": "Connetti",
+    "connecting": "Connessione…",
+    "connected": "Connesso",
+    "disconnect": "Disconnetti",
+    "sync_now": "Backup ora",
+    "syncing": "Sincronizzazione…",
+    "synced": "Salvato",
+    "last_sync": "Ultimo backup",
+    "error_connect": "Errore di connessione",
+    "hint": "Scegli dove salvare il backup automatico.",
+    "soon": "presto",
+    "coming_soon": "{{provider}} sarà disponibile presto.",
+    "github_how_title": "Come creare il token",
+    "github_step1": "Vai su GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)",
+    "github_step2": "Clicca su \"Generate new token (classic)\"",
+    "github_step3": "In Scopes, seleziona solo \"gist\"",
+    "github_step4": "Copia il token (ghp_...) e incollalo qui sotto — appare solo una volta"
   }
 }

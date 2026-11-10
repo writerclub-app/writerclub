@@ -14,6 +14,8 @@ import { useAvatar } from '@/hooks/useAvatar'
 import { useUsername } from '@/contexts/UsernameContext'
 import { loadToken, clearToken } from '@/services/auth.service'
 import { db } from '@/db'
+import { githubGistProvider } from '@/services/backup/github-gist.provider'
+import { ProviderPicker, BackupStatus } from '@/components/backup'
 import './ProfileEditPage.css'
 
 const BIO_MAX = 160
@@ -29,6 +31,7 @@ export function ProfileEditPage() {
   const [displayName, setDisplayName] = useState(token?.displayName ?? '')
   const [bio, setBio] = useState('')
   const [saving, setSaving] = useState(false)
+  const [backupConnected, setBackupConnected] = useState(() => githubGistProvider.isAuthenticated())
 
   const avatarSrc = useAvatar(token?.avatarUrl)
   const initials = displayName.trim()[0]?.toUpperCase() ?? '?'
@@ -186,6 +189,17 @@ export function ProfileEditPage() {
             </div>
             <LanguageSelector />
           </div>
+
+          <Separator className="profile-sep" />
+
+          <Separator className="profile-sep" />
+
+          {/* Backup (BYOS) */}
+          <div className="profile-section-title">{t('backup.title')}</div>
+          {backupConnected
+            ? <BackupStatus onDisconnect={() => setBackupConnected(false)} />
+            : <ProviderPicker onConnected={() => setBackupConnected(true)} />
+          }
 
           <Separator className="profile-sep" />
 
