@@ -4,6 +4,7 @@ import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
 import { LoginPage } from '@/routes/login/LoginPage'
 import { HomePage } from '@/routes/home/HomePage'
 import { EditorPage } from '@/routes/editor/EditorPage'
+import { ProfilePage } from '@/routes/profile/ProfilePage'
 import { AuthCallbackPage } from '@/routes/auth-callback/AuthCallbackPage'
 
 export default function App() {
@@ -22,7 +23,7 @@ export default function App() {
             <Route path="/writings/new" element={<EditorPage />} />
             <Route path="/writings/:id" element={<EditorPage />} />
             <Route path="/folders/:id" element={<div>Pasta</div>} />
-            <Route path="/profile" element={<div>Perfil</div>} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Route>
         </Route>
 

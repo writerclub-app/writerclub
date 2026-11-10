@@ -72,5 +72,22 @@
     "modal_publish_confirm": "Sim, publicar",
     "modal_cancel": "Cancelar",
     "char_count": "{{count}} caracteres"
+  },
+  "profile": {
+    "title": "Dados do perfil",
+    "avatar_hint": "Foto vinda do Google",
+    "name_label": "Nome de exibição",
+    "name_placeholder": "Como você quer ser chamado",
+    "username_label": "Username",
+    "username_locked": "Imutável — seu endereço público em writerclub.app/@você",
+    "bio_label": "Bio",
+    "bio_placeholder": "Conte um pouco sobre você e sua escrita…",
+    "appearance": "Aparência",
+    "language": "Idioma",
+    "save": "Salvar alterações",
+    "saving": "Salvando…",
+    "saved": "✓ Perfil salvo",
+    "danger_zone": "Zona de perigo",
+    "logout": "Sair da conta"
   }
 }
