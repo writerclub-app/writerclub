@@ -6,6 +6,7 @@ import type { Editor } from '@tiptap/react'
 import { useToast } from '@awakr/awake-ui/toast'
 import { loadToken } from '@/services/auth.service'
 import { createWriting, updateWriting } from '@/services/writing.service'
+import { publishWritingToAPI, unpublishWritingFromAPI } from '@/services/api.service'
 import type { Writing } from '@/types/writing'
 
 type SaveStatus = 'idle' | 'saving' | 'saved' | 'error'
@@ -77,7 +78,24 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
         setWritingId(created.id)
       }
       setSaveStatus('saved')
-      if (pub && overridePublic) setIsPublic(true)
+      if (pub && overridePublic) {
+        setIsPublic(true)
+        // Sincroniza com o servidor (silencioso)
+        const slug = (title || 'sem-titulo')
+          .toLowerCase()
+          .normalize('NFD').replace(/[̀-ͯ]/g, '')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-|-$/g, '')
+        const excerpt = editorRef.current?.getText().slice(0, 200) ?? ''
+        void publishWritingToAPI(token.authId, {
+          localId: writingId ?? '',
+          title: title || 'Sem título',
+          slug: `${slug}-${writingId?.slice(0, 8) ?? Date.now()}`,
+          content: getContent(),
+          excerpt,
+          categoryName,
+        }).catch(() => { /* silent */ })
+      }
       toast({
         message: pub && overridePublic ? t('editor.toast_published') : t('editor.toast_saved'),
         variant: pub && overridePublic ? 'success' : 'info',
@@ -100,8 +118,11 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
 
   const unpublish = useCallback(async () => {
     setIsPublic(false)
+    if (writingId && token) {
+      void unpublishWritingFromAPI(token.authId, writingId).catch(() => { /* silent */ })
+    }
     await save(false)
-  }, [save])
+  }, [save, writingId, token])
 
   const goBack = useCallback(() => {
     void navigate('/')
