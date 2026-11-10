@@ -13,10 +13,11 @@ export function getActiveProvider(): BackupProvider | null {
 
 /** Collect all local data and return as a serialisable payload. */
 async function buildPayload(authorId: string): Promise<BackupPayload> {
-  const [writings, folders, categories] = await Promise.all([
+  const [writings, folders, categories, profile] = await Promise.all([
     db.writings.where('authorId').equals(authorId).toArray(),
     db.folders.where('authorId').equals(authorId).toArray(),
     db.categories.where('authorId').equals(authorId).toArray(),
+    db.profile.where('authId').equals(authorId).toArray(),
   ])
   return {
     version: 1,
@@ -25,6 +26,7 @@ async function buildPayload(authorId: string): Promise<BackupPayload> {
     writings,
     folders,
     categories,
+    profile,
   }
 }
 
@@ -57,7 +59,7 @@ export async function restoreBackup(authorId: string): Promise<{ writings: numbe
     throw new Error('Backup pertence a outro usuário')
   }
 
-  await db.transaction('rw', [db.writings, db.folders, db.categories], async () => {
+  await db.transaction('rw', [db.writings, db.folders, db.categories, db.profile], async () => {
     for (const w of payload.writings as Parameters<typeof db.writings.put>[0][]) {
       await db.writings.put(w)
     }
@@ -66,6 +68,9 @@ export async function restoreBackup(authorId: string): Promise<{ writings: numbe
     }
     for (const c of payload.categories as Parameters<typeof db.categories.put>[0][]) {
       await db.categories.put(c)
+    }
+    for (const p of (payload.profile ?? []) as Parameters<typeof db.profile.put>[0][]) {
+      await db.profile.put(p)
     }
   })
 

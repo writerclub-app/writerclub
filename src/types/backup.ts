@@ -24,4 +24,5 @@ export interface BackupPayload {
   writings: unknown[]
   folders: unknown[]
   categories: unknown[]
+  profile: unknown[]
 }
