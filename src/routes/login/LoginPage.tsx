@@ -6,6 +6,7 @@ import { Loading } from '@awakr/awake-ui/loading'
 import { Badge } from '@awakr/awake-ui/badge'
 import './LoginPage.css'
 import { initiateGoogleLogin, saveToken } from '@/services/auth.service'
+import { syncProfile } from '@/services/api.service'
 import { GoogleIcon, MicrosoftIcon, GitHubIcon } from '@/components/ui/icons'
 import { GlobalControls } from '@/components/ui/GlobalControls'
 
@@ -19,6 +20,14 @@ export function LoginPage() {
     initiateGoogleLogin(
       async (token) => {
         saveToken(token)
+        // Upsert de perfil no servidor (silencioso)
+        const username = (token.email?.split('@')[0] ?? token.authId.slice(0, 12))
+          .toLowerCase().replace(/[^a-z0-9]/g, '')
+        void syncProfile(token.authId, {
+          username,
+          displayName: token.displayName ?? undefined,
+          avatarUrl: token.avatarUrl ?? undefined,
+        }).catch(() => { /* silent */ })
         void navigate('/')
       },
       () => setLoading(false),

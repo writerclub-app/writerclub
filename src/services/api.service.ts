@@ -63,3 +63,19 @@ export async function fetchPublicWritings(page = 1): Promise<unknown[]> {
   const { data } = await res.json() as { data: unknown[] }
   return data
 }
+
+export async function syncProfile(authId: string, profile: {
+  username: string
+  displayName?: string
+  avatarUrl?: string
+}): Promise<void> {
+  const token = await getToken(authId)
+  await fetch(`${API_URL}/profiles`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(profile),
+  })
+}

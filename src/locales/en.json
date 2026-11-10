@@ -176,5 +176,14 @@
     "github_step2": "Click \"Generate new token (classic)\"",
     "github_step3": "Under Scopes, check only \"gist\"",
     "github_step4": "Copy the token (ghp_...) and paste it below — it only appears once"
+  },
+  "explore": {
+    "title": "Explore",
+    "subtitle": "Writings published by the community",
+    "loading": "Loading writings…",
+    "loading_more": "Loading…",
+    "load_more": "Load more",
+    "empty": "No writings published yet.",
+    "anonymous": "Anonymous"
   }
 }

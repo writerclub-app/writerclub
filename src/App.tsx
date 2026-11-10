@@ -8,6 +8,7 @@ import { ProfilePage } from '@/routes/profile/ProfilePage'
 import { ProfileEditPage } from '@/routes/profile/ProfileEditPage'
 import { FolderPage } from '@/routes/folder/FolderPage'
 import { AuthCallbackPage } from '@/routes/auth-callback/AuthCallbackPage'
+import { ExplorePage } from '@/routes/explore/ExplorePage'
 
 export default function App() {
   return (
@@ -21,7 +22,7 @@ export default function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route path="/" element={<HomePage />} />
-            <Route path="/explore" element={<div>Explore</div>} />
+            <Route path="/explore" element={<ExplorePage />} />
             <Route path="/writings/new" element={<EditorPage />} />
             <Route path="/writings/:id" element={<EditorPage />} />
             <Route path="/folders/:id" element={<FolderPage />} />

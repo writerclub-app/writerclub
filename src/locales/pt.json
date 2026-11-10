@@ -176,5 +176,14 @@
     "github_step2": "Clique em \"Generate new token (classic)\"",
     "github_step3": "Em Scopes, marque apenas \"gist\"",
     "github_step4": "Copie o token (ghp_...) e cole abaixo — ele só aparece uma vez"
+  },
+  "explore": {
+    "title": "Explorar",
+    "subtitle": "Textos publicados pela comunidade",
+    "loading": "Carregando textos…",
+    "loading_more": "Carregando…",
+    "load_more": "Carregar mais",
+    "empty": "Nenhum texto publicado ainda.",
+    "anonymous": "Anônimo"
   }
 }
