@@ -127,7 +127,7 @@ export function PublicWritingPage() {
           <Link to="/explore" className="pw-breadcrumb__link">{t('nav.explore')}</Link>
           <span className="pw-breadcrumb__sep" aria-hidden="true">›</span>
           <Link to={`/u/${writing.username ?? username}`} className="pw-breadcrumb__link">
-            {authorName}
+            @{writing.username ?? username}
           </Link>
         </nav>
 
