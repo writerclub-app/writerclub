@@ -46,8 +46,8 @@
     "filter_published": "Publicados",
     "empty_writings": "Aún no hay escritos.",
     "empty_writings_sub": "Toca + para empezar.",
-    "empty_folders": "Aún no hay carpetas.",
-    "empty_folders_sub": "Organiza tus escritos en carpetas.",
+    "empty_folders": "Aún no hay carpetas",
+    "empty_folders_sub": "Crea carpetas para organizar tus escritos.",
     "writings_count": "{{count}} escrito",
     "writings_count_plural": "{{count}} escritos",
     "draft": "Borrador",
@@ -109,5 +109,29 @@
     "error_format": "Usa solo letras minúsculas y números, entre 3 y 15 caracteres.",
     "error_taken": "Este nombre ya está en uso. Intenta con otro.",
     "error_profane": "Este nombre no está permitido en la plataforma."
+  },
+  "folder": {
+    "create_title": "Nueva carpeta",
+    "rename_title": "Renombrar carpeta",
+    "create_sub": "Dale un nombre a tu carpeta.",
+    "rename_sub": "Elige un nuevo nombre para la carpeta.",
+    "name_label": "Nombre de la carpeta",
+    "name_placeholder": "Ej: Poemas, Borradores, Historias...",
+    "error_required": "El nombre no puede estar vacío.",
+    "error_too_long": "El nombre debe tener como máximo 40 caracteres.",
+    "error_save": "No se pudo guardar. Inténtalo de nuevo.",
+    "saving": "Guardando...",
+    "create_confirm": "Crear",
+    "rename_confirm": "Renombrar",
+    "empty_title": "Carpeta vacía",
+    "empty_sub": "Aún no hay escritos aquí.",
+    "not_found": "Carpeta no encontrada.",
+    "confirm_delete": "Eliminar carpeta \"{{name}}\"? Los escritos no se eliminarán.",
+    "rename": "Renombrar",
+    "delete": "Eliminar carpeta"
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "options": "Opciones"
   }
 }

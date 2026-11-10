@@ -1,0 +1,113 @@
+@import 'tailwindcss';
+
+.fmodal-backdrop {
+  @apply fixed inset-0 flex items-end;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+@media (min-width: 480px) {
+  .fmodal-backdrop {
+    @apply items-center justify-center;
+  }
+}
+
+.fmodal {
+  @apply w-full flex flex-col;
+  max-width: 420px;
+  background-color: var(--color-awake-surface);
+  border-radius: 20px 20px 0 0;
+  padding: 8px 24px calc(32px + env(safe-area-inset-bottom, 0px));
+}
+
+@media (min-width: 480px) {
+  .fmodal {
+    border-radius: 20px;
+    padding: 28px 24px 28px;
+  }
+  .fmodal__drag { @apply hidden; }
+}
+
+.fmodal__drag {
+  @apply mx-auto w-9 h-1 rounded-sm mt-3 mb-5;
+  background-color: var(--color-awake-border);
+}
+
+.fmodal__emoji {
+  @apply text-center mb-2;
+  font-size: 1.8rem;
+}
+
+.fmodal__title {
+  @apply text-center font-semibold mb-1;
+  font-size: 1.1rem;
+  color: var(--color-awake-text, inherit);
+}
+
+.fmodal__sub {
+  @apply text-center leading-normal mb-5;
+  font-size: 0.84rem;
+  color: var(--color-awake-text-muted, #666);
+}
+
+.fmodal__field {
+  @apply relative mb-1;
+}
+
+.fmodal__input {
+  @apply w-full outline-none;
+  padding: 12px 42px 12px 14px;
+  border: 1.5px solid var(--color-awake-border);
+  border-radius: 12px;
+  background-color: var(--color-awake-bg-raised, rgba(128,128,128,0.06));
+  color: var(--color-awake-text, inherit);
+  font-size: 0.95rem;
+  font-family: inherit;
+  @apply transition-colors;
+}
+.fmodal__input:focus {
+  border-color: var(--color-awake-brand, #6366f1);
+}
+.fmodal__input--error {
+  border-color: #DC2626;
+}
+.fmodal__input::placeholder {
+  color: var(--color-awake-text-subtle, #bbb);
+}
+
+.fmodal__char {
+  @apply absolute select-none;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.7rem;
+  color: var(--color-awake-text-muted, #aaa);
+}
+
+.fmodal__error {
+  font-size: 0.8rem;
+  color: #DC2626;
+  margin-bottom: 10px;
+}
+
+.fmodal__actions {
+  @apply flex flex-col gap-2 mt-4;
+}
+
+.fmodal__btn-confirm {
+  @apply w-full;
+  min-height: 46px;
+  font-size: 0.9rem;
+}
+
+.fmodal__btn-cancel {
+  @apply w-full text-center;
+  font-size: 0.82rem;
+  padding: 8px;
+  color: var(--color-awake-text-muted, #888);
+  background: none;
+  border: none;
+  @apply cursor-pointer;
+  font-family: inherit;
+}

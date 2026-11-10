@@ -1,0 +1,46 @@
+@import 'tailwindcss';
+
+.folder-page {
+  @apply flex flex-col min-h-dvh;
+  background-color: var(--color-awake-surface);
+}
+
+/* Topbar */
+.folder-topbar {
+  @apply flex items-center justify-between sticky top-0 z-10 flex-shrink-0;
+  height: 52px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--color-awake-border);
+  background-color: var(--color-awake-surface);
+}
+
+.folder-topbar__left {
+  @apply flex items-center gap-2 min-w-0;
+}
+
+.folder-btn-back {
+  @apply flex items-center justify-center flex-shrink-0;
+  width: 36px;
+  height: 36px;
+}
+
+.folder-topbar__title {
+  @apply font-semibold truncate;
+  @apply text-base;
+  color: var(--color-awake-text, inherit);
+}
+
+.folder-topbar__count {
+  @apply flex-shrink-0 text-xs;
+  color: var(--color-awake-text-muted, #888);
+}
+
+/* Main — reutiliza classes home-panel / home-filter / home-list / home-empty */
+.folder-main {
+  @apply flex flex-col flex-1 gap-2;
+  padding: 1rem var(--spacing-3, 12px);
+}
+
+@media (min-width: 768px) {
+  .folder-topbar { height: 56px; }
+}

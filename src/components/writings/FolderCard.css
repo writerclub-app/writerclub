@@ -30,3 +30,52 @@
   @apply text-xs m-0 opacity-60;
   color: var(--color-awake-text-muted, currentColor);
 }
+
+/* Menu 3 pontos */
+.folder-card__menu-wrap {
+  @apply relative ml-auto flex-shrink-0;
+}
+
+.folder-card__menu-btn {
+  @apply flex items-center justify-center rounded-md border-0 bg-transparent cursor-pointer select-none w-8 h-8;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  color: var(--color-awake-text-muted, #888);
+  transition: background 0.12s, color 0.12s;
+  @apply leading-none;
+}
+
+.folder-card__menu-btn:hover {
+  background-color: color-mix(in srgb, var(--color-awake-text, currentColor) 8%, transparent);
+  color: var(--color-awake-text, inherit);
+}
+
+.folder-card__dropdown {
+  @apply absolute right-0 top-full z-20 flex flex-col overflow-hidden;
+  min-width: 140px;
+  @apply mt-1;
+  border-radius: 10px;
+  background-color: var(--color-awake-surface);
+  border: 1px solid var(--color-awake-border);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.folder-card__dropdown-item {
+  @apply w-full text-left border-0 bg-transparent cursor-pointer;
+  padding: 10px 14px;
+  @apply text-sm;
+  color: var(--color-awake-text, inherit);
+  @apply transition-colors;
+}
+
+.folder-card__dropdown-item:hover {
+  background-color: color-mix(in srgb, var(--color-awake-text, currentColor) 6%, transparent);
+}
+
+.folder-card__dropdown-item--danger {
+  color: #DC2626;
+}
+
+.folder-card__dropdown-item--danger:hover {
+  background-color: rgba(220, 38, 38, 0.08);
+}

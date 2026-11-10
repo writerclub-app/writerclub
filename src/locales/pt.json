@@ -46,8 +46,8 @@
     "filter_published": "Publicados",
     "empty_writings": "Nenhum escrito ainda.",
     "empty_writings_sub": "Toque em + para começar.",
-    "empty_folders": "Nenhuma pasta ainda.",
-    "empty_folders_sub": "Organize seus escritos em pastas.",
+    "empty_folders": "Nenhuma pasta ainda",
+    "empty_folders_sub": "Crie pastas para organizar seus textos.",
     "writings_count": "{{count}} escrito",
     "writings_count_plural": "{{count}} escritos",
     "draft": "Rascunho",
@@ -109,5 +109,29 @@
     "error_format": "Use apenas letras minúsculas e números, entre 3 e 15 caracteres.",
     "error_taken": "Este nome já está em uso. Tente outro.",
     "error_profane": "Este nome não é permitido na plataforma."
+  },
+  "folder": {
+    "create_title": "Nova pasta",
+    "rename_title": "Renomear pasta",
+    "create_sub": "Dê um nome para a sua pasta.",
+    "rename_sub": "Escolha um novo nome para a pasta.",
+    "name_label": "Nome da pasta",
+    "name_placeholder": "Ex: Poemas, Rascunhos, Histórias...",
+    "error_required": "O nome não pode estar vazio.",
+    "error_too_long": "O nome deve ter no máximo 40 caracteres.",
+    "error_save": "Não foi possível salvar. Tente novamente.",
+    "saving": "Salvando...",
+    "create_confirm": "Criar",
+    "rename_confirm": "Renomear",
+    "empty_title": "Pasta vazia",
+    "empty_sub": "Nenhum texto aqui ainda.",
+    "not_found": "Pasta não encontrada.",
+    "confirm_delete": "Excluir a pasta \"{{name}}\"? Os textos não serão apagados.",
+    "rename": "Renomear",
+    "delete": "Excluir pasta"
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "options": "Opções"
   }
 }

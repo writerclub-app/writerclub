@@ -14,9 +14,7 @@
 }
 
 .fmt-sep {
-  @apply flex-shrink-0 self-stretch;
-  width: 1px;
-  margin: 2px 4px;
+  @apply flex-shrink-0 self-stretch w-px my-0.5 mx-1;
   background-color: var(--color-awake-border);
 }
 

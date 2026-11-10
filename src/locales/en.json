@@ -46,8 +46,8 @@
     "filter_published": "Published",
     "empty_writings": "No writings yet.",
     "empty_writings_sub": "Tap + to get started.",
-    "empty_folders": "No folders yet.",
-    "empty_folders_sub": "Organize your writings into folders.",
+    "empty_folders": "No folders yet",
+    "empty_folders_sub": "Create folders to organize your writings.",
     "writings_count": "{{count}} writing",
     "writings_count_plural": "{{count}} writings",
     "draft": "Draft",
@@ -109,5 +109,29 @@
     "error_format": "Use only lowercase letters and numbers, 3–15 characters.",
     "error_taken": "This name is already taken. Try another.",
     "error_profane": "This name is not allowed on the platform."
+  },
+  "folder": {
+    "create_title": "New folder",
+    "rename_title": "Rename folder",
+    "create_sub": "Give your folder a name.",
+    "rename_sub": "Choose a new name for the folder.",
+    "name_label": "Folder name",
+    "name_placeholder": "E.g. Poems, Drafts, Stories...",
+    "error_required": "Name cannot be empty.",
+    "error_too_long": "Name must be at most 40 characters.",
+    "error_save": "Could not save. Please try again.",
+    "saving": "Saving...",
+    "create_confirm": "Create",
+    "rename_confirm": "Rename",
+    "empty_title": "Empty folder",
+    "empty_sub": "No writings here yet.",
+    "not_found": "Folder not found.",
+    "confirm_delete": "Delete folder \"{{name}}\"? Writings will not be deleted.",
+    "rename": "Rename",
+    "delete": "Delete folder"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "options": "Options"
   }
 }

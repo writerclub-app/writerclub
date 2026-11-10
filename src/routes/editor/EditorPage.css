@@ -43,7 +43,7 @@
   font-size: 0.72rem;
   letter-spacing: 0.03em;
   font-family: inherit;
-  transition: all 0.15s;
+  @apply transition-all;
 }
 .editor-type-btn--active {
   background-color: var(--color-awake-brand-subtle, rgba(99, 102, 241, 0.12));
@@ -198,7 +198,7 @@
 /* Card preview inside modal */
 .editor-modal__preview { margin-bottom: 18px; }
 .editor-modal__preview-content { padding: 12px 14px !important; }
-.editor-modal__preview-title { font-size: 0.95rem; font-weight: 600; color: var(--color-awake-text, inherit); margin-bottom: 2px; }
+.editor-modal__preview-title { font-size: 0.95rem; @apply font-semibold; color: var(--color-awake-text, inherit); margin-bottom: 2px; }
 .editor-modal__preview-meta  { font-size: 0.75rem; color: var(--color-awake-text-muted, #888); }
 
 /* Modal action buttons */

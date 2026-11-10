@@ -149,9 +149,9 @@ export function UsernameModal({ required = false, warningMessage }: UsernameModa
         </Button>
 
         {!required && (
-          <button className="umodal__btn-skip" onClick={closeModal}>
+          <Button variant="ghost" className="umodal__btn-skip" onClick={closeModal}>
             {t('username_setup.skip')}
-          </button>
+          </Button>
         )}
       </div>
     </div>

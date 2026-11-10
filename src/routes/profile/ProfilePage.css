@@ -28,8 +28,7 @@
 
 .profile-topbar__title {
   font-family: 'Lora', Georgia, serif;
-  font-size: 1rem;
-  @apply font-semibold;
+  @apply text-base font-semibold;
   color: var(--color-awake-text, inherit);
 }
 
@@ -91,7 +90,7 @@
   color: var(--color-awake-text, inherit);
   font-size: 0.9rem;
   font-family: inherit;
-  transition: border-color 0.15s, background 0.15s;
+  @apply transition-colors;
 }
 
 .profile-field__input:focus {
@@ -207,7 +206,7 @@
   border: 1.5px solid rgba(220, 38, 38, 0.3) !important;
   background: rgba(220, 38, 38, 0.05) !important;
   border-radius: 10px;
-  transition: background 0.15s, border-color 0.15s;
+  @apply transition-colors;
 }
 .profile-btn-logout:hover {
   background: rgba(220, 38, 38, 0.1) !important;

@@ -142,9 +142,9 @@ export function ProfilePage() {
                 {t('profile.username_locked')}
               </div>
             ) : (
-              <button className="profile-field__lock profile-field__lock--choose" onClick={openModal}>
+              <Button variant="ghost" className="profile-field__lock profile-field__lock--choose" onClick={openModal}>
                 {t('profile.username_choose', 'Escolher @username')}
-              </button>
+              </Button>
             )}
           </Field.Root>
 

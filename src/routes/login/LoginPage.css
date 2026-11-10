@@ -70,7 +70,7 @@
 
 /* Badge "em breve" alinhado à direita */
 .login-soon-badge {
-  margin-left: auto;
+  @apply ml-auto;
   font-size: 0.72rem;
 }
 

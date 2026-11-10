@@ -37,7 +37,7 @@
 /* Emoji */
 .umodal__emoji {
   font-size: 2rem;
-  line-height: 1;
+  @apply leading-none;
   margin-bottom: 2px;
 }
 
@@ -88,7 +88,7 @@
   border: 1.5px solid var(--color-awake-border);
   border-radius: 10px;
   background: var(--color-awake-bg-raised, rgba(128,128,128,0.06));
-  transition: border-color 0.15s;
+  @apply transition-colors;
 }
 
 .umodal__input-wrap:focus-within {
@@ -156,8 +156,7 @@
   background: rgba(99, 102, 241, 0.1);
   border: 1px solid rgba(99, 102, 241, 0.25);
   color: var(--color-awake-brand, #6366f1);
-  transition: background 0.15s;
-  cursor: pointer;
+  @apply cursor-pointer transition-colors;
 }
 
 .umodal__suggestion-chip:hover {
@@ -188,10 +187,7 @@
   @apply w-full font-medium;
   font-size: 0.85rem;
   color: var(--color-awake-text-muted, #888);
-  padding: 8px;
-  text-align: center;
-  cursor: pointer;
-  transition: color 0.15s;
+  @apply p-2 text-center cursor-pointer transition-colors;
 }
 
 .umodal__btn-skip:hover {

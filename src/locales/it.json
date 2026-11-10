@@ -46,8 +46,8 @@
     "filter_published": "Pubblicati",
     "empty_writings": "Nessuno scritto ancora.",
     "empty_writings_sub": "Tocca + per iniziare.",
-    "empty_folders": "Nessuna cartella ancora.",
-    "empty_folders_sub": "Organizza i tuoi scritti in cartelle.",
+    "empty_folders": "Nessuna cartella ancora",
+    "empty_folders_sub": "Crea cartelle per organizzare i tuoi scritti.",
     "writings_count": "{{count}} scritto",
     "writings_count_plural": "{{count}} scritti",
     "draft": "Bozza",
@@ -109,5 +109,29 @@
     "error_format": "Usa solo lettere minuscole e numeri, tra 3 e 15 caratteri.",
     "error_taken": "Questo nome è già in uso. Prova con un altro.",
     "error_profane": "Questo nome non è consentito sulla piattaforma."
+  },
+  "folder": {
+    "create_title": "Nuova cartella",
+    "rename_title": "Rinomina cartella",
+    "create_sub": "Dai un nome alla tua cartella.",
+    "rename_sub": "Scegli un nuovo nome per la cartella.",
+    "name_label": "Nome cartella",
+    "name_placeholder": "Es: Poesie, Bozze, Storie...",
+    "error_required": "Il nome non può essere vuoto.",
+    "error_too_long": "Il nome deve avere al massimo 40 caratteri.",
+    "error_save": "Impossibile salvare. Riprova.",
+    "saving": "Salvataggio...",
+    "create_confirm": "Crea",
+    "rename_confirm": "Rinomina",
+    "empty_title": "Cartella vuota",
+    "empty_sub": "Nessuno scritto qui ancora.",
+    "not_found": "Cartella non trovata.",
+    "confirm_delete": "Eliminare la cartella \"{{name}}\"? Gli scritti non verranno eliminati.",
+    "rename": "Rinomina",
+    "delete": "Elimina cartella"
+  },
+  "common": {
+    "cancel": "Annulla",
+    "options": "Opzioni"
   }
 }
