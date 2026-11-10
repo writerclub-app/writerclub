@@ -19,6 +19,15 @@ class WriterClubDB extends Dexie {
       categories: '++id, authorId',
       profile:    '++id',
     })
+
+    // v2: todas as tabelas usam UUID manual (string) como primary key
+    // profile.authId indexado para lookup por OAuth sub
+    this.version(2).stores({
+      writings:   'id, authorId, categoryId, folderId, slug, isPublic, updatedAt',
+      folders:    'id, authorId, isPublic',
+      categories: 'id, authorId',
+      profile:    'id, authId',
+    })
   }
 }
 

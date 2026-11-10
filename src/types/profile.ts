@@ -4,7 +4,8 @@ export type OAuthProvider = 'google' | 'microsoft' | 'github'
 
 // Stored locally in Dexie (full profile)
 export interface Profile {
-  id: string              // authId from OAuth — primary key, never in URLs
+  id: string              // UUID — primary key interno
+  authId: string          // ID do provider OAuth (ex: Google sub) — indexado para lookup
   username: string        // public handle → /u/:username
   displayName: string
   email: string           // local only, never sent to D1

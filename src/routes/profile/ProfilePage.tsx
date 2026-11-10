@@ -31,10 +31,10 @@ export function ProfilePage() {
   const avatarSrc = useAvatar(token?.avatarUrl)
   const initials = displayName.trim()[0]?.toUpperCase() ?? '?'
 
-  // Load bio from local profile
+  // Load profile from local DB
   useEffect(() => {
     if (!token) return
-    void db.profile.get(token.authId).then((p) => {
+    void db.profile.where('authId').equals(token.authId).first().then((p) => {
       if (p?.bio) setBio(p.bio)
       if (p?.displayName) setDisplayName(p.displayName)
     })
@@ -44,17 +44,18 @@ export function ProfilePage() {
     if (!token) return
     setSaving(true)
     try {
-      const existing = await db.profile.get(token.authId)
+      const existing = await db.profile.where('authId').equals(token.authId).first()
       if (existing) {
-        await db.profile.update(token.authId, {
+        await db.profile.update(existing.id, {
           displayName,
           bio,
           updatedAt: new Date(),
         })
       } else {
         await db.profile.put({
-          id: token.authId,
-          username: token.authId, // fallback, real username set on onboarding
+          id: crypto.randomUUID(),
+          authId: token.authId,
+          username: token.authId,
           displayName,
           email: token.email,
           bio,
