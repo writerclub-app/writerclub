@@ -208,5 +208,13 @@
     "save": "Save",
     "more_from": "More from",
     "see_all_writings": "See all writings"
+  },
+  "follows": {
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "followers": "Followers",
+    "following": "Following",
+    "no_followers": "No followers yet.",
+    "no_following": "Not following anyone yet."
   }
 }

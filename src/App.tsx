@@ -11,6 +11,7 @@ import { AuthCallbackPage } from '@/routes/auth-callback/AuthCallbackPage'
 import { ExplorePage } from '@/routes/explore/ExplorePage'
 import { PublicWritingPage } from '@/routes/public-writing/PublicWritingPage'
 import { PublicProfilePage } from '@/routes/public-profile/PublicProfilePage'
+import { FollowListPage } from '@/routes/follow-list/FollowListPage'
 
 export default function App() {
   return (
@@ -34,6 +35,8 @@ export default function App() {
         </Route>
 
         {/* Perfis e textos públicos */}
+        <Route path="/u/:username/followers" element={<FollowListPage type="followers" />} />
+        <Route path="/u/:username/following" element={<FollowListPage type="following" />} />
         <Route path="/u/:username" element={<PublicProfilePage />} />
         <Route path="/u/:username/:slug" element={<PublicWritingPage />} />
 

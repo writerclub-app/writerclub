@@ -114,6 +114,15 @@ export interface PublicProfile {
   bio: string | null
   avatarUrl: string | null
   createdAt: string
+  followerCount: number
+  followingCount: number
+  isFollowing: boolean
+}
+
+export interface FollowUser {
+  username: string
+  display_name: string | null
+  avatar_url: string | null
 }
 
 export async function fetchPublicWriting(slug: string): Promise<PublicWriting> {
@@ -123,12 +132,63 @@ export async function fetchPublicWriting(slug: string): Promise<PublicWriting> {
   return data
 }
 
-export async function fetchPublicProfile(username: string, page = 1): Promise<{
+export async function fetchPublicProfile(
+  username: string,
+  page = 1,
+  authId?: string
+): Promise<{
   profile: PublicProfile
   writings: PublicWriting[]
   page: number
 }> {
-  const res = await fetch(`${API_URL}/profiles/${username}?page=${page}`)
+  const headers: Record<string, string> = {}
+  if (authId) {
+    try {
+      const token = await getToken(authId)
+      headers['Authorization'] = `Bearer ${token}`
+    } catch { /* sem token — ignora */ }
+  }
+  const res = await fetch(`${API_URL}/profiles/${username}?page=${page}`, { headers })
   if (!res.ok) throw new Error('Profile not found')
   return res.json() as Promise<{ profile: PublicProfile; writings: PublicWriting[]; page: number }>
+}
+
+/** Seguir um usuário. */
+export async function followUser(authId: string, username: string): Promise<void> {
+  const token = await getToken(authId)
+  const res = await fetch(`${API_URL}/follows/${username}`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  if (!res.ok) throw new Error('Failed to follow user')
+}
+
+/** Deixar de seguir um usuário. */
+export async function unfollowUser(authId: string, username: string): Promise<void> {
+  const token = await getToken(authId)
+  const res = await fetch(`${API_URL}/follows/${username}`, {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  if (!res.ok) throw new Error('Failed to unfollow user')
+}
+
+/** Lista de seguidores de um usuário. */
+export async function fetchFollowers(
+  username: string,
+  page = 1
+): Promise<{ followers: FollowUser[]; total: number; page: number }> {
+  const res = await fetch(`${API_URL}/follows/${username}/followers?page=${page}`)
+  if (!res.ok) throw new Error('Failed to fetch followers')
+  return res.json() as Promise<{ followers: FollowUser[]; total: number; page: number }>
+}
+
+/** Lista de quem um usuário segue. */
+export async function fetchFollowing(
+  username: string,
+  page = 1
+): Promise<{ following: FollowUser[]; total: number; page: number }> {
+  const res = await fetch(`${API_URL}/follows/${username}/following?page=${page}`)
+  if (!res.ok) throw new Error('Failed to fetch following')
+  return res.json() as Promise<{ following: FollowUser[]; total: number; page: number }>
 }

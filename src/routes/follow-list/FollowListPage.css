@@ -1,0 +1,148 @@
+@import 'tailwindcss';
+
+.fl-root {
+  @apply min-h-screen flex flex-col;
+  background: var(--color-awake-surface);
+  color: var(--color-awake-text);
+}
+
+.fl-root--center {
+  @apply items-center justify-center;
+}
+
+.fl-not-found {
+  color: var(--color-awake-text-muted);
+}
+
+.fl-main {
+  @apply flex flex-col mx-auto w-full;
+  max-width: 680px;
+  padding: 24px var(--spacing-4);
+  gap: 20px;
+}
+
+/* Breadcrumb */
+.fl-breadcrumb {
+  @apply flex items-center;
+  gap: var(--spacing-2);
+  font-size: 0.82rem;
+}
+
+.fl-breadcrumb__link {
+  color: var(--color-awake-text-muted);
+  @apply no-underline transition-colors;
+}
+
+.fl-breadcrumb__link:hover {
+  color: var(--color-awake-brand);
+}
+
+.fl-breadcrumb__sep {
+  color: var(--color-awake-text-muted);
+  @apply flex-shrink-0;
+}
+
+.fl-breadcrumb__current {
+  color: var(--color-awake-text);
+  @apply font-medium;
+}
+
+/* Tabs */
+.fl-tabs {
+  @apply flex relative;
+  border-bottom: 1px solid var(--color-awake-border);
+  gap: 0;
+}
+
+.fl-tab {
+  @apply flex items-center cursor-pointer;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: 0.875rem;
+  @apply font-medium;
+  color: var(--color-awake-text-muted);
+  background: none;
+  border: none;
+  @apply transition-colors;
+}
+
+.fl-tab:hover {
+  color: var(--color-awake-text);
+}
+
+.fl-tab[data-selected] {
+  color: var(--color-awake-brand);
+}
+
+.fl-tab__count {
+  font-size: 0.72rem;
+  @apply font-semibold;
+  background: color-mix(in srgb, var(--color-awake-brand) 12%, transparent);
+  color: var(--color-awake-brand);
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+
+.fl-tab-indicator {
+  @apply absolute bottom-0;
+  height: 2px;
+  background: var(--color-awake-brand);
+  border-radius: 999px 999px 0 0;
+  transition: left 0.2s ease, width 0.2s ease;
+}
+
+/* Panel */
+.fl-panel {
+  padding-top: var(--spacing-3);
+}
+
+/* Empty state */
+.fl-empty {
+  color: var(--color-awake-text-muted);
+  font-size: 0.875rem;
+  padding: 20px 0;
+}
+
+/* User list */
+.fl-list {
+  @apply flex flex-col list-none;
+  margin: 0;
+  padding: 0;
+  gap: var(--spacing-1);
+}
+
+/* User card */
+.fl-user-card {
+  @apply flex items-center no-underline;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+  border-radius: 10px;
+  color: inherit;
+  @apply transition-colors;
+}
+
+.fl-user-card:hover {
+  background: color-mix(in srgb, var(--color-awake-brand) 6%, transparent);
+}
+
+.fl-user-card__info {
+  @apply flex flex-col;
+  gap: 2px;
+}
+
+.fl-user-card__name {
+  font-size: 0.9rem;
+  @apply font-semibold;
+  color: var(--color-awake-text);
+}
+
+.fl-user-card__username {
+  font-size: 0.8rem;
+  color: var(--color-awake-text-muted);
+}
+
+/* Load more */
+.fl-more {
+  @apply flex justify-center;
+  margin-top: 20px;
+}

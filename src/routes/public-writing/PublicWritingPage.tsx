@@ -7,21 +7,6 @@ import { fetchPublicWriting, fetchPublicProfile, type PublicWriting } from '@/se
 import { GlobalControls } from '@/components/ui/GlobalControls'
 import './PublicWritingPage.css'
 
-/** Garante que data-theme e data-palette do localStorage estejam aplicados no HTML.
- *  main.tsx já faz isso antes do mount, mas esta página pode ser acessada em nova
- *  aba / contexto onde a lógica do main não foi suficiente. */
-function useApplyTheme() {
-  useEffect(() => {
-    try {
-      const t = localStorage.getItem('theme')
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      document.documentElement.setAttribute('data-theme', t ?? (prefersDark ? 'dark' : 'light'))
-      const p = localStorage.getItem('palette') ?? 'modern'
-      document.documentElement.setAttribute('data-palette', p)
-    } catch { /* ignore */ }
-  }, [])
-}
-
 function extractTextAndWords(content: string): { nodes: React.ReactNode[]; wordCount: number } {
   try {
     const doc = JSON.parse(content) as {
@@ -54,7 +39,6 @@ export function PublicWritingPage() {
   const { username, slug } = useParams<{ username: string; slug: string }>()
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
-  useApplyTheme()
   const [writing, setWriting] = useState<PublicWriting | null>(null)
   const [moreWritings, setMoreWritings] = useState<PublicWriting[]>([])
   const [loading, setLoading] = useState(true)
