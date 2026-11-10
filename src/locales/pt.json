@@ -71,7 +71,9 @@
     "modal_publish_sub": "Ele ficará visível para todos. Você pode despublicar a qualquer momento.",
     "modal_publish_confirm": "Sim, publicar",
     "modal_cancel": "Cancelar",
-    "char_count": "{{count}} caracteres"
+    "char_count": "{{count}} caracteres",
+    "folder_picker": "Escolher pasta",
+    "no_folder": "Sem pasta"
   },
   "profile": {
     "title": "Dados do perfil",

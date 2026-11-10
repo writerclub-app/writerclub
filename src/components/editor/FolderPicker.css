@@ -1,0 +1,59 @@
+@import 'tailwindcss';
+
+.folder-picker {
+  @apply relative inline-flex;
+}
+
+.folder-picker__trigger {
+  @apply flex items-center cursor-pointer transition-colors;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--color-awake-border);
+  @apply bg-transparent;
+  color: var(--color-awake-text-muted, #888);
+  font-size: 0.78rem;
+  font-family: inherit;
+}
+
+.folder-picker__trigger:hover,
+.folder-picker__trigger--open {
+  border-color: var(--color-awake-border-strong, #94a3b8);
+  color: var(--color-awake-text, inherit);
+  background-color: var(--color-awake-bg-raised, rgba(128,128,128,0.06));
+}
+
+.folder-picker__dropdown {
+  @apply absolute flex flex-col z-50;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 180px;
+  border-radius: 10px;
+  border: 1px solid var(--color-awake-border);
+  background-color: var(--color-awake-surface);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  padding: 4px;
+  gap: 2px;
+}
+
+.folder-picker__item {
+  @apply flex items-center w-full text-left cursor-pointer transition-colors;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  @apply border-0 bg-transparent;
+  color: var(--color-awake-text-muted, #888);
+  font-size: 0.84rem;
+  font-family: inherit;
+}
+
+.folder-picker__item:hover {
+  background-color: var(--color-awake-bg-raised, rgba(128,128,128,0.08));
+  color: var(--color-awake-text, inherit);
+}
+
+.folder-picker__item--active {
+  color: var(--color-awake-brand, #6366f1);
+  background-color: var(--color-awake-brand-subtle, rgba(99,102,241,0.08));
+  @apply font-medium;
+}

@@ -71,7 +71,9 @@
     "modal_publish_sub": "It will be visible to everyone. You can unpublish at any time.",
     "modal_publish_confirm": "Yes, publish",
     "modal_cancel": "Cancel",
-    "char_count": "{{count}} characters"
+    "char_count": "{{count}} characters",
+    "folder_picker": "Choose folder",
+    "no_folder": "No folder"
   },
   "profile": {
     "title": "Profile",

@@ -18,6 +18,7 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
   const [title, setTitle] = useState(writing?.title ?? '')
   const [categoryId, setCategoryId] = useState(writing?.categoryId ?? '')
   const [categoryName, setCategoryName] = useState(writing?.categoryName ?? '')
+  const [folderId, setFolderId] = useState<string | undefined>(writing?.folderId)
   const [isPublic, setIsPublic] = useState(writing?.isPublic ?? false)
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle')
   const [showPublishModal, setShowPublishModal] = useState(false)
@@ -45,7 +46,7 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
 
     try {
       if (writingId) {
-        await updateWriting(writingId, { title, content, categoryId, categoryName, isPublic: pub })
+        await updateWriting(writingId, { title, content, categoryId, categoryName, folderId, isPublic: pub })
       } else {
         const created = await createWriting({
           title: title || 'Sem título',
@@ -53,6 +54,7 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
           categoryId,
           categoryName,
           isPublic: pub,
+          folderId,
           authorId: token.authId,
         })
         setWritingId(created.id)
@@ -63,7 +65,7 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
     } catch {
       setSaveStatus('error')
     }
-  }, [token, title, categoryId, categoryName, isPublic, writingId, getContent])
+  }, [token, title, categoryId, categoryName, folderId, isPublic, writingId, getContent])
 
   const publish = useCallback(async () => {
     setShowPublishModal(false)
@@ -79,6 +81,10 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
     void navigate('/')
   }, [navigate])
 
+  const selectFolder = useCallback((id: string | undefined) => {
+    setFolderId(id)
+  }, [])
+
   const selectCategory = useCallback((id: string, name: string) => {
     setCategoryId(id)
     setCategoryName(name)
@@ -87,6 +93,7 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
   return {
     title, setTitle,
     categoryId, categoryName, selectCategory,
+    folderId, selectFolder,
     isPublic,
     saveStatus,
     showPublishModal, setShowPublishModal,

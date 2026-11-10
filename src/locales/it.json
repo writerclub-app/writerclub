@@ -71,7 +71,9 @@
     "modal_publish_sub": "Sarà visibile a tutti. Puoi toglierlo in qualsiasi momento.",
     "modal_publish_confirm": "Sì, pubblica",
     "modal_cancel": "Annulla",
-    "char_count": "{{count}} caratteri"
+    "char_count": "{{count}} caratteri",
+    "folder_picker": "Scegli cartella",
+    "no_folder": "Nessuna cartella"
   },
   "profile": {
     "title": "Profilo",

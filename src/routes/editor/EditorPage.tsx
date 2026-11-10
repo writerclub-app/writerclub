@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import Underline from '@tiptap/extension-underline'
 import TextAlign from '@tiptap/extension-text-align'
 import Placeholder from '@tiptap/extension-placeholder'
 import CharacterCount from '@tiptap/extension-character-count'
@@ -13,6 +12,7 @@ import { Dialog } from '@awakr/awake-ui/dialog'
 import { Card } from '@awakr/awake-ui/card'
 import { Loading } from '@awakr/awake-ui/loading'
 import { EditorToolbar } from '@/components/editor/EditorToolbar'
+import { FolderPicker } from '@/components/editor/FolderPicker'
 import { useWritingEditor } from '@/hooks/useWritingEditor'
 import { getWriting } from '@/services/writing.service'
 import { getCategories } from '@/services/category.service'
@@ -50,6 +50,7 @@ export function EditorPage() {
   const {
     title, setTitle,
     categoryName, selectCategory,
+    folderId, selectFolder,
     isPublic, saveStatus,
     showPublishModal, setShowPublishModal,
     editorRef,
@@ -59,7 +60,6 @@ export function EditorPage() {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Underline,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       Placeholder.configure({ placeholder: t('editor.placeholder') }),
       CharacterCount,
@@ -181,6 +181,8 @@ export function EditorPage() {
               : `${t('editor.word_count', { count: words })} · ${t('editor.char_count', { count: chars })}`}
           </span>
         </div>
+
+        <FolderPicker folderId={folderId} onSelect={selectFolder} />
 
         <EditorContent editor={editor} className="editor-body" />
       </div>
