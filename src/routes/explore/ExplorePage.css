@@ -58,7 +58,8 @@
 }
 
 .explore-card__content {
-  @apply flex flex-col gap-2 p-3\.5;
+  @apply flex flex-col gap-2;
+  padding: 14px;
 }
 
 /* Top row: title + badge */
