@@ -1,0 +1,50 @@
+@import 'tailwindcss';
+
+.cdialog-overlay {
+  @apply fixed inset-0 flex items-end;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+.cdialog-sheet {
+  @apply w-full flex flex-col;
+  background-color: var(--color-awake-surface);
+  color: var(--color-awake-text);
+  border-radius: 20px 20px 0 0;
+  padding: 12px 20px calc(36px + env(safe-area-inset-bottom, 0px));
+  gap: 10px;
+}
+
+.cdialog-drag {
+  @apply w-10 h-1 rounded-full mx-auto mb-1;
+  background-color: var(--color-awake-border);
+}
+
+.cdialog-title {
+  @apply text-base font-semibold m-0 text-center;
+}
+
+.cdialog-desc {
+  @apply text-sm m-0 text-center opacity-70;
+}
+
+.cdialog-actions {
+  @apply flex flex-col gap-2 mt-2;
+}
+
+.cdialog-btn {
+  @apply w-full;
+}
+
+.cdialog-btn--cancel {
+  @apply border-0;
+  color: var(--color-awake-text, #333) !important;
+  opacity: 0.6;
+}
+.cdialog-btn--cancel:hover,
+.cdialog-btn--cancel:active {
+  color: var(--color-awake-text, #333) !important;
+  opacity: 1;
+  background-color: transparent;
+}

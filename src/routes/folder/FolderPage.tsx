@@ -6,6 +6,8 @@ import { WritingCard } from '@/components/writings/WritingCard'
 import { WritingCardSkeleton } from '@/components/writings/WritingCardSkeleton'
 import { ArrowLeftIcon } from '@/components/ui/icons'
 import { getFolderById } from '@/services/folder.service'
+import { deleteWriting } from '@/services/writing.service'
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { db } from '@/db'
 import type { Writing } from '@/types/writing'
 import type { Folder } from '@/types/folder'
@@ -22,6 +24,7 @@ export function FolderPage() {
   const [writings, setWritings] = useState<Writing[]>([])
   const [filter, setFilter] = useState<Filter>('all')
   const [loading, setLoading] = useState(true)
+  const [deletingWriting, setDeletingWriting] = useState<Writing | undefined>()
 
   useEffect(() => {
     if (!id) return
@@ -46,6 +49,13 @@ export function FolderPage() {
     { value: 'draft',     label: t('home.filter_draft') },
     { value: 'published', label: t('home.filter_published') },
   ]
+
+  async function confirmDeleteWriting() {
+    if (!deletingWriting) return
+    await deleteWriting(deletingWriting.id)
+    setWritings((prev) => prev.filter((w) => w.id !== deletingWriting.id))
+    setDeletingWriting(undefined)
+  }
 
   return (
     <div className="folder-page">
@@ -109,11 +119,19 @@ export function FolderPage() {
                 key={w.id}
                 writing={w}
                 onClick={() => void navigate(`/writings/${w.id}`)}
+                onDelete={() => setDeletingWriting(w)}
               />
             ))}
           </div>
         )}
       </main>
+      <ConfirmDialog
+        open={!!deletingWriting}
+        title={t('writing.confirm_delete', { title: deletingWriting?.title ?? '' })}
+        description={t('common.cannot_undo')}
+        onConfirm={() => void confirmDeleteWriting()}
+        onCancel={() => setDeletingWriting(undefined)}
+      />
     </div>
   )
 }

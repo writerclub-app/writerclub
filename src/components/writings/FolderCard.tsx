@@ -74,12 +74,12 @@ export function FolderCard({ folder, writingsCount, onClick, onRename, onDelete 
           </Button>
           {menuOpen && (
             <div className="folder-card__dropdown" role="menu">
-              <button className="folder-card__dropdown-item" role="menuitem" onClick={handleRename}>
+              <Button variant="ghost" className="folder-card__dropdown-item" role="menuitem" onClick={handleRename}>
                 {t('folder.rename')}
-              </button>
-              <button className="folder-card__dropdown-item folder-card__dropdown-item--danger" role="menuitem" onClick={handleDelete}>
+              </Button>
+              <Button variant="ghost" className="folder-card__dropdown-item folder-card__dropdown-item--danger" role="menuitem" onClick={handleDelete}>
                 {t('folder.delete')}
-              </button>
+              </Button>
             </div>
           )}
         </div>

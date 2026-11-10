@@ -58,6 +58,7 @@
     "title_placeholder": "Text title…",
     "back": "Back",
     "save": "Save",
+    "save_draft": "Save draft",
     "saved": "Saved",
     "publish": "Publish",
     "unpublish": "Unpublish",
@@ -135,12 +136,18 @@
     "empty_title": "Empty folder",
     "empty_sub": "No writings here yet.",
     "not_found": "Folder not found.",
-    "confirm_delete": "Delete folder \"{{name}}\"? Writings will not be deleted.",
+    "confirm_delete": "Are you sure you want to delete \"{{name}}\"?",
     "rename": "Rename",
     "delete": "Delete folder"
   },
   "common": {
     "cancel": "Cancel",
-    "options": "Options"
+    "options": "Options",
+    "delete": "Delete",
+    "cannot_undo": "This action cannot be undone."
+  },
+  "writing": {
+    "delete": "Delete writing",
+    "confirm_delete": "Are you sure you want to delete \"{{title}}\"?"
   }
 }

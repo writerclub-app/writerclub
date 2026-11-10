@@ -8,6 +8,8 @@ import { FolderCard } from '@/components/writings/FolderCard'
 import { FolderCardSkeleton } from '@/components/writings/FolderCardSkeleton'
 import { FolderModal } from './FolderModal'
 import { deleteFolder } from '@/services/folder.service'
+import { deleteWriting } from '@/services/writing.service'
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { db } from '@/db'
 import type { Writing } from '@/types/writing'
 import type { Folder } from '@/types/folder'
@@ -27,6 +29,8 @@ export function HomePage() {
   // FolderModal state
   const [modalOpen, setModalOpen] = useState(false)
   const [editingFolder, setEditingFolder] = useState<Folder | undefined>()
+  const [deletingWriting, setDeletingWriting] = useState<Writing | undefined>()
+  const [deletingFolder, setDeletingFolder] = useState<Folder | undefined>()
 
   useEffect(() => {
     void Promise.all([
@@ -76,14 +80,21 @@ export function HomePage() {
     })
   }
 
-  async function handleDeleteFolder(folder: Folder) {
-    if (!window.confirm(t('folder.confirm_delete', { name: folder.name }))) return
-    await deleteFolder(folder.id)
-    setFolders((prev) => prev.filter((f) => f.id !== folder.id))
-    // writings dessa pasta voltam para "sem pasta"
+  async function confirmDeleteFolder() {
+    if (!deletingFolder) return
+    await deleteFolder(deletingFolder.id)
+    setFolders((prev) => prev.filter((f) => f.id !== deletingFolder.id))
     setWritings((prev) => prev.map((w) =>
-      w.folderId === folder.id ? { ...w, folderId: undefined } : w
+      w.folderId === deletingFolder.id ? { ...w, folderId: undefined } : w
     ))
+    setDeletingFolder(undefined)
+  }
+
+  async function confirmDeleteWriting() {
+    if (!deletingWriting) return
+    await deleteWriting(deletingWriting.id)
+    setWritings((prev) => prev.filter((w) => w.id !== deletingWriting.id))
+    setDeletingWriting(undefined)
   }
 
   return (
@@ -120,7 +131,7 @@ export function HomePage() {
           ) : (
             <div className="home-list">
               {filtered.map((w) => (
-                <WritingCard key={w.id} writing={w} onClick={() => void navigate(`/writings/${w.id}`)} />
+                <WritingCard key={w.id} writing={w} onClick={() => void navigate(`/writings/${w.id}`)} onDelete={() => setDeletingWriting(w)} />
               ))}
             </div>
           )}
@@ -146,7 +157,7 @@ export function HomePage() {
                   writingsCount={writingsCountByFolder(folder.id)}
                   onClick={() => void navigate(`/folders/${folder.id}`)}
                   onRename={() => openEditModal(folder)}
-                  onDelete={() => void handleDeleteFolder(folder)}
+                  onDelete={() => setDeletingFolder(folder)}
                 />
               ))}
             </div>
@@ -159,6 +170,24 @@ export function HomePage() {
           </button>
         </TabsPanel>
       </TabsRoot>
+
+      {/* Confirm delete writing */}
+      <ConfirmDialog
+        open={!!deletingWriting}
+        title={t('writing.confirm_delete', { title: deletingWriting?.title ?? '' })}
+        description={t('common.cannot_undo')}
+        onConfirm={() => void confirmDeleteWriting()}
+        onCancel={() => setDeletingWriting(undefined)}
+      />
+
+      {/* Confirm delete folder */}
+      <ConfirmDialog
+        open={!!deletingFolder}
+        title={t('folder.confirm_delete', { name: deletingFolder?.name ?? '' })}
+        description={t('common.cannot_undo')}
+        onConfirm={() => void confirmDeleteFolder()}
+        onCancel={() => setDeletingFolder(undefined)}
+      />
 
       {/* Modal criar / renomear */}
       {modalOpen && (

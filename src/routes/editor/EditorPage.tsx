@@ -94,6 +94,7 @@ export function EditorPage() {
   }, [title])
 
   const today = new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'short', year: 'numeric' })
+  const canSave = title.trim() !== '' && words > 0
 
   return (
     <div className="editor-page">
@@ -142,17 +143,17 @@ export function EditorPage() {
             size="sm"
             className={`editor-btn-save${saveStatus === 'saved' ? ' editor-btn-save--saved' : ''}`}
             onClick={() => void save()}
-            disabled={saveStatus === 'saving'}
+            disabled={saveStatus === 'saving' || !canSave}
           >
             {saveStatus === 'saving'
               ? <Loading size="sm" label={t('editor.saving')} />
               : saveStatus === 'saved'
                 ? `✓ ${t('editor.saved')}`
-                : t('editor.save')}
+                : t('editor.save_draft')}
           </Button>
 
           {!isPublic && (
-            <Button variant="primary" size="sm" className="editor-btn-publish" onClick={() => { if (!hasUsername) { openModal(); return } setShowPublishModal(true) }}>
+            <Button variant="primary" size="sm" className="editor-btn-publish" disabled={!canSave} onClick={() => { if (!hasUsername) { openModal(); return } setShowPublishModal(true) }}>
               {t('editor.publish')}
             </Button>
           )}

@@ -35,3 +35,22 @@
   @apply text-xs m-0 opacity-60;
   color: var(--color-awake-text-muted, currentColor);
 }
+
+/* Botão de delete */
+.writing-card__content {
+  @apply relative;
+}
+
+.writing-card__delete-btn {
+  @apply absolute bottom-3 right-3 transition-colors;
+  color: var(--color-awake-text-muted, #888);
+  opacity: 0.45;
+  padding: 6px;
+}
+
+.writing-card__delete-btn:hover,
+.writing-card__delete-btn:active {
+  color: #DC2626;
+  background-color: rgba(220, 38, 38, 0.08);
+  opacity: 1;
+}

@@ -58,6 +58,7 @@
     "title_placeholder": "Titolo del testo…",
     "back": "Indietro",
     "save": "Salva",
+    "save_draft": "Salva bozza",
     "saved": "Salvato",
     "publish": "Pubblica",
     "unpublish": "Togli pubbl.",
@@ -135,12 +136,18 @@
     "empty_title": "Cartella vuota",
     "empty_sub": "Nessuno scritto qui ancora.",
     "not_found": "Cartella non trovata.",
-    "confirm_delete": "Eliminare la cartella \"{{name}}\"? Gli scritti non verranno eliminati.",
+    "confirm_delete": "Sei sicuro di voler eliminare \"{{name}}\"?",
     "rename": "Rinomina",
     "delete": "Elimina cartella"
   },
   "common": {
     "cancel": "Annulla",
-    "options": "Opzioni"
+    "options": "Opzioni",
+    "delete": "Elimina",
+    "cannot_undo": "Questa azione non può essere annullata."
+  },
+  "writing": {
+    "delete": "Elimina testo",
+    "confirm_delete": "Sei sicuro di voler eliminare \"{{title}}\"?"
   }
 }

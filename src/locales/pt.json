@@ -58,6 +58,7 @@
     "title_placeholder": "Título do texto…",
     "back": "Voltar",
     "save": "Salvar",
+    "save_draft": "Salvar rascunho",
     "saved": "Salvo",
     "publish": "Publicar",
     "unpublish": "Despublicar",
@@ -135,12 +136,18 @@
     "empty_title": "Pasta vazia",
     "empty_sub": "Nenhum texto aqui ainda.",
     "not_found": "Pasta não encontrada.",
-    "confirm_delete": "Excluir a pasta \"{{name}}\"? Os textos não serão apagados.",
+    "confirm_delete": "Tem certeza que quer excluir \"{{name}}\"?",
     "rename": "Renomear",
     "delete": "Excluir pasta"
   },
   "common": {
     "cancel": "Cancelar",
-    "options": "Opções"
+    "options": "Opções",
+    "delete": "Excluir",
+    "cannot_undo": "Esta ação não pode ser desfeita."
+  },
+  "writing": {
+    "delete": "Excluir texto",
+    "confirm_delete": "Tem certeza que quer excluir \"{{title}}\"?"
   }
 }

@@ -58,6 +58,7 @@
     "title_placeholder": "Título del texto…",
     "back": "Volver",
     "save": "Guardar",
+    "save_draft": "Guardar borrador",
     "saved": "Guardado",
     "publish": "Publicar",
     "unpublish": "Despublicar",
@@ -135,12 +136,18 @@
     "empty_title": "Carpeta vacía",
     "empty_sub": "Aún no hay escritos aquí.",
     "not_found": "Carpeta no encontrada.",
-    "confirm_delete": "Eliminar carpeta \"{{name}}\"? Los escritos no se eliminarán.",
+    "confirm_delete": "¿Seguro que quieres eliminar \"{{name}}\"?",
     "rename": "Renombrar",
     "delete": "Eliminar carpeta"
   },
   "common": {
     "cancel": "Cancelar",
-    "options": "Opciones"
+    "options": "Opciones",
+    "delete": "Eliminar",
+    "cannot_undo": "Esta acción no se puede deshacer."
+  },
+  "writing": {
+    "delete": "Eliminar texto",
+    "confirm_delete": "¿Seguro que quieres eliminar \"{{title}}\"?"
   }
 }

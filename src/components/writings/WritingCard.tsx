@@ -1,13 +1,15 @@
 import { useTranslation } from 'react-i18next'
+import { Button } from '@awakr/awake-ui/button'
 import { Card } from '@awakr/awake-ui/card'
 import { Badge } from '@awakr/awake-ui/badge'
-import { PoemIcon, SongIcon, StoryIcon, ChronicleIcon } from '@/components/ui/icons'
+import { PoemIcon, SongIcon, StoryIcon, ChronicleIcon, TrashIcon } from '@/components/ui/icons'
 import type { Writing } from '@/types/writing'
 import './WritingCard.css'
 
 interface Props {
   writing: Writing
   onClick: () => void
+  onDelete?: () => void
 }
 
 function CategoryIcon({ name }: { name: string }) {
@@ -22,7 +24,7 @@ function formatDate(date: Date): string {
   return new Intl.DateTimeFormat(undefined, { day: '2-digit', month: 'short' }).format(new Date(date))
 }
 
-export function WritingCard({ writing, onClick }: Props) {
+export function WritingCard({ writing, onClick, onDelete }: Props) {
   const { t } = useTranslation()
 
   return (
@@ -43,6 +45,18 @@ export function WritingCard({ writing, onClick }: Props) {
         </div>
         <h3 className="writing-card__title">{writing.title || t('home.untitled')}</h3>
         <p className="writing-card__date">{formatDate(writing.updatedAt)}</p>
+
+        {onDelete && (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="writing-card__delete-btn"
+            onClick={(e) => { e.stopPropagation(); onDelete() }}
+            aria-label={t('writing.delete')}
+          >
+            <TrashIcon />
+          </Button>
+        )}
       </Card.Content>
     </Card.Root>
   )
