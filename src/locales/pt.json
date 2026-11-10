@@ -52,5 +52,25 @@
     "writings_count_plural": "{{count}} escritos",
     "draft": "Rascunho",
     "published": "Publicado"
+  },
+  "editor": {
+    "placeholder": "Comece a escrever…",
+    "title_placeholder": "Título do texto…",
+    "back": "Voltar",
+    "save": "Salvar",
+    "saved": "Salvo",
+    "publish": "Publicar",
+    "unpublish": "Despublicar",
+    "status_draft": "Rascunho",
+    "status_published": "Publicado",
+    "untitled": "Sem título",
+    "no_words": "0 palavras",
+    "word_count": "{{count}} palavras",
+    "words": "palavras",
+    "modal_publish_title": "Publicar este texto?",
+    "modal_publish_sub": "Ele ficará visível para todos. Você pode despublicar a qualquer momento.",
+    "modal_publish_confirm": "Sim, publicar",
+    "modal_cancel": "Cancelar",
+    "char_count": "{{count}} caracteres"
   }
 }

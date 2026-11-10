@@ -52,5 +52,25 @@
     "writings_count_plural": "{{count}} scritti",
     "draft": "Bozza",
     "published": "Pubblicato"
+  },
+  "editor": {
+    "placeholder": "Inizia a scrivere…",
+    "title_placeholder": "Titolo del testo…",
+    "back": "Indietro",
+    "save": "Salva",
+    "saved": "Salvato",
+    "publish": "Pubblica",
+    "unpublish": "Togli pubbl.",
+    "status_draft": "Bozza",
+    "status_published": "Pubblicato",
+    "untitled": "Senza titolo",
+    "no_words": "0 parole",
+    "word_count": "{{count}} parole",
+    "words": "parole",
+    "modal_publish_title": "Pubblicare questo testo?",
+    "modal_publish_sub": "Sarà visibile a tutti. Puoi toglierlo in qualsiasi momento.",
+    "modal_publish_confirm": "Sì, pubblica",
+    "modal_cancel": "Annulla",
+    "char_count": "{{count}} caratteri"
   }
 }

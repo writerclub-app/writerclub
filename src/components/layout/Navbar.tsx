@@ -1,6 +1,8 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Avatar } from '@awakr/awake-ui/avatar'
 import { GlobalControls } from '@/components/ui/GlobalControls'
+import { useAvatar } from '@/hooks/useAvatar'
 import { loadToken } from '@/services/auth.service'
 import './Navbar.css'
 
@@ -12,6 +14,8 @@ export function Navbar() {
   const initials = token?.displayName
     ? token.displayName.charAt(0).toUpperCase()
     : '?'
+
+  const avatarSrc = useAvatar(token?.avatarUrl)
 
   const links = [
     { to: '/',        label: t('nav.home') },
@@ -43,11 +47,12 @@ export function Navbar() {
             onClick={() => navigate('/profile')}
             aria-label={t('nav.profile')}
           >
-            {token?.avatarUrl ? (
-              <img src={token.avatarUrl} alt={initials} className="navbar-avatar__img" />
-            ) : (
-              <span>{initials}</span>
-            )}
+            <Avatar
+              src={avatarSrc}
+              alt={initials}
+              fallback={<span>{initials}</span>}
+              size="sm"
+            />
           </button>
         </div>
       </div>

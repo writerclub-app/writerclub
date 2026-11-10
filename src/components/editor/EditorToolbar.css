@@ -1,0 +1,49 @@
+@import 'tailwindcss';
+
+.format-bar {
+  @apply flex items-center overflow-x-auto flex-shrink-0;
+  gap: 2px;
+  padding: 6px 16px;
+  border-bottom: 1px solid var(--color-awake-border);
+  background-color: var(--color-awake-surface);
+  scrollbar-width: none;
+}
+
+.format-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.fmt-sep {
+  @apply flex-shrink-0 self-stretch;
+  width: 1px;
+  margin: 2px 4px;
+  background-color: var(--color-awake-border);
+}
+
+.fmt-btn {
+  @apply flex items-center justify-center flex-shrink-0 cursor-pointer select-none;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--color-awake-text-muted, #666);
+  font-family: inherit;
+  font-size: 0.88rem;
+  transition: background 0.12s, color 0.12s;
+}
+
+.fmt-btn:hover {
+  background-color: var(--color-awake-bg-raised, rgba(128, 128, 128, 0.08));
+  color: var(--color-awake-text, inherit);
+}
+
+.fmt-btn--active {
+  background-color: var(--color-awake-brand-subtle, rgba(99, 102, 241, 0.12));
+  color: var(--color-awake-brand, #6366f1);
+}
+
+.fmt-btn svg {
+  width: 15px;
+  height: 15px;
+}

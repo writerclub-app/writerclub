@@ -52,5 +52,25 @@
     "writings_count_plural": "{{count}} writings",
     "draft": "Draft",
     "published": "Published"
+  },
+  "editor": {
+    "placeholder": "Start writing…",
+    "title_placeholder": "Text title…",
+    "back": "Back",
+    "save": "Save",
+    "saved": "Saved",
+    "publish": "Publish",
+    "unpublish": "Unpublish",
+    "status_draft": "Draft",
+    "status_published": "Published",
+    "untitled": "Untitled",
+    "no_words": "0 words",
+    "word_count": "{{count}} words",
+    "words": "words",
+    "modal_publish_title": "Publish this text?",
+    "modal_publish_sub": "It will be visible to everyone. You can unpublish at any time.",
+    "modal_publish_confirm": "Yes, publish",
+    "modal_cancel": "Cancel",
+    "char_count": "{{count}} characters"
   }
 }
