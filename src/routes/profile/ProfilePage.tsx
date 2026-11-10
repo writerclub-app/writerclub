@@ -11,6 +11,7 @@ import { LanguageSelector } from '@/components/ui/LanguageSelector'
 import { PaletteSelector } from '@/components/ui/PaletteSelector'
 import { ArrowLeftIcon, LockIcon, LogoutIcon } from '@/components/ui/icons'
 import { useAvatar } from '@/hooks/useAvatar'
+import { useUsername } from '@/contexts/UsernameContext'
 import { loadToken, clearToken } from '@/services/auth.service'
 import { db } from '@/db'
 import './ProfilePage.css'
@@ -23,6 +24,7 @@ export function ProfilePage() {
   const navigate = useNavigate()
   const { toast } = useToast()
   const token = loadToken()
+  const { username, openModal } = useUsername()
 
   const [displayName, setDisplayName] = useState(token?.displayName ?? '')
   const [bio, setBio] = useState('')
@@ -55,7 +57,7 @@ export function ProfilePage() {
         await db.profile.put({
           id: crypto.randomUUID(),
           authId: token.authId,
-          username: token.authId,
+          username: '',
           displayName,
           email: token.email,
           bio,
@@ -130,13 +132,20 @@ export function ProfilePage() {
             <Field.Label className="profile-field__label">{t('profile.username_label')}</Field.Label>
             <Field.Control
               className="profile-field__input profile-field__input--readonly"
-              value={`@${token?.authId ?? ''}`}
+              value={username ? `@${username}` : ''}
+              placeholder={t('profile.username_not_set', '@—')}
               readOnly
             />
-            <div className="profile-field__lock">
-              <LockIcon />
-              {t('profile.username_locked')}
-            </div>
+            {username ? (
+              <div className="profile-field__lock">
+                <LockIcon />
+                {t('profile.username_locked')}
+              </div>
+            ) : (
+              <button className="profile-field__lock profile-field__lock--choose" onClick={openModal}>
+                {t('profile.username_choose', 'Escolher @username')}
+              </button>
+            )}
           </Field.Root>
 
           {/* Bio */}

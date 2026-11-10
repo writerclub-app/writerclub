@@ -1,7 +1,10 @@
 @import 'tailwindcss';
 
 .tabs-list {
-  @apply flex border-b sticky top-0 z-10 px-4;
+  @apply flex border-b sticky top-0 z-10;
+  /* Sem padding horizontal — o alinhamento vem do padding do awake-tabs-tab (12px) */
+  padding-left: 0 !important;
+  padding-right: 0 !important;
   background-color: var(--color-awake-surface, var(--color-awake-bg));
   border-color: var(--color-awake-border);
 }

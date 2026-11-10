@@ -17,6 +17,7 @@ import { useWritingEditor } from '@/hooks/useWritingEditor'
 import { getWriting } from '@/services/writing.service'
 import { getCategories } from '@/services/category.service'
 import { loadToken } from '@/services/auth.service'
+import { useUsername } from '@/contexts/UsernameContext'
 import type { Writing } from '@/types/writing'
 import type { Category } from '@/types/category'
 import './EditorPage.css'
@@ -29,6 +30,7 @@ export function EditorPage() {
   const { id } = useParams<{ id?: string }>()
   const { t } = useTranslation()
   const token = loadToken()
+  const { hasUsername, openModal } = useUsername()
 
   const [writing, setWriting] = useState<Writing | undefined>()
   const [categories, setCategories] = useState<Category[]>([])
@@ -150,7 +152,7 @@ export function EditorPage() {
           </Button>
 
           {!isPublic && (
-            <Button variant="primary" size="sm" className="editor-btn-publish" onClick={() => setShowPublishModal(true)}>
+            <Button variant="primary" size="sm" className="editor-btn-publish" onClick={() => { if (!hasUsername) { openModal(); return } setShowPublishModal(true) }}>
               {t('editor.publish')}
             </Button>
           )}

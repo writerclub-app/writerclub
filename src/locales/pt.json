@@ -88,6 +88,26 @@
     "saving": "Salvando…",
     "saved": "✓ Perfil salvo",
     "danger_zone": "Zona de perigo",
-    "logout": "Sair da conta"
+    "logout": "Sair da conta",
+    "username_not_set": "@—",
+    "username_choose": "Escolher @username"
+  },
+  "username_setup": {
+    "title": "Escolha seu nome de escritor",
+    "subtitle": "Seu @ é como a comunidade vai te encontrar.",
+    "immutable_warning": "Uma vez escolhido, não pode ser alterado.",
+    "label": "Nome de usuário",
+    "placeholder": "seunome",
+    "hint": "Apenas letras e números, de 3 a 15 caracteres.",
+    "suggestions": "Sugestões",
+    "info_prefix": "Seu perfil público ficará em",
+    "info_suffix": "Escolha com cuidado.",
+    "confirm": "Entrar no WriterClub",
+    "saving": "Salvando...",
+    "skip": "Fazer depois",
+    "error_required": "Digite um nome de usuário para continuar.",
+    "error_format": "Use apenas letras minúsculas e números, entre 3 e 15 caracteres.",
+    "error_taken": "Este nome já está em uso. Tente outro.",
+    "error_profane": "Este nome não é permitido na plataforma."
   }
 }

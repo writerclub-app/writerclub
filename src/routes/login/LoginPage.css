@@ -9,8 +9,7 @@
 }
 
 .login-wrapper {
-  @apply flex flex-col;
-  width: 100%;
+  @apply flex flex-col w-full;
   max-width: 380px;
 }
 
@@ -22,27 +21,26 @@
 }
 
 .login-logomark {
-  @apply flex items-center justify-center select-none;
+  @apply flex items-center justify-center select-none rounded-2xl;
   width: 56px;
   height: 56px;
   font-size: 1.6rem;
-  border-radius: 16px;
   background-color: var(--color-awake-brand-subtle, color-mix(in srgb, var(--color-awake-brand, #3B6E1A) 15%, transparent));
   border: 1.5px solid color-mix(in srgb, var(--color-awake-brand, #3B6E1A) 25%, transparent);
 }
 
 .login-title {
+  @apply font-semibold;
   font-family: 'Lora', Georgia, serif;
   font-size: 2rem;
-  font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.1;
   color: var(--color-awake-text);
 }
 
 .login-subtitle {
+  @apply italic;
   font-size: 0.875rem;
-  font-style: italic;
   line-height: 1.6;
   color: var(--color-awake-text-muted);
   max-width: 280px;
@@ -65,8 +63,7 @@
 
 /* ── Força width full nos botões awake-ui dentro do card ── */
 .login-providers-card .awake-button {
-  width: 100%;
-  justify-content: flex-start;
+  @apply w-full justify-start;
   gap: 12px;
   min-height: 46px;
 }
@@ -85,31 +82,27 @@
 }
 
 .login-divider-line {
-  @apply flex-1;
-  height: 1px;
+  @apply flex-1 h-px;
   background-color: var(--color-awake-border);
 }
 
 .login-divider-text {
+  @apply whitespace-nowrap select-none;
   font-size: 0.74rem;
-  white-space: nowrap;
-  user-select: none;
   color: var(--color-awake-text-muted);
 }
 
 /* ── Notice ── */
 .login-notice {
-  @apply text-center;
+  @apply text-center mt-5;
   font-size: 0.75rem;
   line-height: 1.65;
-  margin-top: 20px;
   padding: 0 4px;
   color: var(--color-awake-text-muted);
 }
 
 .login-notice a {
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  @apply underline underline-offset-2;
   color: var(--color-awake-text-muted);
 }
 

@@ -1,0 +1,199 @@
+@import 'tailwindcss';
+
+/* Backdrop */
+.umodal-backdrop {
+  @apply fixed inset-0 flex items-end justify-center;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+@media (min-width: 480px) {
+  .umodal-backdrop {
+    @apply items-center;
+  }
+}
+
+/* Modal card */
+.umodal {
+  @apply flex flex-col w-full;
+  max-width: 440px;
+  background-color: var(--color-awake-surface);
+  border-radius: 20px 20px 0 0;
+  padding: 28px 24px calc(32px + env(safe-area-inset-bottom, 0px));
+  gap: 16px;
+  box-shadow: 0 -4px 40px rgba(0,0,0,0.2);
+}
+
+@media (min-width: 480px) {
+  .umodal {
+    border-radius: 20px;
+    padding: 32px 28px 28px;
+    box-shadow: 0 8px 48px rgba(0,0,0,0.25);
+  }
+}
+
+/* Emoji */
+.umodal__emoji {
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+/* Title */
+.umodal__title {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.25rem;
+  @apply font-semibold;
+  color: var(--color-awake-text);
+  margin: 0;
+}
+
+/* Subtitle */
+.umodal__subtitle {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--color-awake-text-muted, #888);
+  margin: 0;
+}
+
+/* Action warning (shown when modal opens because of a blocked action) */
+.umodal__action-warning {
+  font-size: 0.8rem;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(234, 179, 8, 0.1);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  color: #92400e;
+}
+@media (prefers-color-scheme: dark) {
+  .umodal__action-warning { color: #fbbf24; }
+}
+
+/* Field */
+.umodal__field {
+  @apply flex flex-col;
+  gap: 6px;
+}
+
+.umodal__label {
+  font-size: 0.8rem;
+  @apply font-medium;
+  color: var(--color-awake-text-muted, #666);
+}
+
+.umodal__input-wrap {
+  @apply flex items-center;
+  border: 1.5px solid var(--color-awake-border);
+  border-radius: 10px;
+  background: var(--color-awake-bg-raised, rgba(128,128,128,0.06));
+  transition: border-color 0.15s;
+}
+
+.umodal__input-wrap:focus-within {
+  border-color: var(--color-awake-brand, #6366f1);
+  background: var(--color-awake-surface);
+}
+
+.umodal__at {
+  @apply flex items-center flex-shrink-0 font-semibold select-none;
+  padding: 0 4px 0 14px;
+  font-size: 1rem;
+  color: var(--color-awake-brand, #6366f1);
+}
+
+.umodal__input {
+  @apply w-full outline-none;
+  flex: 1;
+  padding: 11px 14px 11px 2px;
+  background: transparent;
+  color: var(--color-awake-text);
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.umodal__input::placeholder {
+  color: var(--color-awake-text-subtle, #bbb);
+}
+
+.umodal__input--error + .umodal__hint,
+.umodal__input-wrap:has(.umodal__input--error) {
+  border-color: #ef4444;
+}
+
+.umodal__hint {
+  font-size: 0.75rem;
+  color: var(--color-awake-text-muted, #aaa);
+}
+
+.umodal__hint--error {
+  color: #ef4444;
+  @apply font-medium;
+}
+
+/* Suggestions */
+.umodal__suggestions {
+  @apply flex flex-col;
+  gap: 8px;
+}
+
+.umodal__suggestions-label {
+  font-size: 0.75rem;
+  color: var(--color-awake-text-muted, #aaa);
+}
+
+.umodal__suggestions-list {
+  @apply flex flex-wrap;
+  gap: 6px;
+}
+
+.umodal__suggestion-chip {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  @apply font-medium;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  color: var(--color-awake-brand, #6366f1);
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+.umodal__suggestion-chip:hover {
+  background: rgba(99, 102, 241, 0.18);
+}
+
+/* Info box */
+.umodal__info {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(99, 102, 241, 0.06);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  color: var(--color-awake-text-muted, #666);
+}
+
+/* Confirm button */
+.umodal__btn-confirm {
+  @apply w-full font-semibold;
+  min-height: 48px;
+  font-size: 0.95rem;
+  margin-top: 4px;
+}
+
+/* Skip link */
+.umodal__btn-skip {
+  @apply w-full font-medium;
+  font-size: 0.85rem;
+  color: var(--color-awake-text-muted, #888);
+  padding: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.umodal__btn-skip:hover {
+  color: var(--color-awake-text);
+}

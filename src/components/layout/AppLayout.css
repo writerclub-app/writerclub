@@ -12,9 +12,8 @@
 */
 
 .app-layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100dvh;
+  @apply flex flex-col min-h-dvh;
+  background-color: var(--color-awake-surface);
 }
 
 @media (min-width: 768px) {
@@ -24,9 +23,7 @@
 }
 
 .app-layout__main {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+  @apply flex flex-col flex-1;
   padding-left: max(0px, env(safe-area-inset-left, 0px));
   padding-right: max(0px, env(safe-area-inset-right, 0px));
 }
@@ -37,6 +34,6 @@
 
 @media (min-width: 768px) {
   .app-layout__bottom-nav {
-    display: none;
+    @apply hidden;
   }
 }

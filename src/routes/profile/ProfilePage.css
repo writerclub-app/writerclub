@@ -8,13 +8,11 @@
 
 /* Topbar */
 .profile-topbar {
-  @apply flex items-center justify-between sticky flex-shrink-0;
+  @apply flex items-center justify-between sticky flex-shrink-0 top-0 z-10;
   height: 52px;
   padding: 0 16px;
   border-bottom: 1px solid var(--color-awake-border);
   background-color: var(--color-awake-surface);
-  top: 0;
-  z-index: 10;
 }
 
 .profile-topbar__left {
@@ -37,10 +35,8 @@
 
 /* Main */
 .profile-main {
-  @apply flex flex-col overflow-y-auto;
-  flex: 1;
+  @apply flex flex-col overflow-y-auto flex-1 w-full mx-auto;
   max-width: 480px;
-  @apply w-full mx-auto;
   padding: 24px 16px calc(72px + env(safe-area-inset-bottom, 0px));
 }
 
@@ -203,8 +199,7 @@
 }
 
 .profile-btn-logout {
-  @apply w-full flex items-center justify-center;
-  gap: 8px;
+  @apply w-full flex items-center justify-center gap-2;
   min-height: 44px;
   font-size: 0.875rem;
   @apply font-medium;
@@ -222,4 +217,10 @@
 @media (min-width: 768px) {
   .profile-topbar { height: 56px; }
   .profile-main { padding-top: 32px; }
+}
+
+.profile-field__lock--choose {
+  @apply cursor-pointer font-medium underline;
+  color: var(--color-awake-brand, #6366f1);
+  text-decoration-style: dashed;
 }

@@ -1,23 +1,16 @@
+@import 'tailwindcss';
+
 .lang-select-popup .awake-select-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  @apply flex items-center gap-2;
 }
 
 .lang-select-popup .awake-select-item-text {
-  flex: 1;
-  display: flex;
-  align-items: center;
+  @apply flex-1 flex items-center whitespace-nowrap;
   gap: 6px;
-  white-space: nowrap;
 }
 
 .lang-select-popup .awake-select-item-indicator {
-  margin-left: auto;
+  @apply ml-auto flex items-center justify-center flex-shrink-0;
   min-width: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
   font-size: 0.75rem;
 }

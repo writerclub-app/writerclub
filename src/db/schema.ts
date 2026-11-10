@@ -13,6 +13,7 @@ class WriterClubDB extends Dexie {
   constructor() {
     super('writerclub')
 
+    // v1 — schema original
     this.version(1).stores({
       writings:   '++id, authorId, categoryId, folderId, slug, isPublic, updatedAt',
       folders:    '++id, authorId, isPublic',
@@ -20,13 +21,11 @@ class WriterClubDB extends Dexie {
       profile:    '++id',
     })
 
-    // v2: todas as tabelas usam UUID manual (string) como primary key
-    // profile.authId indexado para lookup por OAuth sub
+    // v2 — adiciona índices em profile:
+    //   authId  → lookup pelo OAuth sub (login)
+    //   username → lookup por handle público (/u/:username) e checagem de unicidade
     this.version(2).stores({
-      writings:   'id, authorId, categoryId, folderId, slug, isPublic, updatedAt',
-      folders:    'id, authorId, isPublic',
-      categories: 'id, authorId',
-      profile:    'id, authId',
+      profile: '++id, authId, username',
     })
   }
 }
