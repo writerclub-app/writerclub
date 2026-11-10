@@ -76,9 +76,29 @@ export class GitHubGistProvider implements BackupProvider {
     }
   }
 
+  /** Procura entre os Gists do usuário qual contém writerclub-backup.json */
+  private async findGistId(): Promise<string | null> {
+    let page = 1
+    while (page <= 10) {
+      const res = await fetch(`${API}/gists?per_page=100&page=${page}`, { headers: this.headers() })
+      if (!res.ok) return null
+      const list = await res.json() as Array<{ id: string; files: Record<string, unknown> }>
+      if (list.length === 0) return null
+      const found = list.find(g => FILENAME in g.files)
+      if (found) {
+        this.setGistId(found.id)
+        return found.id
+      }
+      if (list.length < 100) return null
+      page++
+    }
+    return null
+  }
+
   async download(_filename: string): Promise<Uint8Array | null> {
-    if (!this.storedGistId) return null
-    const res = await fetch(`${API}/gists/${this.storedGistId}`, { headers: this.headers() })
+    const gistId = this.storedGistId ?? await this.findGistId()
+    if (!gistId) return null
+    const res = await fetch(`${API}/gists/${gistId}`, { headers: this.headers() })
     if (!res.ok) return null
     const json = await res.json() as { files: Record<string, { content: string }> }
     const file = json.files[FILENAME]
