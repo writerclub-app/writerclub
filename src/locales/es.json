@@ -185,5 +185,14 @@
     "load_more": "Cargar más",
     "empty": "Aún no hay textos publicados.",
     "anonymous": "Anónimo"
+  },
+  "public": {
+    "loading": "Cargando…",
+    "not_found": "Texto no encontrado.",
+    "profile_not_found": "Perfil no encontrado.",
+    "back_explore": "Volver a Explorar",
+    "no_writings": "Aún no hay textos publicados.",
+    "writings_one": "{{count}} texto",
+    "writings_other": "{{count}} textos"
   }
 }

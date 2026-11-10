@@ -1,0 +1,108 @@
+.pw-root {
+  @apply min-h-screen flex flex-col;
+  background: var(--color-awake-bg);
+  color: var(--color-awake-text);
+}
+
+.pw-root--center {
+  @apply items-center justify-center;
+}
+
+.pw-not-found {
+  @apply flex flex-col items-center;
+  gap: var(--spacing-4);
+  color: var(--color-awake-text-muted);
+}
+
+
+
+.pw-main {
+  @apply flex flex-col mx-auto w-full;
+  max-width: 680px;
+  padding: var(--spacing-6) var(--spacing-4);
+  gap: var(--spacing-6);
+}
+
+/* Breadcrumb */
+.pw-breadcrumb {
+  @apply flex items-center;
+  gap: var(--spacing-2);
+  font-size: 0.82rem;
+}
+
+.pw-breadcrumb__link {
+  color: var(--color-awake-text-muted);
+  @apply no-underline transition-colors;
+}
+
+.pw-breadcrumb__link:hover {
+  color: var(--color-awake-primary);
+}
+
+.pw-breadcrumb__sep {
+  color: var(--color-awake-border);
+}
+
+/* Article */
+.pw-article {
+  @apply flex flex-col;
+  gap: var(--spacing-4);
+}
+
+.pw-category {
+  font-size: 0.72rem;
+  @apply uppercase font-semibold self-start;
+  letter-spacing: 0.06em;
+  color: var(--color-awake-primary);
+  background: color-mix(in srgb, var(--color-awake-primary) 12%, transparent);
+  padding: 2px 10px;
+  border-radius: 999px;
+}
+
+.pw-title {
+  font-size: 1.75rem;
+  @apply font-bold;
+  line-height: 1.25;
+  color: var(--color-awake-text);
+}
+
+.pw-byline {
+  @apply flex items-center;
+  gap: var(--spacing-3);
+  padding-bottom: var(--spacing-4);
+  border-bottom: 1px solid var(--color-awake-border);
+}
+
+.pw-byline__author {
+  font-size: 0.875rem;
+  @apply font-medium no-underline;
+  color: var(--color-awake-text);
+}
+
+.pw-byline__author:hover {
+  color: var(--color-awake-primary);
+}
+
+.pw-byline__date {
+  font-size: 0.82rem;
+  color: var(--color-awake-text-muted);
+}
+
+/* Content */
+.pw-content {
+  @apply flex flex-col;
+  gap: var(--spacing-3);
+}
+
+.pw-content__paragraph {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-awake-text);
+}
+
+.pw-content__heading {
+  font-size: 1.2rem;
+  @apply font-semibold;
+  margin-top: var(--spacing-4);
+  color: var(--color-awake-text);
+}

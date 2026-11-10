@@ -36,7 +36,7 @@
 /* Lista */
 .explore-list {
   @apply flex flex-col;
-  list-style: none;
+  @apply list-none;
   margin: 0;
   padding: 0;
   gap: var(--spacing-3);
@@ -84,7 +84,7 @@
 
 .explore-card__title {
   font-size: 1.05rem;
-  font-weight: 600;
+  @apply font-semibold;
   color: var(--color-awake-text);
   line-height: 1.35;
 }
@@ -111,22 +111,5 @@
   margin-top: var(--spacing-6);
 }
 
-.explore-more__btn {
-  @apply flex items-center justify-center;
-  padding: var(--spacing-2) var(--spacing-5);
-  border-radius: 999px;
-  border: 1px solid var(--color-awake-border);
-  background: transparent;
-  color: var(--color-awake-text);
-  font-size: 0.875rem;
-  @apply font-medium cursor-pointer transition-colors;
-}
 
-.explore-more__btn:hover:not(:disabled) {
-  border-color: var(--color-awake-primary);
-  color: var(--color-awake-primary);
-}
 
-.explore-more__btn:disabled {
-  @apply cursor-not-allowed opacity-60;
-}

@@ -79,3 +79,41 @@ export async function syncProfile(authId: string, profile: {
     body: JSON.stringify(profile),
   })
 }
+
+export interface PublicWriting {
+  id: string
+  title: string
+  slug: string
+  excerpt: string | null
+  content: string
+  category_name: string | null
+  published_at: string
+  updated_at: string
+  username: string | null
+  display_name: string | null
+}
+
+export interface PublicProfile {
+  username: string
+  displayName: string | null
+  bio: string | null
+  avatarUrl: string | null
+  createdAt: string
+}
+
+export async function fetchPublicWriting(slug: string): Promise<PublicWriting> {
+  const res = await fetch(`${API_URL}/writings/${slug}`)
+  if (!res.ok) throw new Error('Writing not found')
+  const { data } = await res.json() as { data: PublicWriting }
+  return data
+}
+
+export async function fetchPublicProfile(username: string, page = 1): Promise<{
+  profile: PublicProfile
+  writings: PublicWriting[]
+  page: number
+}> {
+  const res = await fetch(`${API_URL}/profiles/${username}?page=${page}`)
+  if (!res.ok) throw new Error('Profile not found')
+  return res.json() as Promise<{ profile: PublicProfile; writings: PublicWriting[]; page: number }>
+}

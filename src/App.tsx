@@ -9,6 +9,8 @@ import { ProfileEditPage } from '@/routes/profile/ProfileEditPage'
 import { FolderPage } from '@/routes/folder/FolderPage'
 import { AuthCallbackPage } from '@/routes/auth-callback/AuthCallbackPage'
 import { ExplorePage } from '@/routes/explore/ExplorePage'
+import { PublicWritingPage } from '@/routes/public-writing/PublicWritingPage'
+import { PublicProfilePage } from '@/routes/public-profile/PublicProfilePage'
 
 export default function App() {
   return (
@@ -32,8 +34,8 @@ export default function App() {
         </Route>
 
         {/* Perfis e textos públicos */}
-        <Route path="/u/:username" element={<div>Perfil público</div>} />
-        <Route path="/u/:username/:slug" element={<div>Texto público</div>} />
+        <Route path="/u/:username" element={<PublicProfilePage />} />
+        <Route path="/u/:username/:slug" element={<PublicWritingPage />} />
 
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

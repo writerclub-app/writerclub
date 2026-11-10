@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Loading } from '@awakr/awake-ui/loading'
+import { Button } from '@awakr/awake-ui/button'
 import { fetchPublicWritings } from '@/services/api.service'
 import './ExplorePage.css'
 
@@ -97,13 +98,13 @@ export function ExplorePage() {
 
             {hasMore && (
               <div className="explore-more">
-                <button
-                  className="explore-more__btn"
+                <Button
+                  variant="outline"
                   onClick={loadMore}
                   disabled={loadingMore}
                 >
                   {loadingMore ? <Loading size="sm" label={t('explore.loading_more')} /> : t('explore.load_more')}
-                </button>
+                </Button>
               </div>
             )}
           </>

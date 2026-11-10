@@ -185,5 +185,14 @@
     "load_more": "Carica altri",
     "empty": "Nessun testo pubblicato ancora.",
     "anonymous": "Anonimo"
+  },
+  "public": {
+    "loading": "Caricamento…",
+    "not_found": "Testo non trovato.",
+    "profile_not_found": "Profilo non trovato.",
+    "back_explore": "Torna a Esplora",
+    "no_writings": "Nessun testo pubblicato ancora.",
+    "writings_one": "{{count}} testo",
+    "writings_other": "{{count}} testi"
   }
 }
