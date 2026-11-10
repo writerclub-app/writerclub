@@ -74,7 +74,9 @@
     "modal_cancel": "Annulla",
     "char_count": "{{count}} caratteri",
     "folder_picker": "Scegli cartella",
-    "no_folder": "Nessuna cartella"
+    "no_folder": "Nessuna cartella",
+    "toast_saved": "Scrittura salvata!",
+    "toast_published": "Pubblicato con successo!"
   },
   "profile": {
     "title": "Profilo",
@@ -144,7 +146,8 @@
     "cancel": "Annulla",
     "options": "Opzioni",
     "delete": "Elimina",
-    "cannot_undo": "Questa azione non può essere annullata."
+    "cannot_undo": "Questa azione non può essere annullata.",
+    "edit": "Modifica"
   },
   "writing": {
     "delete": "Elimina testo",

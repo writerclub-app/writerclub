@@ -15,7 +15,7 @@ import { EditorToolbar } from '@/components/editor/EditorToolbar'
 import { FolderPicker } from '@/components/editor/FolderPicker'
 import { useWritingEditor } from '@/hooks/useWritingEditor'
 import { getWriting } from '@/services/writing.service'
-import { getCategories } from '@/services/category.service'
+import { seedDefaultCategories } from '@/services/category.service'
 import { loadToken } from '@/services/auth.service'
 import { useUsername } from '@/contexts/UsernameContext'
 import type { Writing } from '@/types/writing'
@@ -29,7 +29,7 @@ function countWords(text: string): number {
 export function EditorPage() {
   const { id } = useParams<{ id?: string }>()
   const { t } = useTranslation()
-  const token = loadToken()
+  const tokenRef = useRef(loadToken())
   const { hasUsername, openModal } = useUsername()
 
   const [writing, setWriting] = useState<Writing | undefined>()
@@ -40,12 +40,13 @@ export function EditorPage() {
   const titleRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
+    const token = tokenRef.current
     if (!token) return
-    void getCategories(token.authId).then(setCategories)
+    void seedDefaultCategories(token.authId).then(setCategories)
     if (id) {
       void getWriting(id).then((w) => { setWriting(w); setLoaded(true) })
     }
-  }, [id, token])
+  }, [id])
 
   const {
     title, setTitle,
@@ -110,13 +111,15 @@ export function EditorPage() {
           {categories.length > 0 && (
             <div className="editor-type-picker" role="group">
               {categories.map((cat) => (
-                <button
+                <Button
                   key={cat.id}
+                  variant={categoryName === cat.name ? 'primary' : 'ghost'}
+                  size="sm"
                   className={`editor-type-btn${categoryName === cat.name ? ' editor-type-btn--active' : ''}`}
                   onClick={() => selectCategory(cat.id, cat.name)}
                 >
                   {cat.name}
-                </button>
+                </Button>
               ))}
             </div>
           )}

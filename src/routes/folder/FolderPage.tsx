@@ -119,7 +119,7 @@ export function FolderPage() {
                 key={w.id}
                 writing={w}
                 onClick={() => void navigate(`/writings/${w.id}`)}
-                onDelete={() => setDeletingWriting(w)}
+                onEdit={() => void navigate(`/writings/${w.id}`)} onDelete={() => setDeletingWriting(w)}
               />
             ))}
           </div>

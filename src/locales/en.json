@@ -74,7 +74,9 @@
     "modal_cancel": "Cancel",
     "char_count": "{{count}} characters",
     "folder_picker": "Choose folder",
-    "no_folder": "No folder"
+    "no_folder": "No folder",
+    "toast_saved": "Writing saved!",
+    "toast_published": "Published successfully!"
   },
   "profile": {
     "title": "Profile",
@@ -144,7 +146,8 @@
     "cancel": "Cancel",
     "options": "Options",
     "delete": "Delete",
-    "cannot_undo": "This action cannot be undone."
+    "cannot_undo": "This action cannot be undone.",
+    "edit": "Edit"
   },
   "writing": {
     "delete": "Delete writing",

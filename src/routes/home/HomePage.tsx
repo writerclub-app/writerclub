@@ -131,7 +131,7 @@ export function HomePage() {
           ) : (
             <div className="home-list">
               {filtered.map((w) => (
-                <WritingCard key={w.id} writing={w} onClick={() => void navigate(`/writings/${w.id}`)} onDelete={() => setDeletingWriting(w)} />
+                <WritingCard key={w.id} writing={w} onClick={() => void navigate(`/writings/${w.id}`)} onEdit={() => void navigate(`/writings/${w.id}`)} onDelete={() => setDeletingWriting(w)} />
               ))}
             </div>
           )}

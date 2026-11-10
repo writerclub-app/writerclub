@@ -1,5 +1,10 @@
 @import 'tailwindcss';
 
+/* ── Writing item wrapper (card + actions) ── */
+.writing-item {
+  @apply flex flex-col;
+}
+
 .writing-card {
   @apply cursor-pointer transition-colors duration-150;
 }
@@ -9,19 +14,12 @@
 }
 
 .writing-card__content {
-  @apply flex flex-col gap-1.5 p-3.5;
+  @apply flex flex-col gap-2 p-3.5;
 }
 
-.writing-card__meta {
-  @apply flex items-center flex-wrap gap-1.5;
-}
-
-.writing-card__type-badge {
-  @apply flex items-center gap-1 text-[0.72rem] rounded-full;
-}
-
-.writing-card__status-badge {
-  @apply text-[0.68rem] rounded;
+/* Top row */
+.writing-card__header {
+  @apply flex items-start justify-between gap-2;
 }
 
 .writing-card__title {
@@ -31,26 +29,84 @@
   -webkit-box-orient: vertical;
 }
 
+/* Type badge — pill, colored per category */
+.writing-card__type-badge {
+  @apply text-[0.68rem] font-semibold rounded-full flex-shrink-0;
+  padding: 2px 8px;
+}
+
+.writing-card__type-badge--poem {
+  background-color: rgba(139, 92, 246, 0.15);
+  color: #A78BFA;
+}
+
+.writing-card__type-badge--music {
+  background-color: rgba(236, 72, 153, 0.15);
+  color: #F472B6;
+}
+
+.writing-card__type-badge--chronicle {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #60A5FA;
+}
+
+.writing-card__type-badge--story {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: #FBBF24;
+}
+
+/* Preview */
+.writing-card__preview {
+  @apply text-sm m-0 leading-snug overflow-hidden;
+  color: var(--color-awake-text-muted, currentColor);
+  opacity: 0.75;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Bottom row */
+.writing-card__footer {
+  @apply flex items-center justify-between gap-2;
+}
+
 .writing-card__date {
   @apply text-xs m-0 opacity-60;
   color: var(--color-awake-text-muted, currentColor);
 }
 
-/* Botão de delete */
-.writing-card__content {
-  @apply relative;
+/* Status badge — slightly rounded */
+.writing-card__status-badge {
+  @apply text-[0.68rem];
+  border-radius: 6px;
 }
 
-.writing-card__delete-btn {
-  @apply absolute bottom-3 right-3 transition-colors;
-  color: var(--color-awake-text-muted, #888);
-  opacity: 0.45;
-  padding: 6px;
+/* ── Actions row below card ── */
+.writing-item__actions {
+  @apply flex items-center gap-1 px-1 pb-1;
 }
 
-.writing-card__delete-btn:hover,
-.writing-card__delete-btn:active {
+.writing-item__btn {
+  @apply text-xs font-medium;
+  opacity: 0.7;
+}
+
+.writing-item__btn--edit {
+  color: #4ADE80;
+}
+
+.writing-item__btn--edit:hover,
+.writing-item__btn--edit:active {
+  color: #22C55E;
+  opacity: 1;
+}
+
+.writing-item__btn--delete {
+  color: #F87171;
+}
+
+.writing-item__btn--delete:hover,
+.writing-item__btn--delete:active {
   color: #DC2626;
-  background-color: rgba(220, 38, 38, 0.08);
   opacity: 1;
 }

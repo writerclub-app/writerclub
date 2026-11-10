@@ -74,7 +74,9 @@
     "modal_cancel": "Cancelar",
     "char_count": "{{count}} caracteres",
     "folder_picker": "Escolher pasta",
-    "no_folder": "Sem pasta"
+    "no_folder": "Sem pasta",
+    "toast_saved": "Escrita salva!",
+    "toast_published": "Publicado com sucesso!"
   },
   "profile": {
     "title": "Dados do perfil",
@@ -144,7 +146,8 @@
     "cancel": "Cancelar",
     "options": "Opções",
     "delete": "Excluir",
-    "cannot_undo": "Esta ação não pode ser desfeita."
+    "cannot_undo": "Esta ação não pode ser desfeita.",
+    "edit": "Editar"
   },
   "writing": {
     "delete": "Excluir texto",

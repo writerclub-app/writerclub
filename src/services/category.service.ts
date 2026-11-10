@@ -12,3 +12,14 @@ export async function createCategory(data: CategoryCreate): Promise<Category> {
   await db.categories.add(category)
   return category
 }
+
+const DEFAULT_CATEGORIES = ['Poema', 'Música', 'Conto', 'Crônica']
+
+export async function seedDefaultCategories(authorId: string): Promise<Category[]> {
+  const existing = await getCategories(authorId)
+  if (existing.length > 0) return existing
+  const created = await Promise.all(
+    DEFAULT_CATEGORIES.map((name) => createCategory({ name, authorId }))
+  )
+  return created
+}

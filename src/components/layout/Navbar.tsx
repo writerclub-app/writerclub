@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Avatar } from '@awakr/awake-ui/avatar'
+import { Button } from '@awakr/awake-ui/button'
 import { GlobalControls } from '@/components/ui/GlobalControls'
 import { useAvatar } from '@/hooks/useAvatar'
 import { loadToken } from '@/services/auth.service'
@@ -41,6 +42,9 @@ export function Navbar() {
           ))}
         </nav>
         <div className="navbar-actions">
+          <Button variant="primary" size="sm" onClick={() => navigate('/writings/new')}>
+            {t('nav.new')}
+          </Button>
           <GlobalControls />
           <button
             className="navbar-avatar"

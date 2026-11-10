@@ -1,6 +1,8 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import type { Editor } from '@tiptap/react'
+import { useToast } from '@awakr/awake-ui/toast'
 import { loadToken } from '@/services/auth.service'
 import { createWriting, updateWriting } from '@/services/writing.service'
 import type { Writing } from '@/types/writing'
@@ -13,6 +15,8 @@ interface UseWritingEditorOptions {
 
 export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
   const navigate = useNavigate()
+  const { t } = useTranslation()
+  const { toast } = useToast()
   const token = loadToken()
 
   const [title, setTitle] = useState(writing?.title ?? '')
@@ -25,6 +29,18 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
   const [writingId, setWritingId] = useState<string | null>(writing?.id ?? null)
 
   const editorRef = useRef<Editor | null>(null)
+
+  // Sync state when writing loads async (edit mode) — dep on id only to avoid object churn
+  useEffect(() => {
+    if (!writing) return
+    setTitle(writing.title ?? '')
+    setCategoryId(writing.categoryId ?? '')
+    setCategoryName(writing.categoryName ?? '')
+    setFolderId(writing.folderId)
+    setIsPublic(writing.isPublic ?? false)
+    setWritingId(writing.id ?? null)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [writing?.id])
 
   const getContent = useCallback(() => {
     if (!editorRef.current) return ''
@@ -61,11 +77,16 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
       }
       setSaveStatus('saved')
       if (pub && overridePublic) setIsPublic(true)
-      setTimeout(() => setSaveStatus('idle'), 2000)
+      toast({
+        message: pub && overridePublic ? t('editor.toast_published') : t('editor.toast_saved'),
+        variant: pub && overridePublic ? 'success' : 'info',
+      })
+      setTimeout(() => { setSaveStatus('idle'); void navigate('/') }, 1200)
     } catch {
       setSaveStatus('error')
     }
-  }, [token, title, categoryId, categoryName, folderId, isPublic, writingId, getContent])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token, title, categoryId, categoryName, folderId, isPublic, writingId, getContent, t, toast])
 
   const publish = useCallback(async () => {
     setShowPublishModal(false)
