@@ -13,6 +13,7 @@ import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { db } from '@/db'
 import { loadToken } from '@/services/auth.service'
 import { fetchMyProfile } from '@/services/api.service'
+import { useSyncBackup } from '@/hooks/useSyncBackup'
 import type { Writing } from '@/types/writing'
 import type { Folder } from '@/types/folder'
 import './HomePage.css'
@@ -37,6 +38,8 @@ export function HomePage() {
   const [deletingWriting, setDeletingWriting] = useState<Writing | undefined>()
   const [deletingFolder, setDeletingFolder] = useState<Folder | undefined>()
 
+  const { restoreIfEmpty } = useSyncBackup()
+
   useEffect(() => {
     void Promise.all([
       db.writings.toArray(),
@@ -45,8 +48,9 @@ export function HomePage() {
       setWritings(w)
       setFolders(f)
       setLoading(false)
+      void restoreIfEmpty()
     })
-  }, [])
+  }, [restoreIfEmpty])
 
   // Fetch real username from Worker on mount; create profile if it doesn't exist yet
   useEffect(() => {
