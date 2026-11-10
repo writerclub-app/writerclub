@@ -80,6 +80,21 @@ export async function syncProfile(authId: string, profile: {
   })
 }
 
+/** Busca o perfil do usuário autenticado (username real do D1). */
+export async function fetchMyProfile(authId: string): Promise<{ username: string; displayName: string | null; bio: string | null; avatarUrl: string | null } | null> {
+  try {
+    const token = await getToken(authId)
+    const res = await fetch(`${API_URL}/profiles/me`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    if (!res.ok) return null
+    const { profile } = await res.json() as { profile: { username: string; display_name: string | null; bio: string | null; avatar_url: string | null } }
+    return { username: profile.username, displayName: profile.display_name, bio: profile.bio, avatarUrl: profile.avatar_url }
+  } catch {
+    return null
+  }
+}
+
 export interface PublicWriting {
   id: string
   title: string

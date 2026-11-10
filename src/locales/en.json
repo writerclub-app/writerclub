@@ -51,7 +51,8 @@
     "writings_count": "{{count}} writing",
     "writings_count_plural": "{{count}} writings",
     "draft": "Draft",
-    "published": "Published"
+    "published": "Published",
+    "access_public_url": "Access public URL"
   },
   "editor": {
     "placeholder": "Start writing…",
@@ -184,7 +185,11 @@
     "loading_more": "Loading…",
     "load_more": "Load more",
     "empty": "No writings published yet.",
-    "anonymous": "Anonymous"
+    "anonymous": "Anonymous",
+    "search_placeholder": "Search writings or @username...",
+    "user_not_found": "User @{{username}} not found",
+    "no_results": "No results found",
+    "results_count": "{{count}} result(s)"
   },
   "public": {
     "loading": "Loading…",
@@ -193,6 +198,15 @@
     "back_explore": "Back to Explore",
     "no_writings": "No writings published yet.",
     "writings_one": "{{count}} writing",
-    "writings_other": "{{count}} writings"
+    "writings_other": "{{count}} writings",
+    "disclaimer": "User-generated content.",
+    "follow": "Follow",
+    "words": "words",
+    "read": "read",
+    "like": "Like",
+    "share": "Share",
+    "save": "Save",
+    "more_from": "More from",
+    "see_all_writings": "See all writings"
   }
 }

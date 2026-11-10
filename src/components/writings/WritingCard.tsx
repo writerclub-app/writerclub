@@ -10,6 +10,7 @@ interface Props {
   onClick: () => void
   onEdit?: () => void
   onDelete?: () => void
+  authorUsername?: string
 }
 
 function extractPreview(content: string | undefined, maxLen = 120): string {
@@ -33,7 +34,7 @@ function formatDate(date: Date): string {
   return new Intl.DateTimeFormat(undefined, { day: '2-digit', month: 'short' }).format(new Date(date))
 }
 
-export function WritingCard({ writing, onClick, onEdit, onDelete }: Props) {
+export function WritingCard({ writing, onClick, onEdit, onDelete, authorUsername }: Props) {
   const { t } = useTranslation()
   const preview = extractPreview(writing.content)
   return (
@@ -68,7 +69,7 @@ export function WritingCard({ writing, onClick, onEdit, onDelete }: Props) {
       </Card.Root>
 
       {/* Actions below card */}
-      {(onEdit || onDelete) && (
+      {(onEdit || onDelete || (writing.isPublic && authorUsername)) && (
         <div className="writing-item__actions">
           {onEdit && (
             <Button variant="ghost" size="sm" className="writing-item__btn writing-item__btn--edit"
@@ -81,6 +82,17 @@ export function WritingCard({ writing, onClick, onEdit, onDelete }: Props) {
               onClick={(e) => { e.stopPropagation(); onDelete() }}>
               {t('common.delete')}
             </Button>
+          )}
+          {writing.isPublic && authorUsername && (
+            <a
+              href={`/u/${authorUsername}/${writing.slug}-${writing.id.slice(0, 8)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="writing-item__btn writing-item__btn--public-url"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {t('home.access_public_url')}
+            </a>
           )}
         </div>
       )}

@@ -11,6 +11,8 @@ import { deleteFolder } from '@/services/folder.service'
 import { deleteWriting } from '@/services/writing.service'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { db } from '@/db'
+import { loadToken } from '@/services/auth.service'
+import { fetchMyProfile, syncProfile } from '@/services/api.service'
 import type { Writing } from '@/types/writing'
 import type { Folder } from '@/types/folder'
 import './HomePage.css'
@@ -25,6 +27,9 @@ export function HomePage() {
   const [writings, setWritings] = useState<Writing[]>([])
   const [folders, setFolders] = useState<Folder[]>([])
   const [loading, setLoading] = useState(true)
+  const [authorUsername, setAuthorUsername] = useState<string | undefined>(() => {
+    try { return sessionStorage.getItem('wc_username') ?? undefined } catch { return undefined }
+  })
 
   // FolderModal state
   const [modalOpen, setModalOpen] = useState(false)
@@ -40,6 +45,24 @@ export function HomePage() {
       setWritings(w)
       setFolders(f)
       setLoading(false)
+    })
+  }, [])
+
+  // Fetch real username from Worker on mount; create profile if it doesn't exist yet
+  useEffect(() => {
+    const token = loadToken()
+    if (!token?.authId) return
+    const derived = token.email
+      ? token.email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '')
+      : token.authId.slice(0, 12)
+    void fetchMyProfile(token.authId).then(async (profile) => {
+      if (profile?.username) {
+        setAuthorUsername(profile.username)
+        try { sessionStorage.setItem('wc_username', profile.username) } catch { /* ignore */ }
+      } else {
+        // Profile not found in Worker yet — use derived as temporary fallback
+        setAuthorUsername(derived)
+      }
     })
   }, [])
 
@@ -131,7 +154,7 @@ export function HomePage() {
           ) : (
             <div className="home-list">
               {filtered.map((w) => (
-                <WritingCard key={w.id} writing={w} onClick={() => void navigate(`/writings/${w.id}`)} onEdit={() => void navigate(`/writings/${w.id}`)} onDelete={() => setDeletingWriting(w)} />
+                <WritingCard key={w.id} writing={w} onClick={() => void navigate(`/writings/${w.id}`)} onEdit={() => void navigate(`/writings/${w.id}`)} onDelete={() => setDeletingWriting(w)} authorUsername={authorUsername} />
               ))}
             </div>
           )}
