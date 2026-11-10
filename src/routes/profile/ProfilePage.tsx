@@ -1,220 +1,126 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@awakr/awake-ui/button'
 import { Avatar } from '@awakr/awake-ui/avatar'
-import { Field } from '@awakr/awake-ui/field'
 import { Separator } from '@awakr/awake-ui/separator'
-import { useToast } from '@awakr/awake-ui/toast'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
-import { LanguageSelector } from '@/components/ui/LanguageSelector'
-import { PaletteSelector } from '@/components/ui/PaletteSelector'
-import { ArrowLeftIcon, LockIcon, LogoutIcon } from '@/components/ui/icons'
+import { EditIcon } from '@/components/ui/icons'
 import { useAvatar } from '@/hooks/useAvatar'
 import { useUsername } from '@/contexts/UsernameContext'
-import { loadToken, clearToken } from '@/services/auth.service'
+import { loadToken } from '@/services/auth.service'
 import { db } from '@/db'
+import type { Writing } from '@/types/writing'
 import './ProfilePage.css'
-
-const BIO_MAX = 160
-const NAME_MAX = 50
 
 export function ProfilePage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { toast } = useToast()
   const token = loadToken()
-  const { username, openModal } = useUsername()
+  const { username } = useUsername()
 
   const [displayName, setDisplayName] = useState(token?.displayName ?? '')
   const [bio, setBio] = useState('')
-  const [saving, setSaving] = useState(false)
+  const [writingCount, setWritingCount] = useState(0)
+  const [recentWritings, setRecentWritings] = useState<Writing[]>([])
 
   const avatarSrc = useAvatar(token?.avatarUrl)
   const initials = displayName.trim()[0]?.toUpperCase() ?? '?'
 
-  // Load profile from local DB
   useEffect(() => {
     if (!token) return
     void db.profile.where('authId').equals(token.authId).first().then((p) => {
-      if (p?.bio) setBio(p.bio)
       if (p?.displayName) setDisplayName(p.displayName)
+      if (p?.bio) setBio(p.bio)
     })
+    void db.writings.count().then(setWritingCount)
+    void db.writings.orderBy('updatedAt').reverse().limit(5).toArray().then(setRecentWritings)
   }, [token])
-
-  async function handleSave() {
-    if (!token) return
-    setSaving(true)
-    try {
-      const existing = await db.profile.where('authId').equals(token.authId).first()
-      if (existing) {
-        await db.profile.update(existing.id, {
-          displayName,
-          bio,
-          updatedAt: new Date(),
-        })
-      } else {
-        await db.profile.put({
-          id: crypto.randomUUID(),
-          authId: token.authId,
-          username: '',
-          displayName,
-          email: token.email,
-          bio,
-          avatarUrl: token.avatarUrl,
-          oauthProvider: token.provider,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        })
-      }
-      toast({ message: t('profile.saved'), variant: 'success' })
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  function handleLogout() {
-    clearToken()
-    navigate('/login', { replace: true })
-  }
 
   return (
     <div className="profile-page">
-      {/* Topbar */}
       <header className="profile-topbar">
-        <div className="profile-topbar__left">
-          <Button variant="ghost" size="sm" className="profile-btn-back" onClick={() => navigate(-1)} aria-label={t('editor.back')}>
-            <ArrowLeftIcon />
+        <span className="profile-topbar__title">{t('profile.view_title', 'Meu Perfil')}</span>
+        <div className="profile-topbar__right">
+          <ThemeToggle />
+          <Button
+            variant="ghost"
+            size="sm"
+            className="profile-btn-edit"
+            onClick={() => navigate('/profile/edit')}
+            aria-label={t('profile.edit')}
+          >
+            <EditIcon />
+            {t('profile.edit', 'Editar')}
           </Button>
-          <span className="profile-topbar__title">{t('profile.title')}</span>
         </div>
-        <ThemeToggle />
       </header>
 
-      <main className="profile-main">
+      <main className="profile-main profile-main--view">
 
-        {/* Avatar */}
-        <div className="profile-avatar-section">
-          <div className="profile-avatar-wrap">
-            <Avatar
-              src={avatarSrc}
-              alt={initials}
-              fallback={<span>{initials}</span>}
-              size="lg"
-              className="profile-avatar"
-            />
-          </div>
-          <span className="profile-avatar-hint">{t('profile.avatar_hint')}</span>
-        </div>
-
-        {/* Form */}
-        <div className="profile-form">
-
-          {/* Display name */}
-          <Field.Root className="profile-field">
-            <Field.Label className="profile-field__label">
-              {t('profile.name_label')}
-              <span className={`profile-char-count${displayName.length > NAME_MAX * 0.9 ? ' profile-char-count--warn' : ''}`}>
-                {displayName.length} / {NAME_MAX}
-              </span>
-            </Field.Label>
-            <Field.Control
-              className="profile-field__input"
-              value={displayName}
-              maxLength={NAME_MAX}
-              placeholder={t('profile.name_placeholder')}
-              onChange={(e) => setDisplayName((e.target as HTMLInputElement).value)}
-            />
-          </Field.Root>
-
-          {/* Username — readonly */}
-          <Field.Root className="profile-field">
-            <Field.Label className="profile-field__label">{t('profile.username_label')}</Field.Label>
-            <Field.Control
-              className="profile-field__input profile-field__input--readonly"
-              value={username ? `@${username}` : ''}
-              placeholder={t('profile.username_not_set', '@—')}
-              readOnly
-            />
-            {username ? (
-              <div className="profile-field__lock">
-                <LockIcon />
-                {t('profile.username_locked')}
-              </div>
-            ) : (
-              <Button variant="ghost" className="profile-field__lock profile-field__lock--choose" onClick={openModal}>
-                {t('profile.username_choose', 'Escolher @username')}
-              </Button>
+        {/* Header do perfil */}
+        <div className="profile-view-header">
+          <Avatar
+            src={avatarSrc}
+            alt={initials}
+            fallback={<span>{initials}</span>}
+            size="lg"
+            className="profile-avatar"
+          />
+          <div className="profile-view-info">
+            <div className="profile-view-name">{displayName || t('profile.name_placeholder')}</div>
+            {username && (
+              <div className="profile-view-username">@{username}</div>
             )}
-          </Field.Root>
-
-          {/* Bio */}
-          <Field.Root className="profile-field">
-            <Field.Label className="profile-field__label">
-              {t('profile.bio_label')}
-              <span className={`profile-char-count${bio.length > BIO_MAX * 0.9 ? ' profile-char-count--warn' : ''}`}>
-                {bio.length} / {BIO_MAX}
-              </span>
-            </Field.Label>
-            <Field.Control
-              render={<textarea />}
-              className="profile-field__input profile-field__input--textarea"
-              value={bio}
-              maxLength={BIO_MAX}
-              placeholder={t('profile.bio_placeholder')}
-              onChange={(e) => setBio((e.target as HTMLTextAreaElement).value)}
-            />
-          </Field.Root>
-
-          <Separator className="profile-sep" />
-
-          {/* Appearance */}
-          <div className="profile-section-title">{t('profile.appearance')}</div>
-
-          <div className="profile-setting-row">
-            <div className="profile-setting-row__left">
-              <span className="profile-setting-row__icon">🎨</span>
-              <span className="profile-setting-row__label">{t('palette.label')}</span>
-            </div>
-            <PaletteSelector />
+            {bio && (
+              <p className="profile-view-bio">{bio}</p>
+            )}
           </div>
-
-          <div className="profile-setting-row">
-            <div className="profile-setting-row__left">
-              <span className="profile-setting-row__icon">🌐</span>
-              <span className="profile-setting-row__label">{t('profile.language')}</span>
-            </div>
-            <LanguageSelector />
-          </div>
-
-          <Separator className="profile-sep" />
-
-          {/* Save */}
-          <Button
-            variant="primary"
-            className="profile-btn-save"
-            onClick={() => void handleSave()}
-            disabled={saving}
-          >
-            {saving ? t('profile.saving') : t('profile.save')}
-          </Button>
-
-          <Separator className="profile-sep" />
-
-          {/* Danger zone */}
-          <div className="profile-danger-zone">
-            <div className="profile-danger-title">{t('profile.danger_zone')}</div>
-            <Button
-              variant="ghost"
-              className="profile-btn-logout"
-              onClick={handleLogout}
-            >
-              <LogoutIcon />
-              {t('profile.logout')}
-            </Button>
-          </div>
-
         </div>
+
+        {/* Stats */}
+        <div className="profile-view-stats">
+          <div className="profile-stat">
+            <span className="profile-stat__num">{writingCount}</span>
+            <span className="profile-stat__label">{t('profile.stat_texts', 'Textos')}</span>
+          </div>
+          <div className="profile-stat">
+            <span className="profile-stat__num">0</span>
+            <span className="profile-stat__label">{t('profile.stat_followers', 'Seguidores')}</span>
+          </div>
+          <div className="profile-stat">
+            <span className="profile-stat__num">0</span>
+            <span className="profile-stat__label">{t('profile.stat_following', 'Seguindo')}</span>
+          </div>
+        </div>
+
+        <Separator className="profile-sep" />
+
+        {/* Textos recentes */}
+        <div className="profile-section-title">{t('profile.recent_writings', 'Textos recentes')}</div>
+
+        {recentWritings.length === 0 ? (
+          <div className="profile-empty">
+            <span className="profile-empty__icon">✍️</span>
+            <span className="profile-empty__text">{t('profile.no_writings', 'Nenhum texto ainda')}</span>
+          </div>
+        ) : (
+          <div className="profile-writing-list">
+            {recentWritings.map((w) => (
+              <button
+                key={w.id}
+                className="profile-writing-item"
+                onClick={() => navigate(`/writings/${w.id}`)}
+              >
+                <span className="profile-writing-item__title">{w.title || t('editor.untitled')}</span>
+                <span className="profile-writing-item__date">
+                  {new Date(w.updatedAt).toLocaleDateString()}
+                </span>
+              </button>
+            ))}
+          </div>
+        )}
+
       </main>
     </div>
   )

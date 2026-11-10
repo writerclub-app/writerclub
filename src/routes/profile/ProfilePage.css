@@ -223,3 +223,126 @@
   color: var(--color-awake-brand, #6366f1);
   text-decoration-style: dashed;
 }
+
+/* ── VIEW MODE ── */
+.profile-topbar__right {
+  @apply flex items-center;
+  gap: 8px;
+}
+
+.profile-btn-edit {
+  @apply flex items-center;
+  gap: 6px;
+  font-size: 0.875rem;
+}
+
+.profile-main--view {
+  max-width: 560px;
+}
+
+.profile-view-header {
+  @apply flex items-start;
+  gap: 20px;
+  padding-block: 24px 20px;
+}
+
+.profile-view-info {
+  @apply flex flex-col flex-1;
+  gap: 4px;
+}
+
+.profile-view-name {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.2rem;
+  @apply font-semibold;
+  color: var(--color-awake-text, inherit);
+}
+
+.profile-view-username {
+  font-size: 0.875rem;
+  @apply font-medium;
+  color: var(--color-awake-text-muted, #888);
+}
+
+.profile-view-bio {
+  font-size: 0.875rem;
+  color: var(--color-awake-text-muted, #666);
+  line-height: 1.6;
+  font-style: italic;
+  margin-top: 6px;
+}
+
+/* Stats */
+.profile-view-stats {
+  @apply flex;
+  gap: 32px;
+  padding-block: 16px 20px;
+}
+
+.profile-stat {
+  @apply flex flex-col items-center;
+  gap: 2px;
+}
+
+.profile-stat__num {
+  font-size: 1.1rem;
+  @apply font-semibold;
+  color: var(--color-awake-text, inherit);
+  font-variant-numeric: tabular-nums;
+}
+
+.profile-stat__label {
+  font-size: 0.72rem;
+  @apply uppercase font-semibold;
+  letter-spacing: 0.05em;
+  color: var(--color-awake-text-muted, #aaa);
+}
+
+/* Recent writings */
+.profile-writing-list {
+  @apply flex flex-col;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.profile-writing-item {
+  @apply flex items-center justify-between w-full text-left cursor-pointer;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--color-awake-border);
+  background-color: var(--color-awake-bg-raised, rgba(128,128,128,0.04));
+  transition: border-color 0.12s, background 0.12s;
+}
+
+.profile-writing-item:hover {
+  border-color: var(--color-awake-border-strong, #94a3b8);
+  background-color: var(--color-awake-bg-hover, rgba(128,128,128,0.08));
+}
+
+.profile-writing-item__title {
+  font-size: 0.9rem;
+  @apply font-medium;
+  color: var(--color-awake-text, inherit);
+}
+
+.profile-writing-item__date {
+  font-size: 0.75rem;
+  color: var(--color-awake-text-muted, #aaa);
+  @apply flex-shrink-0;
+}
+
+/* Empty */
+.profile-empty {
+  @apply flex flex-col items-center;
+  gap: 8px;
+  padding: 40px 0;
+}
+
+.profile-empty__icon {
+  font-size: 2rem;
+}
+
+.profile-empty__text {
+  font-size: 0.875rem;
+  color: var(--color-awake-text-muted, #aaa);
+}

@@ -90,7 +90,14 @@
     "danger_zone": "Zona de peligro",
     "logout": "Cerrar sesión",
     "username_not_set": "@—",
-    "username_choose": "Elegir @username"
+    "username_choose": "Elegir @username",
+    "view_title": "Mi Perfil",
+    "edit": "Editar",
+    "stat_texts": "Textos",
+    "stat_followers": "Seguidores",
+    "stat_following": "Siguiendo",
+    "recent_writings": "Escritos recientes",
+    "no_writings": "Sin escritos aún"
   },
   "username_setup": {
     "title": "Elige tu nombre de escritor",

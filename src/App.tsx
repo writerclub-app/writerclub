@@ -5,6 +5,7 @@ import { LoginPage } from '@/routes/login/LoginPage'
 import { HomePage } from '@/routes/home/HomePage'
 import { EditorPage } from '@/routes/editor/EditorPage'
 import { ProfilePage } from '@/routes/profile/ProfilePage'
+import { ProfileEditPage } from '@/routes/profile/ProfileEditPage'
 import { FolderPage } from '@/routes/folder/FolderPage'
 import { AuthCallbackPage } from '@/routes/auth-callback/AuthCallbackPage'
 
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="/writings/:id" element={<EditorPage />} />
             <Route path="/folders/:id" element={<FolderPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile/edit" element={<ProfileEditPage />} />
           </Route>
         </Route>
 
