@@ -38,7 +38,7 @@ export function ConfirmDialog({ open, title, description, confirmLabel, onConfir
         <p id="cdialog-title" className="cdialog-title">{title}</p>
         {description && <p className="cdialog-desc">{description}</p>}
         <div className="cdialog-actions">
-          <Button variant="danger" className="cdialog-btn" onClick={onConfirm}>
+          <Button variant="destructive" className="cdialog-btn" onClick={onConfirm}>
             {confirmLabel ?? t('common.delete')}
           </Button>
           <Button variant="ghost" className="cdialog-btn cdialog-btn--cancel" onClick={onCancel}>

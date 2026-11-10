@@ -39,16 +39,15 @@ export function FollowListPage({ type }: Props) {
     setPage(1)
     setHasMore(false)
 
-    const fetcher = type === 'followers'
-      ? fetchFollowers(username, 1)
-      : fetchFollowing(username, 1)
+    const promise = type === 'followers'
+      ? fetchFollowers(username, 1).then(res => ({ list: res.followers, total: res.total }))
+      : fetchFollowing(username, 1).then(res => ({ list: res.following, total: res.total }))
 
-    fetcher
-      .then(res => {
-        const list = type === 'followers' ? res.followers : res.following
-        setUsers(list as FollowUser[])
-        setTotal(res.total)
-        setHasMore((list as FollowUser[]).length === LIMIT)
+    promise
+      .then(({ list, total }) => {
+        setUsers(list)
+        setTotal(total)
+        setHasMore(list.length === LIMIT)
       })
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false))
@@ -60,15 +59,14 @@ export function FollowListPage({ type }: Props) {
     setPage(next)
     setLoadingMore(true)
 
-    const fetcher = type === 'followers'
-      ? fetchFollowers(username, next)
-      : fetchFollowing(username, next)
+    const promise = type === 'followers'
+      ? fetchFollowers(username, next).then(res => ({ list: res.followers }))
+      : fetchFollowing(username, next).then(res => ({ list: res.following }))
 
-    fetcher
-      .then(res => {
-        const list = type === 'followers' ? res.followers : res.following
-        setUsers(prev => [...prev, ...(list as FollowUser[])])
-        setHasMore((list as FollowUser[]).length === LIMIT)
+    promise
+      .then(({ list }) => {
+        setUsers(prev => [...prev, ...list])
+        setHasMore(list.length === LIMIT)
       })
       .catch(() => { /* silent */ })
       .finally(() => setLoadingMore(false))
