@@ -36,7 +36,8 @@
     "home": "Writings",
     "explore": "Explore",
     "new": "New",
-    "profile": "Profile"
+    "profile": "Profile",
+    "feed": "Feed"
   },
   "home": {
     "tab_writings": "Writings",
@@ -148,7 +149,8 @@
     "options": "Options",
     "delete": "Delete",
     "cannot_undo": "This action cannot be undone.",
-    "edit": "Edit"
+    "edit": "Edit",
+    "retry": "Try again"
   },
   "writing": {
     "delete": "Delete writing",
@@ -207,7 +209,8 @@
     "share": "Share",
     "save": "Save",
     "more_from": "More from",
-    "see_all_writings": "See all writings"
+    "see_all_writings": "See all writings",
+    "unlike": "Unlike"
   },
   "follows": {
     "follow": "Follow",
@@ -217,12 +220,11 @@
     "no_followers": "No followers yet.",
     "no_following": "Not following anyone yet."
   },
-  "nav.feed": "Feed",
-  "feed.loading": "Loading feed…",
-  "feed.error": "Failed to load feed.",
-  "feed.empty_title": "Your feed is empty",
-  "feed.empty_body": "Follow writers to see their writings here.",
-  "feed.load_more": "Load more",
-  "public.unlike": "Unlike",
-  "common.retry": "Try again"
+  "feed": {
+    "loading": "Loading feed…",
+    "error": "Failed to load feed.",
+    "empty_title": "Your feed is empty",
+    "empty_body": "Follow writers to see their texts here.",
+    "load_more": "Load more"
+  }
 }

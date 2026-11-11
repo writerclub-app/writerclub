@@ -19,6 +19,7 @@ import { seedDefaultCategories } from '@/services/category.service'
 import { loadToken } from '@/services/auth.service'
 import { useUsername } from '@/contexts/UsernameContext'
 import type { Writing } from '@/types/writing'
+import { ArrowLeftIcon } from '@/components/ui/icons'
 import type { Category } from '@/types/category'
 import './EditorPage.css'
 
@@ -42,7 +43,10 @@ export function EditorPage() {
   useEffect(() => {
     const token = tokenRef.current
     if (!token) return
-    void seedDefaultCategories(token.authId).then(setCategories)
+    void seedDefaultCategories(token.authId).then(setCategories).catch(() => {
+      // Dexie unavailable — keep empty list (user sees no type picker)
+      console.warn('[editor] failed to load categories from Dexie')
+    })
     if (id) {
       void getWriting(id).then((w) => { setWriting(w); setLoaded(true) })
     }
@@ -114,9 +118,7 @@ export function EditorPage() {
       <header className="editor-topbar">
         <div className="editor-topbar__left">
           <Button variant="ghost" size="sm" className="editor-btn-back" onClick={goBack} aria-label={t('editor.back')}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M19 12H5M12 5l-7 7 7 7"/>
-            </svg>
+            <ArrowLeftIcon />
           </Button>
 
           {categories.length > 0 && (

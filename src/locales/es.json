@@ -36,7 +36,8 @@
     "home": "Escritos",
     "explore": "Explorar",
     "new": "Nuevo",
-    "profile": "Perfil"
+    "profile": "Perfil",
+    "feed": "Feed"
   },
   "home": {
     "tab_writings": "Escritos",
@@ -148,7 +149,8 @@
     "options": "Opciones",
     "delete": "Eliminar",
     "cannot_undo": "Esta acción no se puede deshacer.",
-    "edit": "Editar"
+    "edit": "Editar",
+    "retry": "Reintentar"
   },
   "writing": {
     "delete": "Eliminar texto",
@@ -207,7 +209,8 @@
     "share": "Compartir",
     "save": "Guardar",
     "more_from": "Más de",
-    "see_all_writings": "Ver todos los escritos"
+    "see_all_writings": "Ver todos los escritos",
+    "unlike": "No me gusta"
   },
   "follows": {
     "follow": "Seguir",
@@ -217,12 +220,11 @@
     "no_followers": "Aún no hay seguidores.",
     "no_following": "Aún no sigue a nadie."
   },
-  "nav.feed": "Feed",
-  "feed.loading": "Cargando feed…",
-  "feed.error": "Error al cargar el feed.",
-  "feed.empty_title": "Tu feed está vacío",
-  "feed.empty_body": "Sigue a escritores para ver sus textos aquí.",
-  "feed.load_more": "Cargar más",
-  "public.unlike": "Dejar de dar me gusta",
-  "common.retry": "Reintentar"
+  "feed": {
+    "loading": "Cargando feed…",
+    "error": "Error al cargar el feed.",
+    "empty_title": "Tu feed está vacío",
+    "empty_body": "Sigue escritores para ver sus textos aquí.",
+    "load_more": "Cargar más"
+  }
 }

@@ -36,7 +36,8 @@
     "home": "Scritti",
     "explore": "Esplora",
     "new": "Nuovo",
-    "profile": "Profilo"
+    "profile": "Profilo",
+    "feed": "Feed"
   },
   "home": {
     "tab_writings": "Scritti",
@@ -148,7 +149,8 @@
     "options": "Opzioni",
     "delete": "Elimina",
     "cannot_undo": "Questa azione non può essere annullata.",
-    "edit": "Modifica"
+    "edit": "Modifica",
+    "retry": "Riprova"
   },
   "writing": {
     "delete": "Elimina testo",
@@ -207,7 +209,8 @@
     "share": "Condividi",
     "save": "Salva",
     "more_from": "Altro da",
-    "see_all_writings": "Vedi tutti gli scritti"
+    "see_all_writings": "Vedi tutti gli scritti",
+    "unlike": "Non mi piace più"
   },
   "follows": {
     "follow": "Segui",
@@ -217,12 +220,11 @@
     "no_followers": "Ancora nessun follower.",
     "no_following": "Non segui ancora nessuno."
   },
-  "nav.feed": "Feed",
-  "feed.loading": "Caricamento feed…",
-  "feed.error": "Impossibile caricare il feed.",
-  "feed.empty_title": "Il tuo feed è vuoto",
-  "feed.empty_body": "Segui gli scrittori per vedere i loro testi qui.",
-  "feed.load_more": "Carica altri",
-  "public.unlike": "Tolgi mi piace",
-  "common.retry": "Riprova"
+  "feed": {
+    "loading": "Caricamento feed…",
+    "error": "Errore nel caricamento del feed.",
+    "empty_title": "Il tuo feed è vuoto",
+    "empty_body": "Segui scrittori per vedere i loro testi qui.",
+    "load_more": "Carica altri"
+  }
 }
