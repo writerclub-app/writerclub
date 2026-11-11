@@ -7,3 +7,10 @@
   --spacing-3: 12px;
   --spacing-4: 16px;
 }
+
+/* Background do body garante que a barra de navegação do Android
+   (fora do viewport) herde a cor certa em modo escuro */
+body {
+  background-color: var(--color-awake-surface);
+  color: var(--color-awake-text);
+}

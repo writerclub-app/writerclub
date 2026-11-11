@@ -29,6 +29,8 @@
 }
 
 .app-layout__bottom-nav {
+  /* Faz o safe-area-inset (trecho atrás dos botões Android) ter a cor certa */
+  background-color: var(--color-awake-surface);
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
