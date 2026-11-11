@@ -147,7 +147,19 @@ export class GoogleDriveProvider implements BackupProvider {
 
   // ── BackupProvider interface ──────────────────────────────────────────────
 
+  private _uploadBusy = false
+
   async upload(data: Uint8Array, _filename: string): Promise<void> {
+    if (this._uploadBusy) return
+    this._uploadBusy = true
+    try {
+      await this._doUpload(data)
+    } finally {
+      this._uploadBusy = false
+    }
+  }
+
+  private async _doUpload(data: Uint8Array): Promise<void> {
     const token    = await this.ensureToken()
     const folderId = await this.ensureFolder(token)
     const content  = new TextDecoder().decode(data)
