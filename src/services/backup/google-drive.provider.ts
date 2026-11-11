@@ -11,18 +11,21 @@ const UPLOAD_API   = 'https://www.googleapis.com/upload/drive/v3'
 const FOLDER_NAME  = 'WriterClub'
 const FILENAME     = 'writerclub-backup.json'
 
-type TokenResponse = { access_token: string; expires_in: number; error?: string }
-type TokenError     = { type: string; message?: string }
-type TokenClient    = { requestAccessToken: (cfg?: { prompt?: string }) => void }
-type TokenClientCfg = {
+interface TokenResponse  { access_token: string; expires_in: number; error?: string }
+interface TokenError     { type: string; message?: string }
+interface TokenClient    { requestAccessToken: (cfg?: { prompt?: string }) => void }
+interface TokenClientCfg {
   client_id: string
   scope: string
   callback: (r: TokenResponse) => void
   error_callback?: (e: TokenError) => void
 }
+interface GoogleGsi {
+  accounts: { oauth2: { initTokenClient: (cfg: TokenClientCfg) => TokenClient } }
+}
 
-function getGoogle(): { accounts: { oauth2: { initTokenClient: (cfg: TokenClientCfg) => TokenClient } } } | null {
-  return (window as unknown as { google?: typeof getGoogle extends () => infer R ? R : never }).google ?? null
+function getGoogleGsi(): GoogleGsi | null {
+  return (window as unknown as { google?: GoogleGsi }).google ?? null
 }
 
 export class GoogleDriveProvider implements BackupProvider {
@@ -57,18 +60,21 @@ export class GoogleDriveProvider implements BackupProvider {
   authenticate(silent = false): Promise<void> {
     return new Promise((resolve, reject) => {
       const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string
-      const google = window as unknown as { google?: GoogleAccounts }
-      if (!google.google?.accounts?.oauth2) { reject(new Error('Google API não disponível')); return }
-      const client = google.google.accounts.oauth2.initTokenClient({
+      const gsi = getGoogleGsi()
+      if (!gsi) { reject(new Error('Google API não disponível')); return }
+      const client = gsi.accounts.oauth2.initTokenClient({
         client_id: clientId,
         scope: SCOPE,
-        callback: (res) => {
+        callback: (res: TokenResponse) => {
           if (res.error) { reject(new Error(res.error)); return }
           this._setToken(res.access_token, res.expires_in)
           resolve()
         },
         error_callback: (err: TokenError) => {
-          reject(new Error(err?.type === 'popup_closed' ? 'Popup fechado pelo usuário' : (err?.message ?? err?.type ?? 'Erro de autenticação')))
+          const msg = err?.type === 'popup_closed'
+            ? 'Popup fechado pelo usuário'
+            : (err?.message ?? err?.type ?? 'Erro de autenticação')
+          reject(new Error(msg))
         },
       })
       client.requestAccessToken({ prompt: silent ? '' : 'select_account' })
@@ -102,7 +108,6 @@ export class GoogleDriveProvider implements BackupProvider {
   private async ensureFolder(token: string): Promise<string> {
     if (this.storedFolderId) return this.storedFolderId
 
-    // Try to find existing folder
     const q = encodeURIComponent(`name='${FOLDER_NAME}' and mimeType='application/vnd.google-apps.folder' and trashed=false`)
     const listRes = await fetch(`${DRIVE_API}/files?q=${q}&fields=files(id)`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -116,7 +121,6 @@ export class GoogleDriveProvider implements BackupProvider {
       }
     }
 
-    // Create folder
     const createRes = await fetch(`${DRIVE_API}/files`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
@@ -150,7 +154,6 @@ export class GoogleDriveProvider implements BackupProvider {
     const fileId   = this.storedFileId
 
     if (fileId) {
-      // Update existing file (PATCH — no parents field)
       const form = new FormData()
       form.append('metadata', new Blob([JSON.stringify({ name: FILENAME })], { type: 'application/json' }))
       form.append('file',     new Blob([content], { type: 'application/json' }))
@@ -161,7 +164,6 @@ export class GoogleDriveProvider implements BackupProvider {
       })
       if (!res.ok) throw new Error(`Drive: erro ao atualizar arquivo (${res.status})`)
     } else {
-      // Create new file
       const form = new FormData()
       form.append('metadata', new Blob([JSON.stringify({ name: FILENAME, parents: [folderId] })], { type: 'application/json' }))
       form.append('file',     new Blob([content], { type: 'application/json' }))
