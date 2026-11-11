@@ -5,6 +5,7 @@ export interface BackupProvider {
   label: string
   isAuthenticated(): boolean
   authenticate(): Promise<void>
+  clearToken(): void
   upload(data: Uint8Array, filename: string): Promise<void>
   download(filename: string): Promise<Uint8Array | null>
   getMetadata(filename: string): Promise<{ lastModified: Date } | null>

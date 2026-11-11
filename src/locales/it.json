@@ -178,7 +178,9 @@
     "github_step1": "Vai su GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)",
     "github_step2": "Clicca su \"Generate new token (classic)\"",
     "github_step3": "In Scopes, seleziona solo \"gist\"",
-    "github_step4": "Copia il token (ghp_...) e incollalo qui sotto — appare solo una volta"
+    "github_step4": "Copia il token (ghp_...) e incollalo qui sotto — appare solo una volta",
+    "google_connect": "Connetti con Google Drive",
+    "google_hint": "I tuoi scritti verranno salvati in una cartella \"WriterClub\" nel tuo Google Drive. Solo questa app avrà accesso a quei file."
   },
   "explore": {
     "title": "Esplora",

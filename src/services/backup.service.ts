@@ -1,5 +1,6 @@
 import { db } from '@/db'
 import { githubGistProvider } from './backup/github-gist.provider'
+import { googleDriveProvider } from './backup/google-drive.provider'
 import type { BackupProvider, BackupPayload } from '@/types/backup'
 
 const LAST_SYNC_KEY = 'byos_last_sync'
@@ -7,6 +8,7 @@ const FILENAME = 'writerclub-backup.json'
 
 /** Returns the active provider if one is configured and authenticated. */
 export function getActiveProvider(): BackupProvider | null {
+  if (googleDriveProvider.isAuthenticated()) return googleDriveProvider
   if (githubGistProvider.isAuthenticated()) return githubGistProvider
   return null
 }

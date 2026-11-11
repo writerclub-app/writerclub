@@ -112,3 +112,9 @@
 .provider-picker__info-steps li {
   @apply leading-snug;
 }
+
+.provider-picker__google-hint {
+  @apply text-xs m-0;
+  color: var(--color-awake-text);
+  opacity: 0.75;
+}

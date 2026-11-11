@@ -4,6 +4,7 @@ import { Button } from '@awakr/awake-ui/button'
 import { Field } from '@awakr/awake-ui/field'
 import { GitHubIcon, GoogleIcon, MicrosoftIcon } from '@/components/ui/icons'
 import { githubGistProvider } from '@/services/backup/github-gist.provider'
+import { googleDriveProvider } from '@/services/backup/google-drive.provider'
 import './ProviderPicker.css'
 
 type Provider = 'github-gist' | 'google-drive' | 'onedrive'
@@ -16,9 +17,9 @@ interface ProviderOption {
 }
 
 const PROVIDERS: ProviderOption[] = [
-  { id: 'github-gist',   label: 'GitHub Gist',  icon: <GitHubIcon />,    available: true },
-  { id: 'google-drive',  label: 'Google Drive', icon: <GoogleIcon />,    available: false },
-  { id: 'onedrive',      label: 'OneDrive',     icon: <MicrosoftIcon />, available: false },
+  { id: 'github-gist',  label: 'GitHub Gist',  icon: <GitHubIcon />,    available: true },
+  { id: 'google-drive', label: 'Google Drive', icon: <GoogleIcon />,    available: true },
+  { id: 'onedrive',     label: 'OneDrive',     icon: <MicrosoftIcon />, available: false },
 ]
 
 interface Props {
@@ -32,20 +33,29 @@ export function ProviderPicker({ onConnected }: Props) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  async function handleConnect() {
-    if (selected === 'github-gist') {
-      if (!pat.trim()) return
-      setLoading(true)
-      setError(null)
-      try {
-        await githubGistProvider.validateToken(pat.trim())
-        githubGistProvider.setToken(pat.trim())
-        onConnected()
-      } catch (err) {
-        setError(err instanceof Error ? err.message : t('backup.error_connect'))
-      } finally {
-        setLoading(false)
-      }
+  async function handleConnectGitHub() {
+    if (!pat.trim()) return
+    setLoading(true); setError(null)
+    try {
+      await githubGistProvider.validateToken(pat.trim())
+      githubGistProvider.setToken(pat.trim())
+      onConnected()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : t('backup.error_connect'))
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function handleConnectGoogle() {
+    setLoading(true); setError(null)
+    try {
+      await googleDriveProvider.authenticate()
+      onConnected()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : t('backup.error_connect'))
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -55,7 +65,6 @@ export function ProviderPicker({ onConnected }: Props) {
     <div className="provider-picker">
       <p className="provider-picker__hint">{t('backup.hint')}</p>
 
-      {/* Provider selector */}
       <div className="provider-picker__options">
         {PROVIDERS.map((p) => (
           <button
@@ -79,8 +88,7 @@ export function ProviderPicker({ onConnected }: Props) {
         ))}
       </div>
 
-      {/* Dynamic field */}
-      {/* Info block */}
+      {/* GitHub Gist */}
       {selected === 'github-gist' && (
         <div className="provider-picker__info">
           <p className="provider-picker__info-title">ℹ️ {t('backup.github_how_title')}</p>
@@ -110,18 +118,33 @@ export function ProviderPicker({ onConnected }: Props) {
               placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
               value={pat}
               onChange={(e) => { setPat(e.target.value); setError(null) }}
-              onKeyDown={(e: React.KeyboardEvent) => { if (e.key === 'Enter') void handleConnect() }}
+              onKeyDown={(e: React.KeyboardEvent) => { if (e.key === 'Enter') void handleConnectGitHub() }}
             />
           </Field.Root>
           {error && <p className="provider-picker__error">{error}</p>}
-
           <Button
             variant="primary"
-            onClick={() => void handleConnect()}
+            onClick={() => void handleConnectGitHub()}
             disabled={!pat.trim() || loading}
             className="provider-picker__btn"
           >
             {loading ? t('backup.connecting') : t('backup.connect')}
+          </Button>
+        </div>
+      )}
+
+      {/* Google Drive */}
+      {selected === 'google-drive' && (
+        <div className="provider-picker__form">
+          <p className="provider-picker__google-hint">{t('backup.google_hint')}</p>
+          {error && <p className="provider-picker__error">{error}</p>}
+          <Button
+            variant="primary"
+            onClick={() => void handleConnectGoogle()}
+            disabled={loading}
+            className="provider-picker__btn"
+          >
+            {loading ? t('backup.connecting') : t('backup.google_connect')}
           </Button>
         </div>
       )}

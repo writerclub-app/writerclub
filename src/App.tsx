@@ -13,6 +13,7 @@ import { PublicWritingPage } from '@/routes/public-writing/PublicWritingPage'
 import { PublicProfilePage } from '@/routes/public-profile/PublicProfilePage'
 import { FollowListPage } from '@/routes/follow-list/FollowListPage'
 import { FeedPage } from '@/routes/feed/FeedPage'
+import { PrivacyPage } from '@/routes/privacy/PrivacyPage'
 
 export default function App() {
   return (
@@ -42,6 +43,7 @@ export default function App() {
         <Route path="/u/:username" element={<PublicProfilePage />} />
         <Route path="/u/:username/:slug" element={<PublicWritingPage />} />
 
+        <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
