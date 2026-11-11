@@ -9,13 +9,14 @@ import { useToast } from '@awakr/awake-ui/toast'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { LanguageSelector } from '@/components/ui/LanguageSelector'
 import { PaletteSelector } from '@/components/ui/PaletteSelector'
-import { ArrowLeftIcon, LockIcon, LogoutIcon } from '@/components/ui/icons'
+import { ArrowLeftIcon, LockIcon, LogoutIcon, DownloadIcon } from '@/components/ui/icons'
 import { useAvatar } from '@/hooks/useAvatar'
 import { useUsername } from '@/contexts/UsernameContext'
 import { loadToken, clearToken } from '@/services/auth.service'
 import { db } from '@/db'
 import { getActiveProvider } from '@/services/backup.service'
 import { ProviderPicker, BackupStatus } from '@/components/backup'
+import { usePwaInstall } from '@/hooks/usePwaInstall'
 import './ProfileEditPage.css'
 
 const BIO_MAX = 160
@@ -32,6 +33,7 @@ export function ProfileEditPage() {
   const [bio, setBio] = useState('')
   const [saving, setSaving] = useState(false)
   const [backupConnected, setBackupConnected] = useState(() => !!getActiveProvider())
+  const { canInstall, install } = usePwaInstall()
 
   const avatarSrc = useAvatar(token?.avatarUrl)
   const initials = displayName.trim()[0]?.toUpperCase() ?? '?'
@@ -189,6 +191,18 @@ export function ProfileEditPage() {
             </div>
             <LanguageSelector />
           </div>
+
+          {canInstall && (
+            <div className="profile-setting-row">
+              <div className="profile-setting-row__left">
+                <span className="profile-setting-row__icon"><DownloadIcon /></span>
+                <span className="profile-setting-row__label">{t('profile.install_app', 'Instalar app')}</span>
+              </div>
+              <Button variant="secondary" size="sm" onClick={() => void install()}>
+                {t('profile.install', 'Instalar')}
+              </Button>
+            </div>
+          )}
 
           <Separator className="profile-sep" />
 

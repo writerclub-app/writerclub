@@ -18,6 +18,20 @@ document.documentElement.setAttribute('data-theme', theme)
 const savedPalette = localStorage.getItem('palette') ?? 'modern'
 document.documentElement.setAttribute('data-palette', savedPalette)
 
+
+// Capture PWA install prompt as early as possible (fires before React mounts)
+interface BeforeInstallPromptEvent extends Event {
+  prompt(): Promise<void>
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>
+}
+declare global {
+  interface Window { __pwaInstallPrompt?: BeforeInstallPromptEvent }
+}
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault()
+  window.__pwaInstallPrompt = e as BeforeInstallPromptEvent
+})
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: { staleTime: 1000 * 60 * 5, retry: 1 },
