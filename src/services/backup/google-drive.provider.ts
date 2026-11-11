@@ -57,7 +57,7 @@ export class GoogleDriveProvider implements BackupProvider {
   authenticate(silent = false): Promise<void> {
     return new Promise((resolve, reject) => {
       const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string
-      const google = window as unknown as { google?: { accounts: { oauth2: { initTokenClient: (cfg: { client_id: string; scope: string; callback: (r: TokenResponse) => void }) => TokenClient } } } }
+      const google = window as unknown as { google?: GoogleAccounts }
       if (!google.google?.accounts?.oauth2) { reject(new Error('Google API não disponível')); return }
       const client = google.google.accounts.oauth2.initTokenClient({
         client_id: clientId,
@@ -67,7 +67,7 @@ export class GoogleDriveProvider implements BackupProvider {
           this._setToken(res.access_token, res.expires_in)
           resolve()
         },
-        error_callback: (err) => {
+        error_callback: (err: TokenError) => {
           reject(new Error(err?.type === 'popup_closed' ? 'Popup fechado pelo usuário' : (err?.message ?? err?.type ?? 'Erro de autenticação')))
         },
       })
