@@ -1,3 +1,5 @@
+@import 'tailwindcss';
+
 .privacy-page {
   @apply flex flex-col min-h-screen;
   background: var(--color-awake-bg, var(--color-awake-surface));
