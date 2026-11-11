@@ -14,7 +14,7 @@ import { useAvatar } from '@/hooks/useAvatar'
 import { useUsername } from '@/contexts/UsernameContext'
 import { loadToken, clearToken } from '@/services/auth.service'
 import { db } from '@/db'
-import { githubGistProvider } from '@/services/backup/github-gist.provider'
+import { getActiveProvider } from '@/services/backup.service'
 import { ProviderPicker, BackupStatus } from '@/components/backup'
 import './ProfileEditPage.css'
 
@@ -31,7 +31,7 @@ export function ProfileEditPage() {
   const [displayName, setDisplayName] = useState(token?.displayName ?? '')
   const [bio, setBio] = useState('')
   const [saving, setSaving] = useState(false)
-  const [backupConnected, setBackupConnected] = useState(() => githubGistProvider.isAuthenticated())
+  const [backupConnected, setBackupConnected] = useState(() => !!getActiveProvider())
 
   const avatarSrc = useAvatar(token?.avatarUrl)
   const initials = displayName.trim()[0]?.toUpperCase() ?? '?'
