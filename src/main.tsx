@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Toast } from '@awakr/awake-ui/toast'
+import { syncThemeColor } from '@/utils/themeColor'
 import './i18n'
 import App from './App'
 import './index.css'
@@ -17,6 +18,9 @@ document.documentElement.setAttribute('data-theme', theme)
 
 const savedPalette = localStorage.getItem('palette') ?? 'modern'
 document.documentElement.setAttribute('data-palette', savedPalette)
+
+// Sync Android status bar / navigation bar color with current theme + palette
+syncThemeColor()
 
 
 // Capture PWA install prompt as early as possible (fires before React mounts)

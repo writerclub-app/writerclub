@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import type { Theme } from '@/hooks/useTheme'
+import { syncThemeColor } from '@/utils/themeColor'
 
 export type Palette = 'literary' | 'minimal' | 'modern'
 
@@ -28,10 +29,12 @@ export const useThemeStore = create<ThemeStore>((set, get) => ({
     document.documentElement.setAttribute('data-theme', next)
     localStorage.setItem('theme', next)
     set({ theme: next })
+    syncThemeColor()
   },
   setPalette: (palette: Palette) => {
     document.documentElement.setAttribute('data-palette', palette)
     localStorage.setItem('palette', palette)
     set({ palette })
+    syncThemeColor()
   },
 }))
