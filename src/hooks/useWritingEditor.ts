@@ -101,8 +101,10 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
         variant: pub && overridePublic ? 'success' : 'info',
       })
       // Backup before navigating so the fetch isn't cancelled
-      if (getActiveProvider() && token) {
-        await runBackup(token.authId).catch(() => { /* silent */ })
+      const provider = getActiveProvider()
+      console.log('[backup] provider:', provider?.name ?? 'null', '| token:', !!token)
+      if (provider && token) {
+        await runBackup(token.authId).catch((e) => { console.error('[backup] error:', e) })
       }
       setSaveStatus('idle')
       void navigate('/')
