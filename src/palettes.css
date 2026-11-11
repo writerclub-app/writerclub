@@ -31,7 +31,7 @@
   --color-awake-text:          #E2E8F0;
   --color-awake-text-muted:    #94A3B8;
   --color-awake-text-subtle:   #475569;
-  --color-awake-text-on-brand: #FFFFFF;
+  --color-awake-text-on-brand: #000000; /* branco falha (2.98) sobre #818CF8 — preto passa AAA (7.5) */
 }
 
 /* ── LITERÁRIA ── */
@@ -61,7 +61,7 @@
   --color-awake-text:          #EDE5D0;
   --color-awake-text-muted:    #C0A878;
   --color-awake-text-subtle:   #806850;
-  --color-awake-text-on-brand: #FFFFFF;
+  --color-awake-text-on-brand: #1A1510; /* branco falha (2.20) sobre #7DC050 — dark text passa AAA (10+) */
 }
 
 /* ── MINIMALISTA ── */

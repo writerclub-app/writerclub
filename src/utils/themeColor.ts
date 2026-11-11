@@ -17,4 +17,6 @@ export function syncThemeColor(): void {
   const color = t === 'dark' ? palette.dark : palette.light
   const meta = document.getElementById('pwa-theme-color') as HTMLMetaElement | null
   if (meta) meta.content = color
+  // Also update color-scheme so Chrome Android colors the bottom nav bar correctly
+  document.documentElement.style.colorScheme = t === 'dark' ? 'dark' : 'light'
 }

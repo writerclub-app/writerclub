@@ -6,6 +6,7 @@ import { Button } from '@awakr/awake-ui/button'
 import { Card } from '@awakr/awake-ui/card'
 import { Badge } from '@awakr/awake-ui/badge'
 import { fetchPublicWritings, fetchPublicProfile } from '@/services/api.service'
+import { SearchIcon, XIcon, ChevronRightIcon } from '@/components/ui/icons'
 import './ExplorePage.css'
 
 interface PublicWriting {
@@ -106,7 +107,7 @@ export function ExplorePage() {
 
         {/* Search */}
         <div className="explore-search">
-          <svg className="explore-search__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span className="explore-search__icon"><SearchIcon /></span>
           <input
             className="explore-search__input"
             type="search"
@@ -117,7 +118,7 @@ export function ExplorePage() {
           />
           {query && (
             <button className="explore-search__clear" onClick={() => setQuery('')}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <XIcon />
             </button>
           )}
         </div>
@@ -138,7 +139,7 @@ export function ExplorePage() {
                   <span className="explore-profile-card__username">@{profileResult.username}</span>
                   {profileResult.bio && <span className="explore-profile-card__bio">{profileResult.bio}</span>}
                 </div>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="explore-profile-card__arrow"><polyline points="9 18 15 12 9 6"/></svg>
+                <ChevronRightIcon />
               </button>
             ) : q.length > 2 ? (
               <p className="explore-profile-result__empty">{t('explore.user_not_found', { username: q.slice(1) })}</p>

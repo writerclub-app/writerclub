@@ -61,12 +61,12 @@ export function FolderModal({ folder, onClose, onSaved }: FolderModalProps) {
   }
 
   return (
-    <div className="fmodal-backdrop" onClick={onClose} role="dialog" aria-modal>
-      <div className="fmodal" onClick={(e) => e.stopPropagation()}>
+    <div className="fmodal-backdrop" onClick={onClose} role="presentation">
+      <div className="fmodal" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal aria-labelledby="fmodal-title">
         <div className="fmodal__drag" aria-hidden />
 
         <p className="fmodal__emoji" aria-hidden>📁</p>
-        <h2 className="fmodal__title">
+        <h2 id="fmodal-title" className="fmodal__title">
           {isEdit ? t('folder.rename_title') : t('folder.create_title')}
         </h2>
         <p className="fmodal__sub">
