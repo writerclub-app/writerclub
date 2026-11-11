@@ -100,11 +100,12 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
         message: pub && overridePublic ? t('editor.toast_published') : t('editor.toast_saved'),
         variant: pub && overridePublic ? 'success' : 'info',
       })
-      // Fire backup silently if provider is configured
+      // Backup before navigating so the fetch isn't cancelled
       if (getActiveProvider() && token) {
-        void runBackup(token.authId).catch(() => { /* silent */ })
+        await runBackup(token.authId).catch(() => { /* silent */ })
       }
-      setTimeout(() => { setSaveStatus('idle'); void navigate('/') }, 1200)
+      setSaveStatus('idle')
+      void navigate('/')
     } catch {
       setSaveStatus('error')
     }
