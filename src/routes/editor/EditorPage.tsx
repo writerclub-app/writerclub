@@ -113,7 +113,6 @@ export function EditorPage() {
   }, [title])
 
   // ── AI ────────────────────────────────────────────────────────────────
-  const isLoggedIn = !!tokenRef.current
   const { state: aiState, run: runAI, accept: acceptAI, pickOption, dismiss: dismissAI, selectLang } = useAI(editor ?? null)
 
   // When suggest-title or suggest-slug resolves, apply to respective field
