@@ -228,5 +228,11 @@
     "empty_title": "Il tuo feed è vuoto",
     "empty_body": "Segui scrittori per vedere i loro testi qui.",
     "load_more": "Carica altri"
+  },
+  "categories": {
+    "poem": "Poesia",
+    "music": "Musica",
+    "tale": "Racconto",
+    "chronicle": "Cronaca"
   }
 }

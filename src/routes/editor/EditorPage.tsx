@@ -14,7 +14,6 @@ import { Loading } from '@awakr/awake-ui/loading'
 import { EditorToolbar } from '@/components/editor/EditorToolbar'
 import { FolderPicker } from '@/components/editor/FolderPicker'
 import { AIActionBar } from '@/components/ai/AIActionBar'
-import { SelectionMenu } from '@/components/ai/SelectionMenu'
 import { useWritingEditor } from '@/hooks/useWritingEditor'
 import { useAI } from '@/hooks/useAI'
 import { getWriting } from '@/services/writing.service'
@@ -43,6 +42,7 @@ export function EditorPage() {
   const [chars, setChars] = useState(0)
   const titleRef = useRef<HTMLTextAreaElement>(null)
   const [titleValue, setTitleValueLocal] = useState('')
+  const [hasSelection, setHasSelection] = useState(false)
 
   useEffect(() => {
     const token = tokenRef.current
@@ -83,6 +83,10 @@ export function EditorPage() {
     onUpdate({ editor: e }) {
       setWords(countWords(e.getText()))
       setChars(e.getText().replace(/\n/g, '').length)
+    },
+    onSelectionUpdate({ editor: e }) {
+      const { from, to } = e.state.selection
+      setHasSelection(from !== to)
     },
     editorProps: {
       attributes: { class: 'editor-content' },
@@ -131,27 +135,11 @@ export function EditorPage() {
   return (
     <div className="editor-page">
       {/* Topbar */}
-      <header className="editor-topbar">
+            <header className="editor-topbar">
         <div className="editor-topbar__left">
           <Button variant="ghost" size="sm" className="editor-btn-back" onClick={goBack} aria-label={t('editor.back')}>
             <ArrowLeftIcon />
           </Button>
-
-          {categories.length > 0 && (
-            <div className="editor-type-picker" role="group">
-              {categories.map((cat) => (
-                <Button
-                  key={cat.id}
-                  variant={categoryName === cat.name ? 'primary' : 'ghost'}
-                  size="sm"
-                  className={`editor-type-btn${categoryName === cat.name ? ' editor-type-btn--active' : ''}`}
-                  onClick={() => selectCategory(cat.id, cat.name)}
-                >
-                  {cat.name}
-                </Button>
-              ))}
-            </div>
-          )}
         </div>
 
         <div className="editor-topbar__right">
@@ -192,32 +180,41 @@ export function EditorPage() {
         </div>
       </header>
 
+      {/* Writing type row — scrollable, below topbar */}
+      {categories.length > 0 && (
+        <div className="editor-types-row" role="group">
+          {categories.map((cat) => (
+            <Button
+              key={cat.id}
+              variant={categoryName === cat.name ? 'primary' : 'ghost'}
+              size="sm"
+              className={`editor-type-btn${categoryName === cat.name ? ' editor-type-btn--active' : ''}`}
+              onClick={() => selectCategory(cat.id, cat.name)}
+            >
+              {t(`categories.${cat.name}`, cat.name)}
+            </Button>
+          ))}
+        </div>
+      )}
+
       {editor && (
         <EditorToolbar
           editor={editor}
-          onAIComplete={isLoggedIn ? () => runAI('complete') : undefined}
         />
       )}
 
       {/* AI action bar — sits between toolbar and content */}
       <AIActionBar
         state={aiState}
+        hasSelection={hasSelection}
+        onRun={runAI}
         onAccept={acceptAI}
         onDismiss={dismissAI}
         onPickOption={pickOption}
         onSelectLang={selectLang}
       />
 
-      <div className="editor-wrap" style={{ position: 'relative' }}>
-        {/* Selection floating menu */}
-        {editor && isLoggedIn && (
-          <SelectionMenu
-            editor={editor}
-            onRewrite={() => runAI('rewrite')}
-            onRhyme={() => runAI('suggest-rhyme')}
-          />
-        )}
-
+      <div className="editor-wrap">
         <textarea
           ref={titleRef}
           className="editor-title"
@@ -236,19 +233,6 @@ export function EditorPage() {
               ? t('editor.no_words')
               : `${t('editor.word_count', { count: words })} · ${t('editor.char_count', { count: chars })}`}
           </span>
-          {isLoggedIn && (
-            <>
-              <span className="editor-meta__dot" />
-              <button
-                type="button"
-                className="editor-meta__ai-btn"
-                onClick={() => runAI('suggest-title')}
-                disabled={words === 0}
-              >
-                ✦ Suggest title
-              </button>
-            </>
-          )}
         </div>
 
         <FolderPicker folderId={folderId} onSelect={selectFolder} />
@@ -271,7 +255,9 @@ export function EditorPage() {
             <Card.Root className="editor-modal__preview">
               <Card.Content className="editor-modal__preview-content">
                 <div className="editor-modal__preview-title">{title || t('editor.untitled')}</div>
-                <div className="editor-modal__preview-meta">{categoryName} · {words} {t('editor.words')}</div>
+                <div className="editor-modal__preview-meta">
+                  {t(`categories.${categoryName}`, categoryName)} · {words} {t('editor.words')}
+                </div>
               </Card.Content>
             </Card.Root>
 

@@ -228,5 +228,11 @@
     "empty_title": "Your feed is empty",
     "empty_body": "Follow writers to see their texts here.",
     "load_more": "Load more"
+  },
+  "categories": {
+    "poem": "Poem",
+    "music": "Music",
+    "tale": "Tale",
+    "chronicle": "Chronicle"
   }
 }

@@ -19,6 +19,16 @@
 .editor-topbar__left  { @apply flex items-center overflow-hidden gap-2 flex-1 min-w-0; }
 .editor-topbar__right { @apply flex items-center flex-shrink-0 gap-1.5; }
 
+.editor-types-row {
+  @apply flex overflow-x-auto flex-shrink-0;
+  gap: 6px;
+  padding: 6px 16px;
+  border-bottom: 1px solid var(--color-awake-border);
+  background-color: var(--color-awake-surface);
+  scrollbar-width: none;
+}
+.editor-types-row::-webkit-scrollbar { display: none; }
+
 /* Back button */
 .editor-btn-back {
   @apply flex items-center justify-center flex-shrink-0 cursor-pointer;
@@ -26,13 +36,6 @@
   height: 36px;
 }
 .editor-btn-back svg { width: 18px; height: 18px; }
-
-/* Type picker */
-.editor-type-picker {
-  @apply flex overflow-x-auto gap-1;
-  scrollbar-width: none;
-}
-.editor-type-picker::-webkit-scrollbar { display: none; }
 
 .editor-type-btn {
   @apply cursor-pointer whitespace-nowrap flex-shrink-0 font-semibold bg-transparent;
