@@ -13,7 +13,10 @@ import { Card } from '@awakr/awake-ui/card'
 import { Loading } from '@awakr/awake-ui/loading'
 import { EditorToolbar } from '@/components/editor/EditorToolbar'
 import { FolderPicker } from '@/components/editor/FolderPicker'
+import { AIActionBar } from '@/components/ai/AIActionBar'
+import { SelectionMenu } from '@/components/ai/SelectionMenu'
 import { useWritingEditor } from '@/hooks/useWritingEditor'
+import { useAI } from '@/hooks/useAI'
 import { getWriting } from '@/services/writing.service'
 import { seedDefaultCategories } from '@/services/category.service'
 import { loadToken } from '@/services/auth.service'
@@ -39,12 +42,12 @@ export function EditorPage() {
   const [words, setWords] = useState(0)
   const [chars, setChars] = useState(0)
   const titleRef = useRef<HTMLTextAreaElement>(null)
+  const [titleValue, setTitleValueLocal] = useState('')
 
   useEffect(() => {
     const token = tokenRef.current
     if (!token) return
     void seedDefaultCategories(token.authId).then(setCategories).catch(() => {
-      // Dexie unavailable — keep empty list (user sees no type picker)
       console.warn('[editor] failed to load categories from Dexie')
     })
     if (id) {
@@ -61,6 +64,9 @@ export function EditorPage() {
     editorRef,
     save, publish, unpublish, goBack,
   } = useWritingEditor({ writing })
+
+  // Keep local titleValue in sync for AI suggest-title
+  useEffect(() => { setTitleValueLocal(title) }, [title])
 
   const editor = useEditor({
     extensions: [
@@ -83,31 +89,41 @@ export function EditorPage() {
     },
   }, [loaded])
 
-  // Sync ref only — no setState here to avoid cascading renders
   useEffect(() => {
-    if (editor) {
-      editorRef.current = editor
-    }
+    if (editor) { editorRef.current = editor }
   }, [editor, editorRef])
 
-  // Set content imperatively when writing loads async (edit mode)
   useEffect(() => {
     if (!editor || !writing?.content) return
     try {
       editor.commands.setContent(JSON.parse(writing.content) as object)
-    } catch {
-      // invalid JSON — ignore
-    }
+    } catch { /* invalid JSON — ignore */ }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor, writing?.id])
 
-  // Auto-resize title textarea
   useEffect(() => {
     const el = titleRef.current
     if (!el) return
     el.style.height = 'auto'
     el.style.height = `${el.scrollHeight}px`
   }, [title])
+
+  // ── AI ────────────────────────────────────────────────────────────────
+  const isLoggedIn = !!tokenRef.current
+  const { state: aiState, run: runAI, accept: acceptAI, pickOption, dismiss: dismissAI, selectLang } = useAI(editor ?? null)
+
+  // When suggest-title or suggest-slug resolves, apply to respective field
+  useEffect(() => {
+    if (aiState.status !== 'suggestion') return
+    if (aiState.command === 'suggest-title') {
+      setTitle(aiState.text.trim())
+      dismissAI()
+    }
+    if (aiState.command === 'suggest-slug') {
+      // slug lives in useWritingEditor — can't set directly; show in action bar
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [aiState])
 
   const today = new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'short', year: 'numeric' })
   const canSave = title.trim() !== '' && words > 0
@@ -176,16 +192,39 @@ export function EditorPage() {
         </div>
       </header>
 
-      {editor && <EditorToolbar editor={editor} />}
+      {editor && (
+        <EditorToolbar
+          editor={editor}
+          onAIComplete={isLoggedIn ? () => runAI('complete') : undefined}
+        />
+      )}
 
-      <div className="editor-wrap">
+      {/* AI action bar — sits between toolbar and content */}
+      <AIActionBar
+        state={aiState}
+        onAccept={acceptAI}
+        onDismiss={dismissAI}
+        onPickOption={pickOption}
+        onSelectLang={selectLang}
+      />
+
+      <div className="editor-wrap" style={{ position: 'relative' }}>
+        {/* Selection floating menu */}
+        {editor && isLoggedIn && (
+          <SelectionMenu
+            editor={editor}
+            onRewrite={() => runAI('rewrite')}
+            onRhyme={() => runAI('suggest-rhyme')}
+          />
+        )}
+
         <textarea
           ref={titleRef}
           className="editor-title"
           rows={1}
           placeholder={t('editor.title_placeholder')}
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={titleValue}
+          onChange={(e) => { setTitleValueLocal(e.target.value); setTitle(e.target.value) }}
           maxLength={120}
         />
 
@@ -197,6 +236,19 @@ export function EditorPage() {
               ? t('editor.no_words')
               : `${t('editor.word_count', { count: words })} · ${t('editor.char_count', { count: chars })}`}
           </span>
+          {isLoggedIn && (
+            <>
+              <span className="editor-meta__dot" />
+              <button
+                type="button"
+                className="editor-meta__ai-btn"
+                onClick={() => runAI('suggest-title')}
+                disabled={words === 0}
+              >
+                ✦ Suggest title
+              </button>
+            </>
+          )}
         </div>
 
         <FolderPicker folderId={folderId} onSelect={selectFolder} />
@@ -204,7 +256,7 @@ export function EditorPage() {
         <EditorContent editor={editor} className="editor-body" />
       </div>
 
-      {/* Publish modal using Dialog from awake-ui */}
+      {/* Publish modal */}
       <Dialog.Root open={showPublishModal} onOpenChange={setShowPublishModal}>
         <Dialog.Portal>
           <Dialog.Backdrop className="editor-modal-backdrop" />

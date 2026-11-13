@@ -250,3 +250,76 @@ export async function toggleLike(authId: string, writingId: string, currentlyLik
   })
   if (!res.ok) throw new Error('Failed to toggle like')
 }
+
+// ── Fase 5 — IA ──────────────────────────────────────────────────────────
+
+export type AICommand = 'complete' | 'suggest-rhyme' | 'rewrite' | 'suggest-title' | 'suggest-slug'
+
+/**
+ * Calls the AI endpoint and streams the response token by token.
+ * `onChunk` is called for each text delta; `onDone` when the stream ends.
+ * Returns an AbortController so the caller can cancel mid-stream.
+ */
+export function streamAI(
+  authId: string,
+  payload: { command: AICommand; context: string; selection?: string; language?: 'pt' | 'en' | 'es' | 'it' },
+  onChunk: (text: string) => void,
+  onDone: () => void,
+  onError: (err: Error) => void,
+): AbortController {
+  const controller = new AbortController()
+
+  ;(async () => {
+    try {
+      const token = await getToken(authId)
+      const res = await fetch(`${API_URL}/ai`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      })
+
+      if (!res.ok) {
+        onError(new Error(`AI request failed: ${res.status}`))
+        return
+      }
+
+      const reader = res.body?.getReader()
+      if (!reader) { onError(new Error('No response body')); return }
+
+      const decoder = new TextDecoder()
+      let buffer = ''
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+
+        buffer += decoder.decode(value, { stream: true })
+        const lines = buffer.split('\n')
+        buffer = lines.pop() ?? ''
+
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue
+          const data = line.slice(6).trim()
+          if (data === '[DONE]') { onDone(); return }
+          try {
+            const parsed = JSON.parse(data) as { response?: string; choices?: Array<{ delta?: { content?: string } }> }
+            const text = parsed.response ?? parsed.choices?.[0]?.delta?.content ?? ""
+            if (text) onChunk(text)
+          } catch { /* skip malformed line */ }
+        }
+      }
+
+      onDone()
+    } catch (err) {
+      if ((err as Error).name !== 'AbortError') {
+        onError(err as Error)
+      }
+    }
+  })()
+
+  return controller
+}

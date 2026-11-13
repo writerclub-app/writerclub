@@ -1,0 +1,43 @@
+@import 'tailwindcss';
+
+.ai-action-bar {
+  @apply flex items-center gap-2 px-4 py-2;
+  background-color: var(--color-awake-surface-raised);
+  border-top: 1px solid var(--color-awake-border);
+  min-height: 48px;
+  overflow-x: auto;
+}
+
+.ai-action-bar__loading {
+  @apply flex items-center gap-2;
+}
+
+.ai-action-bar__error {
+  @apply flex items-center gap-2 w-full;
+  color: var(--color-awake-text-danger);
+}
+
+.ai-action-bar__label {
+  @apply text-sm;
+  color: var(--color-awake-text-subtle);
+}
+
+.ai-action-bar__preview {
+  @apply text-sm flex-1 line-clamp-2;
+  color: var(--color-awake-text);
+  font-style: italic;
+}
+
+.ai-action-bar__actions {
+  @apply flex items-center gap-1 flex-shrink-0;
+}
+
+/* Rhyme options */
+.ai-action-bar__options {
+  @apply flex items-center gap-2 flex-wrap;
+}
+
+/* Language selection */
+.ai-action-bar__lang {
+  @apply flex items-center gap-2 flex-wrap;
+}

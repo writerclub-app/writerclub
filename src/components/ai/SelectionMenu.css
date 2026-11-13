@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+
+.selection-menu {
+  @apply absolute flex items-center gap-1 px-2 py-1 rounded-full text-sm;
+  transform: translate(-50%, -100%) translateY(-4px);
+  background-color: var(--color-awake-surface-raised);
+  border: 1px solid var(--color-awake-border);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  white-space: nowrap;
+  z-index: 50;
+  pointer-events: auto;
+}
+
+.selection-menu__sep {
+  width: 1px;
+  height: 16px;
+  background-color: var(--color-awake-border);
+  flex-shrink: 0;
+}

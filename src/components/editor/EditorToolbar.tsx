@@ -3,12 +3,13 @@ import { Separator } from '@awakr/awake-ui/separator'
 import type { Editor } from '@tiptap/react'
 import {
   AlignLeftIcon, AlignCenterIcon, AlignRightIcon,
-  BlockquoteIcon, ClearFormatIcon,
+  BlockquoteIcon, ClearFormatIcon, SparklesIcon,
 } from '@/components/ui/icons'
 import './EditorToolbar.css'
 
 interface Props {
   editor: Editor
+  onAIComplete?: () => void
 }
 
 interface FormatButtonProps {
@@ -43,7 +44,7 @@ function FormatButton({ onClick, active, label, children }: FormatButtonProps) {
   )
 }
 
-export function EditorToolbar({ editor }: Props) {
+export function EditorToolbar({ editor, onAIComplete }: Props) {
   return (
     <Tooltip.Provider>
       <div className="format-bar" role="toolbar" aria-label="Formatação">
@@ -119,6 +120,19 @@ export function EditorToolbar({ editor }: Props) {
         >
           <ClearFormatIcon />
         </FormatButton>
+
+        {onAIComplete && (
+          <>
+            <Separator orientation="vertical" className="fmt-sep" />
+            <FormatButton
+              onClick={onAIComplete}
+              active={false}
+              label="Continue writing (AI)"
+            >
+              <SparklesIcon />
+            </FormatButton>
+          </>
+        )}
       </div>
     </Tooltip.Provider>
   )
