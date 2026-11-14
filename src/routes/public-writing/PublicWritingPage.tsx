@@ -61,6 +61,7 @@ export function PublicWritingPage() {
   const [isOwnProfile, setIsOwnProfile] = useState(false)
   const [followLoading, setFollowLoading] = useState(false)
   const [followError, setFollowError] = useState(false)
+  const [profileLoaded, setProfileLoaded] = useState(false)
 
   useEffect(() => {
     if (!slug) return
@@ -78,6 +79,7 @@ export function PublicWritingPage() {
             setMoreWritings(res.writings.filter(r => r.slug !== slug).slice(0, 3))
             setIsFollowingLocal(res.profile.isFollowing)
             setIsOwnProfile(res.profile.isOwnProfile)
+            setProfileLoaded(true)
           }).catch(() => {})
         }
       })
@@ -198,7 +200,7 @@ export function PublicWritingPage() {
                 @{writing.username ?? username} · {formatDateShort(writing.published_at)}
               </span>
             </div>
-            {loadToken()?.authId && !isOwnProfile && (
+            {loadToken()?.authId && profileLoaded && !isOwnProfile && (
               <div className="pw-follow-wrap">
                 <Button
                   variant={isFollowingLocal ? 'outline' : 'primary'}
