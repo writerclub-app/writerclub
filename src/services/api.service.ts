@@ -1,16 +1,18 @@
 const API_URL = import.meta.env.VITE_API_URL as string
 
 /** Busca ou renova o JWT do Worker para o authId atual. */
-async function getToken(authId: string): Promise<string> {
-  const cached = sessionStorage.getItem('wc_api_token')
-  if (cached) {
-    // Verifica expiração (exp no payload JWT)
-    try {
-      const payload = JSON.parse(atob(cached.split('.')[1]))
-      if (payload.exp > Math.floor(Date.now() / 1000) + 60) {
-        return cached
-      }
-    } catch { /* ignora e renova */ }
+async function getToken(authId: string, forceRenew = false): Promise<string> {
+  if (!forceRenew) {
+    const cached = sessionStorage.getItem('wc_api_token')
+    if (cached) {
+      // Verifica expiração (exp no payload JWT)
+      try {
+        const payload = JSON.parse(atob(cached.split('.')[1]))
+        if (payload.exp > Math.floor(Date.now() / 1000) + 60) {
+          return cached
+        }
+      } catch { /* ignora e renova */ }
+    }
   }
 
   const res = await fetch(`${API_URL}/auth/token`, {
@@ -160,11 +162,20 @@ export async function fetchPublicProfile(
 
 /** Seguir um usuário. */
 export async function followUser(authId: string, username: string): Promise<void> {
-  const token = await getToken(authId)
-  const res = await fetch(`${API_URL}/follows/${username}`, {
+  let token = await getToken(authId)
+  let res = await fetch(`${API_URL}/follows/${username}`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${token}` },
   })
+  // Token inválido (assinatura antiga) → renova e tenta uma vez
+  if (res.status === 401) {
+    sessionStorage.removeItem('wc_api_token')
+    token = await getToken(authId, true)
+    res = await fetch(`${API_URL}/follows/${username}`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}` },
+    })
+  }
   if (!res.ok) {
     const body = await res.text().catch(() => '')
     console.error('[followUser] falhou:', res.status, body)
@@ -174,11 +185,20 @@ export async function followUser(authId: string, username: string): Promise<void
 
 /** Deixar de seguir um usuário. */
 export async function unfollowUser(authId: string, username: string): Promise<void> {
-  const token = await getToken(authId)
-  const res = await fetch(`${API_URL}/follows/${username}`, {
+  let token = await getToken(authId)
+  let res = await fetch(`${API_URL}/follows/${username}`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` },
   })
+  // Token inválido (assinatura antiga) → renova e tenta uma vez
+  if (res.status === 401) {
+    sessionStorage.removeItem('wc_api_token')
+    token = await getToken(authId, true)
+    res = await fetch(`${API_URL}/follows/${username}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` },
+    })
+  }
   if (!res.ok) {
     const body = await res.text().catch(() => '')
     console.error('[unfollowUser] falhou:', res.status, body)
