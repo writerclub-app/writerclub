@@ -117,6 +117,7 @@ export interface PublicProfile {
   followerCount: number
   followingCount: number
   isFollowing: boolean
+  isOwnProfile: boolean
 }
 
 export interface FollowUser {

@@ -220,7 +220,8 @@
     "followers": "Follower",
     "following": "Seguiti",
     "no_followers": "Ancora nessun follower.",
-    "no_following": "Non segui ancora nessuno."
+    "no_following": "Non segui ancora nessuno.",
+    "error": "Errore nel seguire. Riprova."
   },
   "feed": {
     "loading": "Caricamento feed…",

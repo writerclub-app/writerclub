@@ -22,6 +22,7 @@ export function PublicProfilePage() {
   const [hasMore, setHasMore] = useState(true)
   const [followLoading, setFollowLoading] = useState(false)
   const [isFollowingLocal, setIsFollowingLocal] = useState(false)
+  const [followError, setFollowError] = useState(false)
 
   useEffect(() => {
     if (!username) return
@@ -34,7 +35,7 @@ export function PublicProfilePage() {
       })
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false))
-  }, [username])
+  }, [username, token?.authId])
 
   const loadMore = () => {
     if (!username) return
@@ -63,7 +64,10 @@ export function PublicProfilePage() {
         setIsFollowingLocal(true)
         setProfile(prev => prev ? { ...prev, followerCount: prev.followerCount + 1 } : prev)
       }
-    } catch { /* silent */ } finally {
+    } catch {
+      setFollowError(true)
+      setTimeout(() => setFollowError(false), 3000)
+    } finally {
       setFollowLoading(false)
     }
   }
@@ -104,17 +108,22 @@ export function PublicProfilePage() {
                 <h1 className="pp-name">{profile.displayName ?? profile.username}</h1>
                 <span className="pp-username">@{profile.username}</span>
               </div>
-              {token && profile.username !== username && (
-                <Button
-                  variant={isFollowingLocal ? 'outline' : 'primary'}
-                  size="sm"
-                  onClick={handleFollow}
-                  disabled={followLoading}
-                >
-                  {followLoading
-                    ? <Loading size="sm" />
-                    : isFollowingLocal ? t('follows.unfollow') : t('follows.follow')}
-                </Button>
+              {token && !profile.isOwnProfile && (
+                <div className="pp-follow-wrap">
+                  <Button
+                    variant={isFollowingLocal ? 'outline' : 'primary'}
+                    size="sm"
+                    onClick={handleFollow}
+                    disabled={followLoading}
+                  >
+                    {followLoading
+                      ? <Loading size="sm" />
+                      : isFollowingLocal ? t('follows.unfollow') : t('follows.follow')}
+                  </Button>
+                  {followError && (
+                    <span className="pp-follow-error">{t('follows.error')}</span>
+                  )}
+                </div>
               )}
             </div>
             <div className="pp-stats">

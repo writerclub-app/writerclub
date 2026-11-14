@@ -191,3 +191,13 @@
   font-size: 0.82rem;
   color: var(--color-awake-text-muted);
 }
+
+.pp-follow-wrap {
+  @apply flex flex-col items-end;
+  gap: 4px;
+}
+
+.pp-follow-error {
+  font-size: 0.75rem;
+  color: var(--color-awake-danger, #ef4444);
+}
