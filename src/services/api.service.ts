@@ -1,5 +1,8 @@
 const API_URL = import.meta.env.VITE_API_URL as string
 
+// Tokens gerados antes desta data são inválidos (JWT_SECRET não estava configurado)
+const MIN_TOKEN_IAT = 1794600000 // 2026-11-13 ~18h UTC
+
 /** Busca ou renova o JWT do Worker para o authId atual. */
 async function getToken(authId: string, forceRenew = false): Promise<string> {
   if (!forceRenew) {
@@ -8,7 +11,8 @@ async function getToken(authId: string, forceRenew = false): Promise<string> {
       // Verifica expiração (exp no payload JWT)
       try {
         const payload = JSON.parse(atob(cached.split('.')[1]))
-        if (payload.exp > Math.floor(Date.now() / 1000) + 60) {
+        if (payload.exp > Math.floor(Date.now() / 1000) + 60 &&
+          (payload.iat ?? 0) >= MIN_TOKEN_IAT) {
           return cached
         }
       } catch { /* ignora e renova */ }
