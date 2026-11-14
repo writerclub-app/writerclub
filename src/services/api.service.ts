@@ -19,7 +19,11 @@ async function getToken(authId: string): Promise<string> {
     body: JSON.stringify({ authId }),
   })
 
-  if (!res.ok) throw new Error('Failed to get API token')
+  if (!res.ok) {
+    const body = await res.text().catch(() => '')
+    console.error('[getToken] falhou:', res.status, body)
+    throw new Error('Failed to get API token')
+  }
   const { token } = await res.json() as { token: string }
   sessionStorage.setItem('wc_api_token', token)
   return token
@@ -161,7 +165,11 @@ export async function followUser(authId: string, username: string): Promise<void
     method: 'POST',
     headers: { Authorization: `Bearer ${token}` },
   })
-  if (!res.ok) throw new Error('Failed to follow user')
+  if (!res.ok) {
+    const body = await res.text().catch(() => '')
+    console.error('[followUser] falhou:', res.status, body)
+    throw new Error('Failed to follow user')
+  }
 }
 
 /** Deixar de seguir um usuário. */
@@ -171,7 +179,11 @@ export async function unfollowUser(authId: string, username: string): Promise<vo
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` },
   })
-  if (!res.ok) throw new Error('Failed to unfollow user')
+  if (!res.ok) {
+    const body = await res.text().catch(() => '')
+    console.error('[unfollowUser] falhou:', res.status, body)
+    throw new Error('Failed to unfollow user')
+  }
 }
 
 /** Lista de seguidores de um usuário. */

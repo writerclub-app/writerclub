@@ -64,7 +64,8 @@ export function PublicProfilePage() {
         setIsFollowingLocal(true)
         setProfile(prev => prev ? { ...prev, followerCount: prev.followerCount + 1 } : prev)
       }
-    } catch {
+    } catch (err) {
+      console.error('[follow] erro:', err)
       setFollowError(true)
       setTimeout(() => setFollowError(false), 3000)
     } finally {
