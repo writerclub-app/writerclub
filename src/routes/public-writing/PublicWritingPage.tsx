@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Loading } from '@awakr/awake-ui/loading'
 import { Button } from '@awakr/awake-ui/button'
 import { Avatar } from '@awakr/awake-ui/avatar'
-import { fetchPublicWriting, fetchPublicProfile, fetchLikesInfo, toggleLike, type PublicWriting } from '@/services/api.service'
+import { fetchPublicWriting, fetchPublicProfile, fetchLikesInfo, toggleLike, followUser, unfollowUser, type PublicWriting } from '@/services/api.service'
 import { loadToken } from '@/services/auth.service'
 import { GlobalControls } from '@/components/ui/GlobalControls'
 import {
@@ -57,6 +57,10 @@ export function PublicWritingPage() {
   const [likesCount, setLikesCount] = useState(0)
   const [likeLoading, setLikeLoading] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [isFollowingLocal, setIsFollowingLocal] = useState(false)
+  const [isOwnProfile, setIsOwnProfile] = useState(false)
+  const [followLoading, setFollowLoading] = useState(false)
+  const [followError, setFollowError] = useState(false)
 
   useEffect(() => {
     if (!slug) return
@@ -69,8 +73,11 @@ export function PublicWritingPage() {
           setLikesCount(info.count)
         })
         if (w.username) {
-          fetchPublicProfile(w.username).then(res => {
+          const authId = loadToken()?.authId
+          fetchPublicProfile(w.username, 1, authId ?? undefined).then(res => {
             setMoreWritings(res.writings.filter(r => r.slug !== slug).slice(0, 3))
+            setIsFollowingLocal(res.profile.isFollowing)
+            setIsOwnProfile(res.profile.isOwnProfile)
           }).catch(() => {})
         }
       })
@@ -110,6 +117,27 @@ export function PublicWritingPage() {
   const authorName = writing.display_name ?? writing.username ?? username ?? '?'
   const { nodes: contentNodes, wordCount } = extractTextAndWords(writing.content)
   const mins = readingMinutes(wordCount)
+
+
+  async function handleFollow() {
+    const authId = loadToken()?.authId
+    if (!authId || !writing?.username) return
+    setFollowLoading(true)
+    try {
+      if (isFollowingLocal) {
+        await unfollowUser(authId, writing.username)
+        setIsFollowingLocal(false)
+      } else {
+        await followUser(authId, writing.username)
+        setIsFollowingLocal(true)
+      }
+    } catch {
+      setFollowError(true)
+      setTimeout(() => setFollowError(false), 3000)
+    } finally {
+      setFollowLoading(false)
+    }
+  }
 
   function handleLike() {
     if (likeLoading) return
@@ -170,9 +198,20 @@ export function PublicWritingPage() {
                 @{writing.username ?? username} · {formatDateShort(writing.published_at)}
               </span>
             </div>
-            <Button variant="outline" size="sm" className="pw-follow-btn">
-              {t('public.follow')}
-            </Button>
+            {loadToken()?.authId && !isOwnProfile && (
+              <div className="pw-follow-wrap">
+                <Button
+                  variant={isFollowingLocal ? 'outline' : 'primary'}
+                  size="sm"
+                  className="pw-follow-btn"
+                  disabled={followLoading}
+                  onClick={() => void handleFollow()}
+                >
+                  {followLoading ? '...' : isFollowingLocal ? t('follows.unfollow') : t('follows.follow')}
+                </Button>
+                {followError && <span className="pw-follow-error">{t('follows.error')}</span>}
+              </div>
+            )}
           </div>
 
           <div className="pw-content">
