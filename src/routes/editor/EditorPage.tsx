@@ -65,7 +65,7 @@ export function EditorPage() {
     showSaveModal, pendingTags, pendingPublic,
     confirmSave, cancelSave,
     editorRef,
-    save, publish, unpublish, goBack, triggerSave,
+    publish, unpublish, goBack, triggerSave,
   } = useWritingEditor({ writing })
 
   // Keep local titleValue in sync for AI suggest-title

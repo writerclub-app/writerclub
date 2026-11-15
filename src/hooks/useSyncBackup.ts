@@ -32,7 +32,6 @@ export function useSyncBackup(authId: string | null) {
               title: r.title,
               slug: r.slug || slugify(r.title),
               content: r.content,
-              excerpt: r.excerpt ?? undefined,
               categoryId: '',
               categoryName: r.category_name ?? '',
               isPublic: r.is_public === 1,
