@@ -28,7 +28,7 @@ export function BackupStatus() {
         <div className="backup-status__provider">
           <GoogleIcon />
           <span className="backup-status__name">
-            {provider?.label ?? 'Backup'}
+            {'Google Drive'}
           </span>
           <Badge variant="success" className="backup-status__badge">
             {t('backup.connected')}

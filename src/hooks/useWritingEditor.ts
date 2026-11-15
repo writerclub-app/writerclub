@@ -99,10 +99,6 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
         message: pub && overridePublic ? t('editor.toast_published') : t('editor.toast_saved'),
         variant: pub && overridePublic ? 'success' : 'info',
       })
-      // Backup before navigating so the fetch isn't cancelled
-      if (getActiveProvider() && token) {
-        await runBackup(token.authId).catch(() => { /* silent */ })
-      }
       setSaveStatus('idle')
       void navigate('/')
     } catch {

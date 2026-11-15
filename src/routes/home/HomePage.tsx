@@ -45,7 +45,7 @@ export function HomePage() {
       setWritings(w)
       setFolders(f)
       setLoading(false)    })
-  }, [restoreIfEmpty])
+  }, [])
 
   // Fetch real username from Worker on mount; create profile if it doesn't exist yet
   useEffect(() => {
