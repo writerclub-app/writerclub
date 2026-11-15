@@ -1,0 +1,57 @@
+.cw-overlay {
+  @apply fixed inset-0 flex items-center justify-center;
+  z-index: 50;
+  background: color-mix(in srgb, #000 60%, transparent);
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px))
+           max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+}
+
+.cw-modal {
+  @apply flex flex-col rounded-2xl w-full;
+  max-width: 400px;
+  gap: 16px;
+  padding: 24px;
+  background: var(--color-awake-surface);
+  border: 1px solid var(--color-awake-border);
+  box-shadow: 0 8px 40px color-mix(in srgb, #000 20%, transparent);
+}
+
+.cw-modal__intro {
+  @apply font-semibold;
+  font-size: 1rem;
+  color: var(--color-awake-text);
+  margin: 0;
+}
+
+.cw-modal__sub {
+  font-size: 0.8125rem;
+  color: var(--color-awake-text-muted);
+  margin: 0;
+}
+
+.cw-tags {
+  @apply flex flex-wrap;
+  gap: 8px;
+}
+
+.cw-tag {
+  @apply cursor-pointer rounded-full;
+  font-size: 0.8125rem;
+  padding: 5px 14px;
+  border: 1.5px solid var(--color-awake-border);
+  background: transparent;
+  color: var(--color-awake-text-muted);
+  transition: all 0.15s;
+}
+
+.cw-tag--active {
+  border-color: var(--color-awake-brand, #3B6E1A);
+  background: color-mix(in srgb, var(--color-awake-brand, #3B6E1A) 12%, transparent);
+  color: var(--color-awake-brand, #3B6E1A);
+}
+
+.cw-modal__actions {
+  @apply flex justify-end;
+  gap: 8px;
+  margin-top: 4px;
+}

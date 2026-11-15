@@ -43,6 +43,7 @@ export async function publishWritingToAPI(authId: string, writing: {
   content: string
   excerpt?: string
   categoryName?: string
+  contentWarnings?: string[]
 }): Promise<void> {
   const token = await getToken(authId)
   const res = await fetch(`${API_URL}/writings`, {
@@ -51,7 +52,10 @@ export async function publishWritingToAPI(authId: string, writing: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
     },
-    body: JSON.stringify(writing),
+    body: JSON.stringify({
+      ...writing,
+      content_warnings: writing.contentWarnings ?? [],
+    }),
   })
   if (!res.ok) throw new Error('Failed to publish writing')
 }
@@ -116,6 +120,7 @@ export interface PublicWriting {
   updated_at: string
   username: string | null
   display_name: string | null
+  content_warnings: string[]
 }
 
 export interface PublicProfile {

@@ -27,6 +27,9 @@ class WriterClubDB extends Dexie {
     this.version(2).stores({
       profile: '++id, authId, username',
     })
+
+    // v3 — contentWarnings no writings
+    this.version(3).stores({})
   }
 }
 

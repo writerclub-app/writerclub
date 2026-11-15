@@ -7,6 +7,7 @@ import { loadToken } from '@/services/auth.service'
 import { createWriting, updateWriting } from '@/services/writing.service'
 import { publishWritingToAPI, unpublishWritingFromAPI } from '@/services/api.service'
 import type { Writing } from '@/types/writing'
+import { classifyWarnings, type ContentWarningTag } from '@/services/ai.service'
 
 type SaveStatus = 'idle' | 'saving' | 'saved' | 'error'
 
@@ -27,6 +28,8 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
   const [isPublic, setIsPublic] = useState(writing?.isPublic ?? false)
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle')
   const [showPublishModal, setShowPublishModal] = useState(false)
+  const [showWarningsModal, setShowWarningsModal] = useState(false)
+  const [pendingWarnings, setPendingWarnings] = useState<ContentWarningTag[]>([])
   const [writingId, setWritingId] = useState<string | null>(writing?.id ?? null)
 
   const editorRef = useRef<Editor | null>(null)
@@ -54,7 +57,7 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
     return text.trim() === '' ? 0 : text.trim().split(/\s+/).length
   }, [])
 
-  const save = useCallback(async (overridePublic?: boolean) => {
+  const save = useCallback(async (overridePublic?: boolean, warnings?: ContentWarningTag[]) => {
     if (!token) return
     setSaveStatus('saving')
 
@@ -63,7 +66,7 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
 
     try {
       if (writingId) {
-        await updateWriting(writingId, { title, content, categoryId, categoryName, folderId, isPublic: pub })
+        await updateWriting(writingId, { title, content, categoryId, categoryName, folderId, isPublic: pub, ...(warnings !== undefined ? { contentWarnings: warnings } : {}) })
       } else {
         const created = await createWriting({
           title: title || 'Sem título',
@@ -73,6 +76,7 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
           isPublic: pub,
           folderId,
           authorId: token.authId,
+          contentWarnings: warnings ?? [],
         })
         setWritingId(created.id)
       }
@@ -109,7 +113,18 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
 
   const publish = useCallback(async () => {
     setShowPublishModal(false)
-    await save(true)
+    if (!token) return
+    // Classificar conteúdo antes de publicar
+    const apiToken = sessionStorage.getItem('wc_api_token') ?? token.accessToken
+    const text = editorRef.current?.getText() ?? ''
+    const warnings = await classifyWarnings(text, apiToken).catch(() => [] as ContentWarningTag[])
+    setPendingWarnings(warnings)
+    setShowWarningsModal(true)
+  }, [token, editorRef])
+
+  const confirmPublish = useCallback(async (warnings: ContentWarningTag[]) => {
+    setShowWarningsModal(false)
+    await save(true, warnings)
   }, [save])
 
   const unpublish = useCallback(async () => {
@@ -140,6 +155,9 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
     isPublic,
     saveStatus,
     showPublishModal, setShowPublishModal,
+    showWarningsModal, setShowWarningsModal,
+    pendingWarnings,
+    confirmPublish,
     editorRef,
     wordCount,
     save,

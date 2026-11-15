@@ -88,7 +88,9 @@
     "folder_picker": "Elegir carpeta",
     "no_folder": "Sin carpeta",
     "toast_saved": "¡Escrita guardada!",
-    "toast_published": "¡Publicado con éxito!"
+    "toast_published": "¡Publicado con éxito!",
+    "cw_ai_suggestion": "La IA sugirió los avisos a continuación. Ajusta si es necesario.",
+    "cw_confirm": "Confirmar y publicar"
   },
   "profile": {
     "title": "Perfil",
@@ -228,5 +230,15 @@
     "music": "Música",
     "tale": "Cuento",
     "chronicle": "Crónica"
+  },
+  "content_warnings": {
+    "erotic": "Erótico",
+    "violence": "Violencia",
+    "suicide": "Suicidio / Autolesión",
+    "drugs": "Drogas",
+    "trauma": "Trauma",
+    "abuse": "Abuso",
+    "gate_title": "Este texto contiene advertencias de contenido",
+    "gate_cta": "Entendido, continuar"
   }
 }

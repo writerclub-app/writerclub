@@ -62,6 +62,7 @@ export function PublicWritingPage() {
   const [followLoading, setFollowLoading] = useState(false)
   const [followError, setFollowError] = useState(false)
   const [profileLoaded, setProfileLoaded] = useState(false)
+  const [contentRevealed, setContentRevealed] = useState(false)
 
   useEffect(() => {
     if (!slug) return
@@ -115,6 +116,28 @@ export function PublicWritingPage() {
       </div>
     </div>
   )
+
+  const warnings: string[] = (writing as { content_warnings?: string[] }).content_warnings ?? []
+  const hasWarnings = warnings.length > 0
+
+  if (hasWarnings && !contentRevealed) {
+    return (
+      <div className="pw-root pw-root--center">
+        <div className="pw-topbar"><GlobalControls /></div>
+        <div className="pw-gate">
+          <p className="pw-gate__title">{t('content_warnings.gate_title')}</p>
+          <div className="pw-gate__tags">
+            {warnings.map(w => (
+              <span key={w} className="pw-gate__tag">{t(`content_warnings.${w}`)}</span>
+            ))}
+          </div>
+          <button className="pw-gate__cta" onClick={() => setContentRevealed(true)}>
+            {t('content_warnings.gate_cta')}
+          </button>
+        </div>
+      </div>
+    )
+  }
 
   const authorName = writing.display_name ?? writing.username ?? username ?? '?'
   const { nodes: contentNodes, wordCount } = extractTextAndWords(writing.content)

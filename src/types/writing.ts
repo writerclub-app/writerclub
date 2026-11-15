@@ -8,6 +8,7 @@ export interface Writing {
   slug: string
   isPublic: boolean
   authorId: string
+  contentWarnings: string[]
   createdAt: Date
   updatedAt: Date
 }
