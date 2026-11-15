@@ -109,3 +109,62 @@
 .login-notice a:hover {
   color: var(--color-awake-text);
 }
+
+/* ── Email form ── */
+.login-form {
+  @apply flex flex-col w-full;
+  gap: 10px;
+}
+
+.login-form-title {
+  @apply font-semibold;
+  font-size: 0.9375rem;
+  color: var(--color-awake-text);
+  margin-bottom: 2px;
+}
+
+.login-submit {
+  @apply w-full;
+  margin-top: 4px;
+}
+
+.login-error {
+  font-size: 0.8125rem;
+  color: var(--color-awake-danger, #dc2626);
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background-color: color-mix(in srgb, var(--color-awake-danger, #dc2626) 10%, transparent);
+}
+
+.login-toggle {
+  @apply w-full text-center cursor-pointer;
+  background: none;
+  border: none;
+  font-size: 0.8125rem;
+  color: var(--color-awake-text-muted);
+  padding: 4px;
+  margin-top: 2px;
+  transition: color 0.15s;
+}
+.login-toggle:hover {
+  color: var(--color-awake-text);
+}
+
+/* ── Divider (or) ── */
+.login-divider {
+  @apply flex items-center;
+  gap: 8px;
+  margin: 2px 0;
+}
+.login-divider-line {
+  @apply flex-1;
+  height: 1px;
+  background-color: var(--color-awake-border);
+}
+.login-divider-text {
+  font-size: 0.75rem;
+  color: var(--color-awake-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}

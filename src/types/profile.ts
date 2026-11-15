@@ -1,6 +1,6 @@
-export type BackupProviderName = 'google-drive' | 'onedrive' | 'github-gist'
+export type BackupProviderName = 'google-drive' | 'onedrive'
 
-export type OAuthProvider = 'google' | 'microsoft' | 'github'
+export type OAuthProvider = 'google' | 'microsoft' | 'email'
 
 // Stored locally in Dexie (full profile)
 export interface Profile {

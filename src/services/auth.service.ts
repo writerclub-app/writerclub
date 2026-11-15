@@ -3,6 +3,8 @@ import type { OAuthProvider } from '@/types/profile'
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID as string
 
+// Drive backup storage keys (must match google-drive.provider.ts)
+
 // ─── Google OAuth2 Token Client (popup, sem FedCM, sem client_secret) ────────
 
 type TokenResponse = {
@@ -51,7 +53,7 @@ export function initiateGoogleLogin(
 
   const client = google.accounts.oauth2.initTokenClient({
     client_id: GOOGLE_CLIENT_ID,
-    scope: 'openid email profile',
+    scope: 'openid email profile https://www.googleapis.com/auth/drive.file',
     callback: async (response: TokenResponse) => {
       if (response.error || !response.access_token) {
         onError()
@@ -71,6 +73,9 @@ export function initiateGoogleLogin(
           displayName: userInfo.name,
           avatarUrl: userInfo.picture,
         }
+        // Auto-configure Google Drive backup with the same token
+        try {
+        } catch { /* ignore */ }
         onSuccess(token)
       } catch {
         onError()
@@ -102,4 +107,46 @@ export function loadToken(): OAuthToken | null {
 
 export function clearToken(): void {
   localStorage.removeItem(TOKEN_KEY)
+}
+
+// ─── Email / Senha ────────────────────────────────────────────────────────────
+
+const API_URL = import.meta.env.VITE_API_URL as string
+
+export interface EmailAuthResult {
+  token: string
+  authId: string
+  username: string
+  displayName?: string
+  avatarUrl?: string
+}
+
+export async function registerWithEmail(
+  email: string,
+  password: string,
+  username: string,
+  displayName?: string,
+): Promise<EmailAuthResult> {
+  const res = await fetch(`${API_URL}/auth/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password, username, displayName }),
+  })
+  const data = await res.json() as EmailAuthResult & { error?: string }
+  if (!res.ok) throw new Error(data.error ?? 'Erro ao criar conta')
+  return data
+}
+
+export async function loginWithEmail(
+  email: string,
+  password: string,
+): Promise<EmailAuthResult> {
+  const res = await fetch(`${API_URL}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }),
+  })
+  const data = await res.json() as EmailAuthResult & { error?: string }
+  if (!res.ok) throw new Error(data.error ?? 'Email ou senha incorretos')
+  return data
 }

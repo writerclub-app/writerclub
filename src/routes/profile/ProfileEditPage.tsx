@@ -14,8 +14,6 @@ import { useAvatar } from '@/hooks/useAvatar'
 import { useUsername } from '@/contexts/UsernameContext'
 import { loadToken, clearToken } from '@/services/auth.service'
 import { db } from '@/db'
-import { getActiveProvider } from '@/services/backup.service'
-import { ProviderPicker, BackupStatus } from '@/components/backup'
 import { usePwaInstall } from '@/hooks/usePwaInstall'
 import './ProfileEditPage.css'
 
@@ -32,7 +30,6 @@ export function ProfileEditPage() {
   const [displayName, setDisplayName] = useState(token?.displayName ?? '')
   const [bio, setBio] = useState('')
   const [saving, setSaving] = useState(false)
-  const [backupConnected, setBackupConnected] = useState(() => !!getActiveProvider())
   const { canInstall, install } = usePwaInstall()
 
   const avatarSrc = useAvatar(token?.avatarUrl)
@@ -210,10 +207,6 @@ export function ProfileEditPage() {
 
           {/* Backup (BYOS) */}
           <div className="profile-section-title">{t('backup.title')}</div>
-          {backupConnected
-            ? <BackupStatus onDisconnect={() => setBackupConnected(false)} />
-            : <ProviderPicker onConnected={() => setBackupConnected(true)} />
-          }
 
           <Separator className="profile-sep" />
 

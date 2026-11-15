@@ -1,14 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import { Button } from '@awakr/awake-ui/button'
 import { Badge } from '@awakr/awake-ui/badge'
-import { GitHubIcon, GoogleIcon } from '@/components/ui/icons'
+import { GoogleIcon } from '@/components/ui/icons'
 import { useSyncBackup } from '@/hooks/useSyncBackup'
 import { getActiveProvider } from '@/services/backup.service'
 import './BackupStatus.css'
-
-interface Props {
-  onDisconnect: () => void
-}
 
 function formatRelative(date: Date): string {
   const diff = Date.now() - date.getTime()
@@ -20,23 +16,17 @@ function formatRelative(date: Date): string {
   return date.toLocaleDateString()
 }
 
-export function BackupStatus({ onDisconnect }: Props) {
+export function BackupStatus() {
   const { t } = useTranslation()
   const { sync, status, lastSyncedAt, error } = useSyncBackup()
   const provider = getActiveProvider()
 
-  function handleDisconnect() {
-    provider?.clearToken()
-    onDisconnect()
-  }
-
-  const isGoogleDrive = provider?.name === 'google-drive'
 
   return (
     <div className="backup-status">
       <div className="backup-status__header">
         <div className="backup-status__provider">
-          {isGoogleDrive ? <GoogleIcon /> : <GitHubIcon />}
+          <GoogleIcon />
           <span className="backup-status__name">
             {provider?.label ?? 'Backup'}
           </span>
@@ -44,10 +34,9 @@ export function BackupStatus({ onDisconnect }: Props) {
             {t('backup.connected')}
           </Badge>
         </div>
-        <Button variant="ghost" size="sm" onClick={handleDisconnect} className="backup-status__disconnect">
-          {t('backup.disconnect')}
-        </Button>
       </div>
+
+      <p className="backup-status__info">{t('backup.auto_info')}</p>
 
       {lastSyncedAt && (
         <p className="backup-status__last">{t('backup.last_sync')}: {formatRelative(lastSyncedAt)}</p>

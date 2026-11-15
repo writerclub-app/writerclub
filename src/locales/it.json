@@ -7,12 +7,22 @@
     "login": {
       "continue_with_google": "Continua con Google",
       "continue_with_microsoft": "Continua con Microsoft",
-      "continue_with_github": "Continua con GitHub",
       "local_storage_notice": "I tuoi scritti sono archiviati localmente sul tuo dispositivo.",
       "signing_in": "Accesso in corso…",
       "coming_soon": "presto",
       "coming_soon_label": "Presto",
-      "terms_notice": "Continuando accetti i nostri <a href=\"#\">Termini di utilizzo</a> e la <a href=\"#\">Privacy Policy</a>."
+      "terms_notice": "Continuando accetti i nostri <a href=\"#\">Termini di utilizzo</a> e la <a href=\"#\">Privacy Policy</a>.",
+      "enter_with_email": "Accedi con email",
+      "create_account": "Crea account",
+      "or": "oppure",
+      "email": "Email",
+      "password": "Password",
+      "username": "Nome utente",
+      "display_name": "Nome visualizzato (opzionale)",
+      "enter": "Accedi",
+      "register": "Crea account",
+      "back": "Indietro",
+      "error_generic": "Si è verificato un errore. Riprova."
     },
     "callback": {
       "signing_in": "Accesso in corso…"
@@ -158,29 +168,12 @@
   },
   "backup": {
     "title": "Backup automatico",
-    "github_hint": "Collega il tuo GitHub per salvare automaticamente i tuoi scritti in un Gist privato.",
-    "github_pat_label": "Token di accesso personale",
-    "github_pat_hint": "Token con scope \"gist\". Salvato solo su questo dispositivo.",
-    "github_pat_create": "Crea token →",
-    "connect": "Connetti",
-    "connecting": "Connessione…",
     "connected": "Connesso",
-    "disconnect": "Disconnetti",
     "sync_now": "Backup ora",
     "syncing": "Sincronizzazione…",
     "synced": "Salvato",
     "last_sync": "Ultimo backup",
-    "error_connect": "Errore di connessione",
-    "hint": "Scegli dove salvare il backup automatico.",
-    "soon": "presto",
-    "coming_soon": "{{provider}} sarà disponibile presto.",
-    "github_how_title": "Come creare il token",
-    "github_step1": "Vai su GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)",
-    "github_step2": "Clicca su \"Generate new token (classic)\"",
-    "github_step3": "In Scopes, seleziona solo \"gist\"",
-    "github_step4": "Copia il token (ghp_...) e incollalo qui sotto — appare solo una volta",
-    "google_connect": "Connetti con Google Drive",
-    "google_hint": "I tuoi scritti verranno salvati in una cartella \"WriterClub\" nel tuo Google Drive. Solo questa app avrà accesso a quei file."
+    "auto_info": "I tuoi scritti vengono salvati automaticamente su Google Drive ogni volta che modifichi."
   },
   "explore": {
     "title": "Esplora",

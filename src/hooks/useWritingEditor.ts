@@ -1,6 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { runBackup, getActiveProvider } from '@/services/backup.service'
 import { useNavigate } from 'react-router-dom'
 import type { Editor } from '@tiptap/react'
 import { useToast } from '@awakr/awake-ui/toast'

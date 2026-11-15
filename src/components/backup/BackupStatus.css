@@ -25,10 +25,10 @@
   @apply text-xs m-0;
   color: var(--color-awake-danger, #ef4444);
 }
+.backup-status__info {
+  @apply text-xs m-0;
+  opacity: 0.6;
+}
 .backup-status__btn {
   @apply w-full;
-}
-.backup-status__disconnect {
-  @apply text-xs;
-  opacity: 0.6;
 }
