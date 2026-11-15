@@ -117,7 +117,11 @@ export function PublicWritingPage() {
     </div>
   )
 
-  const warnings: string[] = (writing as { content_warnings?: string[] }).content_warnings ?? []
+  const _cw = (writing as { content_warnings?: string[] | string }).content_warnings
+  const warnings: string[] = (() => {
+    try { return Array.isArray(_cw) ? _cw : (JSON.parse(_cw ?? '[]') as string[]) }
+    catch { return [] }
+  })()
   const hasWarnings = warnings.length > 0
 
   if (hasWarnings && !contentRevealed) {
