@@ -1,20 +1,19 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@awakr/awake-ui/button'
-import { Badge } from '@awakr/awake-ui/badge'
 import type { ContentWarningTag } from '@/services/ai.service'
 
 interface Props {
-  warnings: ContentWarningTag[]
+  suggestions: ContentWarningTag[]
   onConfirm: (warnings: ContentWarningTag[]) => void
   onCancel: () => void
 }
 
 const ALL_TAGS: ContentWarningTag[] = ['erotic', 'violence', 'suicide', 'drugs', 'trauma', 'abuse']
 
-export function ContentWarningsModal({ warnings, onConfirm, onCancel }: Props) {
+export function ContentWarningsModal({ suggestions, onConfirm, onCancel }: Props) {
   const { t } = useTranslation()
-  const [selected, setSelected] = useState<ContentWarningTag[]>(warnings)
+  const [selected, setSelected] = useState<ContentWarningTag[]>(suggestions)
 
   function toggle(tag: ContentWarningTag) {
     setSelected(prev =>

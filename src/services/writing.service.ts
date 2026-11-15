@@ -12,10 +12,10 @@ export async function createWriting(data: Omit<WritingCreate, 'slug'>): Promise<
   const writing: Writing = {
     id: crypto.randomUUID(),
     slug: slugify(data.title) || crypto.randomUUID().slice(0, 8),
-    contentWarnings: [],
     createdAt: now,
     updatedAt: now,
     ...data,
+    contentWarnings: data.contentWarnings ?? [],
   }
   await db.writings.add(writing)
   return writing
