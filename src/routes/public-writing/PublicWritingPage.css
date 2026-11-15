@@ -323,3 +323,32 @@
 .pw-gate__cta:hover {
   opacity: 0.88;
 }
+
+/* Tags below meta */
+.pw-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 0 4px;
+  border-top: 1px solid var(--color-awake-border-subtle);
+}
+
+.pw-tags__label {
+  font-size: 0.75rem;
+  color: var(--color-awake-text-tertiary);
+  font-weight: 500;
+  width: 100%;
+  margin-bottom: 2px;
+}
+
+.pw-tags__tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--color-awake-surface-raised);
+  color: var(--color-awake-text-secondary);
+}

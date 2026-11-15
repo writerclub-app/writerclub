@@ -12,6 +12,7 @@ import { deleteWriting } from '@/services/writing.service'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { db } from '@/db'
 import { loadToken } from '@/services/auth.service'
+import { useSyncBackup } from '@/hooks/useSyncBackup'
 import { fetchMyProfile } from '@/services/api.service'
 import type { Writing } from '@/types/writing'
 import type { Folder } from '@/types/folder'
@@ -22,6 +23,9 @@ type Filter = 'all' | 'draft' | 'published'
 export function HomePage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
+
+  const token = loadToken()
+  useSyncBackup(token?.authId ?? null)
 
   const [filter, setFilter] = useState<Filter>('all')
   const [writings, setWritings] = useState<Writing[]>([])
@@ -49,7 +53,6 @@ export function HomePage() {
 
   // Fetch real username from Worker on mount; create profile if it doesn't exist yet
   useEffect(() => {
-    const token = loadToken()
     if (!token?.authId) return
     const derived = token.email
       ? token.email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '')

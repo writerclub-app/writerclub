@@ -257,6 +257,16 @@ export function PublicWritingPage() {
             )}
           </footer>
 
+          {/* Content tags */}
+          {warnings.length > 0 && (
+            <div className="pw-tags">
+              <span className="pw-tags__label">{t('content_warnings.gate_title')}</span>
+              {warnings.map(w => (
+                <span key={w} className="pw-tags__tag">{t(`content_warnings.${w}`)}</span>
+              ))}
+            </div>
+          )}
+
           {/* Actions */}
           <div className="pw-actions">
             <Button

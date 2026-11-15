@@ -1,0 +1,82 @@
+@reference "tailwindcss";
+
+.scm-overlay {
+  @apply fixed inset-0 flex items-end justify-center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.scm-modal {
+  @apply flex flex-col items-center w-full;
+  background: var(--color-awake-surface-base);
+  border-radius: 20px 20px 0 0;
+  padding: 28px 24px 32px;
+  max-width: 480px;
+  gap: 12px;
+}
+
+.scm-modal__emoji {
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.scm-modal__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-awake-text-primary);
+  text-align: center;
+}
+
+.scm-modal__sub {
+  font-size: 0.85rem;
+  color: var(--color-awake-text-secondary);
+  text-align: center;
+}
+
+.scm-modal__tags {
+  @apply flex flex-wrap justify-center gap-2;
+}
+
+.scm-modal__tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--color-awake-surface-raised);
+  color: var(--color-awake-text-secondary);
+}
+
+.scm-modal__countdown {
+  @apply w-full overflow-hidden;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--color-awake-surface-raised);
+  margin-top: 8px;
+}
+
+.scm-modal__countdown-bar {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--color-awake-brand-primary);
+  animation: countdown-shrink linear forwards;
+  transform-origin: left;
+}
+
+@keyframes countdown-shrink {
+  from { width: 100%; }
+  to   { width: 0%; }
+}
+
+.scm-modal__timer {
+  font-size: 0.8rem;
+  color: var(--color-awake-text-tertiary);
+}
+
+.scm-modal__cancel {
+  @apply w-full;
+  margin-top: 4px;
+}

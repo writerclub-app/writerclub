@@ -90,7 +90,10 @@
     "toast_saved": "¡Escrita guardada!",
     "toast_published": "¡Publicado con éxito!",
     "cw_ai_suggestion": "La IA sugirió los avisos a continuación. Ajusta si es necesario.",
-    "cw_confirm": "Confirmar y publicar"
+    "cw_confirm": "Confirmar y publicar",
+    "modal_save_title": "Borrador guardado",
+    "cw_no_warnings": "No se detectaron advertencias de contenido.",
+    "save_redirecting": "Redirigiendo en {{count}}s..."
   },
   "profile": {
     "title": "Perfil",
@@ -238,7 +241,20 @@
     "drugs": "Drogas",
     "trauma": "Trauma",
     "abuse": "Abuso",
-    "gate_title": "Este texto contiene advertencias de contenido",
-    "gate_cta": "Entendido, continuar"
+    "gate_title": "Este texto contiene...",
+    "gate_cta": "Entendido, continuar",
+    "love": "Amor",
+    "relationships": "Relaciones",
+    "nature": "Naturaleza",
+    "religion": "Religión",
+    "politics": "Política",
+    "humor": "Humor",
+    "family": "Familia",
+    "loss": "Pérdida",
+    "identity": "Identidad",
+    "fantasy": "Fantasía",
+    "mystery": "Misterio",
+    "social": "Social",
+    "spirituality": "Espiritualidad"
   }
 }

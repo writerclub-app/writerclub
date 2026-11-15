@@ -1,6 +1,13 @@
 const API_URL = import.meta.env.VITE_API_URL as string
 
-export type ContentWarningTag = 'erotic' | 'violence' | 'suicide' | 'drugs' | 'trauma' | 'abuse'
+export type ContentWarningTag =
+  // Avisos de conteúdo sensível (disparam gate)
+  | 'erotic' | 'violence' | 'suicide' | 'drugs' | 'trauma' | 'abuse'
+  // Temas descritivos (sem gate)
+  | 'love' | 'relationships' | 'nature' | 'religion' | 'politics'
+  | 'humor' | 'family' | 'loss' | 'identity' | 'fantasy' | 'mystery' | 'social' | 'spirituality'
+
+export const WARNING_GATE_TAGS: ContentWarningTag[] = ['erotic', 'violence', 'suicide', 'drugs', 'trauma', 'abuse']
 
 export async function classifyWarnings(
   text: string,

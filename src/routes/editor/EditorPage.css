@@ -215,3 +215,26 @@
   .editor-title { font-size: 1.9rem; }
   .editor-content { font-size: 1.1rem; }
 }
+
+/* Content warning hint (shown after save) */
+.editor-cw-hint {
+  @apply flex flex-wrap items-center gap-2;
+  padding: 6px 0;
+}
+
+.editor-cw-hint__label {
+  font-size: 0.75rem;
+  color: var(--color-awake-text-secondary);
+  font-weight: 500;
+}
+
+.editor-cw-hint__tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--color-awake-surface-raised);
+  color: var(--color-awake-text-secondary);
+}

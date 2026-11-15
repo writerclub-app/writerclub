@@ -1,3 +1,5 @@
+@reference "tailwindcss";
+
 .cw-overlay {
   @apply fixed inset-0 flex items-center justify-center;
   z-index: 50;

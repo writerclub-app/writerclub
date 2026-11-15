@@ -65,6 +65,16 @@ export function WritingCard({ writing, onClick, onEdit, onDelete, authorUsername
             </Badge>
           </div>
 
+          {/* Tags row */}
+          {writing.contentWarnings && writing.contentWarnings.length > 0 && (
+            <div className="writing-card__tags">
+              <span className="writing-card__tags-label">{t('content_warnings.gate_title')}</span>
+              {writing.contentWarnings.map(tag => (
+                <span key={tag} className="writing-card__tag">{t(`content_warnings.${tag}`)}</span>
+              ))}
+            </div>
+          )}
+
         </Card.Content>
       </Card.Root>
 

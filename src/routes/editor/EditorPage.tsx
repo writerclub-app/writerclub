@@ -15,7 +15,7 @@ import { EditorToolbar } from '@/components/editor/EditorToolbar'
 import { FolderPicker } from '@/components/editor/FolderPicker'
 import { AIActionBar } from '@/components/ai/AIActionBar'
 import { useWritingEditor } from '@/hooks/useWritingEditor'
-import { ContentWarningsModal } from '@/components/editor/ContentWarningsModal'
+import { SaveConfirmModal } from '@/components/editor/SaveConfirmModal'
 import { useAI } from '@/hooks/useAI'
 import { getWriting } from '@/services/writing.service'
 import { seedDefaultCategories } from '@/services/category.service'
@@ -62,10 +62,10 @@ export function EditorPage() {
     folderId, selectFolder,
     isPublic, saveStatus,
     showPublishModal, setShowPublishModal,
-    showWarningsModal, setShowWarningsModal,
-    pendingWarnings, confirmPublish,
+    showSaveModal, pendingTags, pendingPublic,
+    confirmSave, cancelSave,
     editorRef,
-    save, publish, unpublish, goBack,
+    save, publish, unpublish, goBack, triggerSave,
   } = useWritingEditor({ writing })
 
   // Keep local titleValue in sync for AI suggest-title
@@ -164,7 +164,7 @@ export function EditorPage() {
             variant="secondary"
             size="sm"
             className={`editor-btn-save${saveStatus === 'saved' ? ' editor-btn-save--saved' : ''}`}
-            onClick={() => void save()}
+            onClick={() => void triggerSave(false)}
             disabled={saveStatus === 'saving' || !canSave}
           >
             {saveStatus === 'saving'
@@ -282,11 +282,12 @@ export function EditorPage() {
           </Dialog.Popup>
         </Dialog.Portal>
       </Dialog.Root>
-      {showWarningsModal && (
-        <ContentWarningsModal
-          suggestions={pendingWarnings}
-          onConfirm={(warnings) => void confirmPublish(warnings)}
-          onCancel={() => setShowWarningsModal(false)}
+      {showSaveModal && (
+        <SaveConfirmModal
+          tags={pendingTags}
+          isPublic={pendingPublic}
+          onConfirm={(tags) => void confirmSave(tags)}
+          onCancel={cancelSave}
         />
       )}
     </div>

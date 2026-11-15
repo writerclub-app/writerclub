@@ -5,7 +5,7 @@ import type { Editor } from '@tiptap/react'
 import { useToast } from '@awakr/awake-ui/toast'
 import { loadToken } from '@/services/auth.service'
 import { createWriting, updateWriting } from '@/services/writing.service'
-import { publishWritingToAPI, unpublishWritingFromAPI } from '@/services/api.service'
+import { upsertWritingToAPI, unpublishWritingFromAPI } from '@/services/api.service'
 import type { Writing } from '@/types/writing'
 import { classifyWarnings, type ContentWarningTag } from '@/services/ai.service'
 
@@ -28,8 +28,9 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
   const [isPublic, setIsPublic] = useState(writing?.isPublic ?? false)
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle')
   const [showPublishModal, setShowPublishModal] = useState(false)
-  const [showWarningsModal, setShowWarningsModal] = useState(false)
-  const [pendingWarnings, setPendingWarnings] = useState<ContentWarningTag[]>([])
+  const [showSaveModal, setShowSaveModal] = useState(false)
+  const [pendingTags, setPendingTags] = useState<ContentWarningTag[]>([])
+  const [pendingPublic, setPendingPublic] = useState(false)
   const [writingId, setWritingId] = useState<string | null>(writing?.id ?? null)
 
   const editorRef = useRef<Editor | null>(null)
@@ -81,28 +82,25 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
         setWritingId(created.id)
       }
       setSaveStatus('saved')
-      if (pub && overridePublic) {
-        setIsPublic(true)
-        // Sincroniza com o servidor (silencioso)
-        const slug = (title || 'sem-titulo')
-          .toLowerCase()
-          .normalize('NFD').replace(/[̀-ͯ]/g, '')
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/^-|-$/g, '')
-        const excerpt = editorRef.current?.getText().slice(0, 200) ?? ''
-        void publishWritingToAPI(token.authId, {
-          localId: writingId ?? '',
-          title: title || 'Sem título',
-          slug: `${slug}-${writingId?.slice(0, 8) ?? Date.now()}`,
-          content: getContent(),
-          excerpt,
-          categoryName,
-        }).catch(() => { /* silent */ })
-      }
-      toast({
-        message: pub && overridePublic ? t('editor.toast_published') : t('editor.toast_saved'),
-        variant: pub && overridePublic ? 'success' : 'info',
-      })
+      if (pub) setIsPublic(true)
+      // Sincroniza com D1
+      const slug = (title || 'sem-titulo')
+        .toLowerCase()
+        .normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '')
+      const currentId = writingId
+      const excerpt = editorRef.current?.getText().slice(0, 200) ?? ''
+      void upsertWritingToAPI(token.authId, {
+        localId: currentId ?? '',
+        title: title || 'Sem título',
+        slug: `${slug}-${currentId?.slice(0, 8) ?? Date.now()}`,
+        content: getContent(),
+        excerpt,
+        categoryName,
+        isPublic: pub,
+        contentWarnings: warnings ?? [],
+      }).catch(() => { /* silent */ })
       setSaveStatus('idle')
       void navigate('/')
     } catch {
@@ -111,21 +109,30 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token, title, categoryId, categoryName, folderId, isPublic, writingId, getContent, t, toast])
 
-  const publish = useCallback(async () => {
+  // Fluxo unificado: classifica → abre modal → salva (se não cancelar)
+  const triggerSave = useCallback(async (asPublic: boolean) => {
     setShowPublishModal(false)
     if (!token) return
-    // Classificar conteúdo antes de publicar
+    setSaveStatus('saving')
     const apiToken = sessionStorage.getItem('wc_api_token') ?? token.accessToken
     const text = editorRef.current?.getText() ?? ''
-    const warnings = await classifyWarnings(text, apiToken).catch(() => [] as ContentWarningTag[])
-    setPendingWarnings(warnings)
-    setShowWarningsModal(true)
+    const tags = await classifyWarnings(text, apiToken).catch(() => [] as ContentWarningTag[])
+    setPendingTags(tags)
+    setPendingPublic(asPublic)
+    setShowSaveModal(true)
   }, [token, editorRef])
 
-  const confirmPublish = useCallback(async (warnings: ContentWarningTag[]) => {
-    setShowWarningsModal(false)
-    await save(true, warnings)
-  }, [save])
+  const publish = useCallback(() => triggerSave(true), [triggerSave])
+
+  const confirmSave = useCallback(async (tags: ContentWarningTag[]) => {
+    setShowSaveModal(false)
+    await save(pendingPublic, tags)
+  }, [save, pendingPublic])
+
+  const cancelSave = useCallback(() => {
+    setShowSaveModal(false)
+    setSaveStatus('idle')
+  }, [])
 
   const unpublish = useCallback(async () => {
     setIsPublic(false)
@@ -155,12 +162,15 @@ export function useWritingEditor({ writing }: UseWritingEditorOptions = {}) {
     isPublic,
     saveStatus,
     showPublishModal, setShowPublishModal,
-    showWarningsModal, setShowWarningsModal,
-    pendingWarnings,
-    confirmPublish,
+    showSaveModal,
+    pendingTags,
+    pendingPublic,
+    confirmSave,
+    cancelSave,
     editorRef,
     wordCount,
     save,
+    triggerSave,
     publish,
     unpublish,
     goBack,

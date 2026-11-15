@@ -35,14 +35,15 @@ async function getToken(authId: string, forceRenew = false): Promise<string> {
   return token
 }
 
-/** Publica um writing no servidor. */
-export async function publishWritingToAPI(authId: string, writing: {
+/** Upsert de um writing no servidor (privado ou público). */
+export async function upsertWritingToAPI(authId: string, writing: {
   localId: string
   title: string
   slug: string
   content: string
   excerpt?: string
   categoryName?: string
+  isPublic?: boolean
   contentWarnings?: string[]
 }): Promise<void> {
   const token = await getToken(authId)
@@ -53,11 +54,42 @@ export async function publishWritingToAPI(authId: string, writing: {
       'Authorization': `Bearer ${token}`,
     },
     body: JSON.stringify({
-      ...writing,
-      content_warnings: writing.contentWarnings ?? [],
+      localId: writing.localId,
+      title: writing.title,
+      slug: writing.slug,
+      content: writing.content,
+      excerpt: writing.excerpt,
+      categoryName: writing.categoryName,
+      isPublic: writing.isPublic ?? false,
+      contentWarnings: writing.contentWarnings ?? [],
     }),
   })
-  if (!res.ok) throw new Error('Failed to publish writing')
+  if (!res.ok) throw new Error('Failed to upsert writing')
+}
+
+/** @deprecated use upsertWritingToAPI */
+export const publishWritingToAPI = upsertWritingToAPI
+
+/** Busca todos os writings do usuário autenticado (restore/backup). */
+export async function fetchMyWritings(authId: string): Promise<Array<{
+  local_id: string
+  title: string
+  slug: string
+  content: string
+  excerpt: string | null
+  category_name: string | null
+  is_public: number
+  content_warnings: string
+  published_at: string
+  updated_at: string
+}>> {
+  const token = await getToken(authId)
+  const res = await fetch(`${API_URL}/writings/mine`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  if (!res.ok) return []
+  const { data } = await res.json() as { data: unknown[] }
+  return data as ReturnType<typeof fetchMyWritings> extends Promise<infer T> ? T : never
 }
 
 /** Remove um writing do servidor (despublicar). */

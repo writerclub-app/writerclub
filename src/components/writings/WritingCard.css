@@ -122,3 +122,29 @@
   opacity: 1;
   text-decoration: underline;
 }
+
+.writing-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.writing-card__tags-label {
+  font-size: 0.72rem;
+  color: var(--color-awake-text-tertiary);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.writing-card__tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--color-awake-surface-raised);
+  color: var(--color-awake-text-secondary);
+}

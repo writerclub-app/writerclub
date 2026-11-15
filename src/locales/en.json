@@ -90,7 +90,10 @@
     "toast_saved": "Writing saved!",
     "toast_published": "Published successfully!",
     "cw_ai_suggestion": "AI suggested the warnings below. Adjust if needed.",
-    "cw_confirm": "Confirm and publish"
+    "cw_confirm": "Confirm and publish",
+    "modal_save_title": "Draft saved",
+    "cw_no_warnings": "No content warnings detected.",
+    "save_redirecting": "Redirecting in {{count}}s..."
   },
   "profile": {
     "title": "Profile",
@@ -238,7 +241,20 @@
     "drugs": "Drugs",
     "trauma": "Trauma",
     "abuse": "Abuse",
-    "gate_title": "This text contains content warnings",
-    "gate_cta": "I understand, continue"
+    "gate_title": "This text contains...",
+    "gate_cta": "I understand, continue",
+    "love": "Love",
+    "relationships": "Relationships",
+    "nature": "Nature",
+    "religion": "Religion",
+    "politics": "Politics",
+    "humor": "Humor",
+    "family": "Family",
+    "loss": "Loss",
+    "identity": "Identity",
+    "fantasy": "Fantasy",
+    "mystery": "Mystery",
+    "social": "Social",
+    "spirituality": "Spirituality"
   }
 }
